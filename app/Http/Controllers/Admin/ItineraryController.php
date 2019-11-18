@@ -56,7 +56,7 @@ class ItineraryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $codigo = $_POST["txt_codigo"];
+//        $codigo = $_POST["txt_codigo"];
         $title = $_POST["txt_title"];
         $short = $_POST["txta_short"];
         $extended = $_POST["txta_extended"];
@@ -64,7 +64,7 @@ class ItineraryController extends Controller
         if ($request->filled(['txt_title'])){
 
             $itinerary = TItinerario::FindOrFail($id);
-            $itinerary->codigo = $codigo;
+//            $itinerary->codigo = $codigo;
             $itinerary->titulo = $title;
             $itinerary->resumen = $short;
             $itinerary->descripcion = $extended;
