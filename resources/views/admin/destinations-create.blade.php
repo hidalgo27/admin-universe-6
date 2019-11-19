@@ -73,7 +73,7 @@
         <div class="row mb-3">
             <div class="col text-center">
                 {{--<a href="" class="btn btn-primary font-weight-bold">Update Package</a>--}}
-                <button type="submit" class="btn btn-primary font-weight-bold">Create itinerary</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Create Destination</button>
             </div>
         </div>
     </form>

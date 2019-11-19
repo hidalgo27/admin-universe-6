@@ -21,27 +21,27 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
-    <script>
-        function onReady(callback) {
-            var intervalID = window.setInterval(checkReady, 500);
+{{--    <script>--}}
+{{--        function onReady(callback) {--}}
+{{--            var intervalID = window.setInterval(checkReady, 500);--}}
 
-            function checkReady() {
-                if (document.getElementsByTagName('body')[0] !== undefined) {
-                    window.clearInterval(intervalID);
-                    callback.call(this);
-                }
-            }
-        }
+{{--            function checkReady() {--}}
+{{--                if (document.getElementsByTagName('body')[0] !== undefined) {--}}
+{{--                    window.clearInterval(intervalID);--}}
+{{--                    callback.call(this);--}}
+{{--                }--}}
+{{--            }--}}
+{{--        }--}}
 
-        function show(id, value) {
-            document.getElementById(id).style.display = value ? 'block' : 'none';
-        }
+{{--        function show(id, value) {--}}
+{{--            document.getElementById(id).style.display = value ? 'block' : 'none';--}}
+{{--        }--}}
 
-        onReady(function () {
-            show('app', true);
-            show('loading', false);
-        });
-    </script>
+{{--        onReady(function () {--}}
+{{--            show('app', true);--}}
+{{--            show('loading', false);--}}
+{{--        });--}}
+{{--    </script>--}}
 </head>
 <body>
     <div id="app">
@@ -100,7 +100,7 @@
             {{--@yield('content')--}}
         {{--</main>--}}
     </div>
-    <div id="loading"></div>
+{{--    <div id="loading"></div>--}}
     <script>
         feather.replace();
         // });
