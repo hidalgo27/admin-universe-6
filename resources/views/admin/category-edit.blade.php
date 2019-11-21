@@ -48,7 +48,7 @@
 
                     <div class="col-12">
                         @if ($categorias->imagen == NULL)
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Category Thumbnail Image <span class="badge badge-warning">300x300 PX</span></p>
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Category Thumbnail Image <span class="badge badge-warning">350x250 PX</span></p>
                             <form method="post" action="{{route('admin_image_category_image_store_path')}}" enctype="multipart/form-data"
                                   class="dropzone" id="dropzone_category_2">
                                 <input type="hidden" value="{{$categorias->id}}" name="id_category_file">
@@ -60,8 +60,8 @@
 
                     <div class="col-12 text-center">
                         @if ($categorias->imagen)
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Category Thumbnail Image <span class="badge badge-warning">300x300 PX</span></p>
-                            <img src="{{asset('images/category/'.$categorias->imagen.'')}}" alt="" class="img-thumbnail w-100 mb-2">
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Category Thumbnail Image <span class="badge badge-warning">350x250 PX</span></p>
+                            <img src="{{$categorias->imagen}}" alt="" class="img-thumbnail w-100 mb-2">
                             <form action="{{route('admin_category_image_form_delete_path')}}" method="post">
                                 @csrf
                                 <input type="hidden" name="id_category" value="{{$categorias->id}}">
@@ -76,7 +76,7 @@
                     <div class="col-12">
                         @if ($categorias->imagen_banner)
                             <div class="row">
-                                <p class="font-weight-bold text-secondary small pb-1 mb-2">Slider Destinations Images</p>
+                                <p class="font-weight-bold text-secondary small pb-1 mb-2">Slider Category Images <span class="badge badge-warning">1900x1080 PX</span></p>
                                 <div class="col-12 text-center">
                                     <img src="{{$categorias->imagen_banner}}" alt="" class="img-thumbnail w-100 mb-2">
                                     <form action="{{route('admin_category_slider_form_delete_path')}}" method="post">
@@ -91,7 +91,7 @@
 
                     <div class="col-12">
                         @if ($categorias->imagen_banner == NULL)
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Slider Destinations Images <span class="badge badge-warning">300x300 PX</span></p>
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Slider Category Images <span class="badge badge-warning">1900x1080 PX</span></p>
                             <form method="post" action="{{route('admin_image_category_slider_store_path')}}" enctype="multipart/form-data"
                                   class="dropzone" id="dropzone_category">
                                 <input type="hidden" value="{{$categorias->id}}" name="id_category_file">
@@ -154,7 +154,7 @@
                     <div class="row mb-3">
                         <div class="col text-center">
                             {{--<a href="" class="btn btn-primary font-weight-bold">Update Package</a>--}}
-                            <button type="submit" class="btn btn-primary font-weight-bold">Update destination</button>
+                            <button type="submit" class="btn btn-primary font-weight-bold">Update Category</button>
                         </div>
                     </div>
 

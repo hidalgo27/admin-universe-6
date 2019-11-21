@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-12">
                         @if (empty($paquetes->imagen))
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Package Thumbnail Image <span class="badge badge-warning">300x300 PX</span></p>
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Package Thumbnail Image <span class="badge badge-warning">420x280 PX</span></p>
                             <form method="post" action="{{route('admin_image_maps_store_path')}}" enctype="multipart/form-data"
                                   class="dropzone" id="dropzone2">
                                 <input type="hidden" value="{{$paquetes->id}}" name="id_package_file">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-12 mb-4">
                         @if ($paquetes->imagen)
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Package Thumbnail Image <span class="badge badge-warning">300x300 PX</span></p>
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Package Thumbnail Image <span class="badge badge-warning">420x280 PX</span></p>
                             <img src="{{$paquetes->imagen}}" alt="" class="img-thumbnail w-100 mb-2">
                             <form action="{{route('admin_image_delete_map_package_form_path')}}" method="post" class="text-center">
                                 {{--@method('DELETE')--}}
@@ -74,7 +74,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col">
-                                <p class="font-weight-bold text-secondary small pb-1 mb-2">Image Slider <span class="badge badge-warning">300x300 PX</span></p>
+                                <p class="font-weight-bold text-secondary small pb-1 mb-2">Image Slider <span class="badge badge-warning">1900x1080 PX</span></p>
                             </div>
                         </div>
                         <div class="row">
@@ -129,7 +129,7 @@
 
                     <div class="col-12">
                         @if ($imagen_slider < 3)
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Image Slider <span class="badge badge-warning">300x300 PX</span></p>
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Image Slider <span class="badge badge-warning">1900x1080 PX</span></p>
                             <form method="post" action="{{route('admin_image_slider_store_path')}}" enctype="multipart/form-data"
                                   class="dropzone" id="dropzone">
                                 <input type="hidden" value="{{$paquetes->id}}" name="id_package_file">

@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         @if ($destination->imagen)
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Destinations Thumbnail Image <span class="badge badge-warning">300x300 PX</span></p>
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Destinations Thumbnail Image <span class="badge badge-warning">800x900 PX</span></p>
                             <img src="{{$destination->imagen}}" alt="" class="img-thumbnail w-100 mb-2">
                             <form action="{{route('admin_destinations_image_form_delete_path')}}" method="post">
                                 @csrf
@@ -80,7 +80,7 @@
                 <div class="row">
                     <div class="col-12 mb-4">
                         @if ($destination->imagen ==NULL)
-                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Destinations Thumbnail Image <span class="badge badge-warning">300x300 PX</span></p>
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Destinations Thumbnail Image <span class="badge badge-warning">800x900 PX</span></p>
                             <form method="post" action="{{route('admin_image_destinations_image_store_path')}}" enctype="multipart/form-data"
                                   class="dropzone" id="dropzone_imagen">
                                 <input type="hidden" value="{{$destination->id}}" name="id_destinations_file">
@@ -130,7 +130,7 @@
                     </div>
                     @endif
                     <div class="col-12">
-                        <p class="font-weight-bold text-secondary small pb-1 mb-2">Slider Destinations Images <span class="badge badge-warning">300x300 PX</span></p>
+                        <p class="font-weight-bold text-secondary small pb-1 mb-2">Slider Destinations Images <span class="badge badge-warning">1900x1080 PX</span></p>
                         <form method="post" action="{{route('admin_image_destinations_slider_store_path')}}" enctype="multipart/form-data"
                               class="dropzone" id="dropzone_destinations">
                             <input type="hidden" value="{{$destination->id}}" name="id_destinations_file">

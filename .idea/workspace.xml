@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="287983f6-09bd-4dc8-b1f8-d93de045a660" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/../viagens/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vagrantfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vagrantfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/_admin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_admin.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/destinations-create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/destinations-create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/category-edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/category-edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/destinations-edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/destinations-edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/package-edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/package-edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../andes2" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../viagens/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../viagens/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../viagens/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../viagens/.idea/vcs.xml" afterDir="false" />
@@ -150,6 +151,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Homestead/code/viagens" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunDashboard">
@@ -181,7 +183,10 @@
       <option name="presentableId" value="Default" />
       <updated>1574092840168</updated>
       <workItem from="1574092843663" duration="5462000" />
-      <workItem from="1574172953886" duration="816000" />
+      <workItem from="1574172953886" duration="5039000" />
+      <workItem from="1574196970038" duration="22000" />
+      <workItem from="1574271558839" duration="800000" />
+      <workItem from="1574353805438" duration="863000" />
     </task>
     <servers />
   </component>
