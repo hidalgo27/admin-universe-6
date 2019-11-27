@@ -21,27 +21,23 @@ class DestinationsController extends Controller
 
     public function create()
     {
-        return view('admin.destinations-create');
+        $host = $_SERVER["HTTP_HOST"];
+        return view('admin.destinations-create', compact('host'));
     }
 
     public function store(Request $request)
     {
-        $destination = $_POST["txt_destination"];
-        $country = $_POST["txt_country"];
-        $short = $_POST["txta_short"];
-        $extended = $_POST["txta_extended"];
-        $history = $_POST["txta_history"];
-        $geography = $_POST["txta_geography"];
-
         if ($request->filled(['txt_destination', 'txt_country'])){
 
             $destinations = new TDestino();
-            $destinations->nombre = $destination;
-            $destinations->pais = $country;
-            $destinations->resumen = $short;
-            $destinations->descripcion = $extended;
-            $destinations->historia = $history;
-            $destinations->geografia = $geography;
+            $destinations->nombre = $request->input('txt_destination');
+            $destinations->region = $request->input('txt_region');
+            $destinations->pais = $request->input('txt_country');
+            $destinations->url = $request->input('url');
+            $destinations->resumen = $request->input('txta_short');
+            $destinations->descripcion = $request->input('txta_extended');
+            $destinations->historia = $request->input('txta_history');
+            $destinations->geografia = $request->input('txta_geography');
             $destinations->estado = '1';
             $destinations->save();
 
@@ -55,27 +51,23 @@ class DestinationsController extends Controller
     public function edit($id)
     {
         $destinations = TDestino::where('id', $id)->get();
-        return view('admin.destinations-edit', ['destinations'=>$destinations]);
+        $host = $_SERVER["HTTP_HOST"];
+        return view('admin.destinations-edit', compact('destinations','host'));
     }
 
     public function update(Request $request, $id)
     {
-        $destination = $_POST["txt_destination"];
-        $country = $_POST["txt_country"];
-        $short = $_POST["txta_short"];
-        $extended = $_POST["txta_extended"];
-        $history = $_POST["txta_history"];
-        $geography = $_POST["txta_geography"];
-
         if ($request->filled(['txt_destination', 'txt_country'])){
 
             $destinations = TDestino::FindOrFail($id);
-            $destinations->nombre = $destination;
-            $destinations->pais = $country;
-            $destinations->resumen = $short;
-            $destinations->descripcion = $extended;
-            $destinations->historia = $history;
-            $destinations->geografia = $geography;
+            $destinations->nombre = $request->input('txt_destination');
+            $destinations->region = $request->input('txt_region');
+            $destinations->pais = $request->input('txt_country');
+            $destinations->url = $request->input('url');
+            $destinations->resumen = $request->input('txta_short');
+            $destinations->descripcion = $request->input('txta_extended');
+            $destinations->historia = $request->input('txta_history');
+            $destinations->geografia = $request->input('txta_geography');
             $destinations->estado = '1';
             $destinations->save();
 

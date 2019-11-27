@@ -83,6 +83,7 @@ class HomeController extends Controller
 
     public function create(Request $request)
     {
+        $host = $_SERVER["HTTP_HOST"];
         $request->user()->authorizeRoles(['user', 'admin']);
 
 //        $paquete = TPaquete::where('id', $id)->get();
@@ -93,7 +94,7 @@ class HomeController extends Controller
         $destinations = TDestino::all();
         $incluye = TIncluye::all();
         $noincluye = TNoIncluye::all();
-        return view('admin.package-create', ['itinerario'=>$itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
+        return view('admin.package-create', compact('host'),['itinerario'=>$itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
     }
     public function store(Request $request)
     {
@@ -119,6 +120,7 @@ class HomeController extends Controller
 //            $package->codigo_f = $request->input('codigo_f');
         $package->titulo = $request->input('titulo');
         $package->duracion = $request->input('duracion');
+        $package->url = $request->input('url');
         $package->descripcion = $request->input('descripcion');
         $package->incluye = $request->input('txta_included');
         $package->noincluye = $request->input('txta_not_included');
@@ -266,6 +268,8 @@ class HomeController extends Controller
 
     public function edit(Request $request, $id)
     {
+        $host = $_SERVER["HTTP_HOST"];
+
         $request->user()->authorizeRoles(['user', 'admin']);
 
         $paquete = TPaquete::with('imagen_paquetes')->where('id', $id)->get();
@@ -293,7 +297,7 @@ class HomeController extends Controller
         $precio_paquetes_4 = TPrecioPaquete::where('idpaquetes', $id)->where('estrellas', 4)->get();
         $precio_paquetes_5 = TPrecioPaquete::where('idpaquetes', $id)->where('estrellas', 5)->get();
 
-        return view('admin.package-edit', compact('id','paquete','precio_paquetes_2', 'precio_paquetes_3','precio_paquetes_4','precio_paquetes_5','paquete_dificultad','paquete_category','paquete_destino','paquete_incluye','paquete_no_incluye'), ['paquete_itinerario'=>$paquete_itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
+        return view('admin.package-edit', compact('id','paquete','precio_paquetes_2', 'precio_paquetes_3','precio_paquetes_4','precio_paquetes_5','paquete_dificultad','paquete_category','paquete_destino','paquete_incluye','paquete_no_incluye','host'), ['paquete_itinerario'=>$paquete_itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
     }
     public function update(Request $request, $id)
     {
@@ -314,6 +318,7 @@ class HomeController extends Controller
 //        $package->codigo_f = $request->input('codigo_f');
         $package->titulo = $request->input('titulo');
         $package->duracion = $request->input('duracion');
+        $package->url = $request->input('url');
         $package->descripcion = $request->input('descripcion');
         $package->incluye = $request->input('txta_included');
         $package->noincluye = $request->input('txta_not_included');
@@ -343,33 +348,45 @@ class HomeController extends Controller
                 }
             }
 
-            TPaqueteDificultad::where('idpaquetes', $id)->delete();
-            for($i=0; $i < count($request->input('level')); $i++){
+            if ($request->input('level')){
+                TPaqueteDificultad::where('idpaquetes', $id)->delete();
+                for($i=0; $i < count($request->input('level')); $i++){
 
-                $package_level = new TPaqueteDificultad();
-                $package_level->idpaquetes = $id;
-                $package_level->iddificultad = $request->input('level')[$i];
-                $package_level->save();
+                    $package_level = new TPaqueteDificultad();
+                    $package_level->idpaquetes = $id;
+                    $package_level->iddificultad = $request->input('level')[$i];
+                    $package_level->save();
 
+                }
+            }else{
+                TPaqueteDificultad::where('idpaquetes', $id)->delete();
             }
 
-            TPaqueteCategoria::where('idpaquetes', $id)->delete();
-            for($i=0; $i < count($request->input('category')); $i++){
-                $package_category = new TPaqueteCategoria();
-                $package_category->idpaquetes = $id;
-                $package_category->idcategoria = $request->input('category')[$i];
-                $package_category->save();
+            if ($request->input('category')){
+                TPaqueteCategoria::where('idpaquetes', $id)->delete();
+                for($i=0; $i < count($request->input('category')); $i++){
+                    $package_category = new TPaqueteCategoria();
+                    $package_category->idpaquetes = $id;
+                    $package_category->idcategoria = $request->input('category')[$i];
+                    $package_category->save();
 
+                }
+            }else{
+                TPaqueteCategoria::where('idpaquetes', $id)->delete();
             }
 
-            TPaqueteDestino::where('idpaquetes', $id)->delete();
-            for($i=0; $i < count($request->input('destino')); $i++){
+            if ($request->input('destino')){
+                TPaqueteDestino::where('idpaquetes', $id)->delete();
+                for($i=0; $i < count($request->input('destino')); $i++){
 
-                $package_destinations = new TPaqueteDestino();
-                $package_destinations->idpaquetes = $id;
-                $package_destinations->iddestinos = $request->input('destino')[$i];
-                $package_destinations->save();
+                    $package_destinations = new TPaqueteDestino();
+                    $package_destinations->idpaquetes = $id;
+                    $package_destinations->iddestinos = $request->input('destino')[$i];
+                    $package_destinations->save();
 
+                }
+            }else{
+                TPaqueteDestino::where('idpaquetes', $id)->delete();
             }
 
 //            TPaqueteIncluye::where('idpaquetes', $id)->delete();

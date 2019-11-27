@@ -201,6 +201,18 @@
 
                                     <div class="row">
                                         <div class="col">
+                                            <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon3">https://{{$host}}/paquetes/</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3" value="{{$paquetes->url}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
                                             <div class="form-group">
                                                 <textarea id="textarea-package" class="textarea-package" name="descripcion">{{$paquetes->descripcion}}</textarea>
                                             </div>

@@ -152,8 +152,25 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
+                                <label class="font-weight-bold text-secondary small" for="txt_region">Region</label>
+                                <input type="text" name="txt_region" class="form-control font-weight-bold" id="txt_region" placeholder="" value="{{$destination->region}}">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
                                 <label class="font-weight-bold text-secondary small" for="txt_country">Country</label>
                                 <input type="text" name="txt_country" class="form-control font-weight-bold" id="txt_country" value="{{$destination->pais}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3">https://{{$host}}/destinos/</span>
+                                </div>
+                                <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3" value="{{$destination->url}}">
                             </div>
                         </div>
                     </div>

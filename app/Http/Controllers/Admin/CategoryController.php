@@ -11,20 +11,19 @@ class CategoryController extends Controller
 {
     public function index()
     {
+        $host = $_SERVER["HTTP_HOST"];
         $category = TCategoria::paginate(10);
-        return view('admin.category', compact('category'));
+        return view('admin.category', compact('category','host'));
     }
 
     public function store(Request $request)
     {
-        $category = $_POST["txt_category"];
-        $descripcion = $_POST["txta_descripcion"];
-
         if ($request->filled(['txt_category'])){
 
             $category2 = new TCategoria();
-            $category2->nombre = $category;
-            $category2->descripcion = $descripcion;
+            $category2->nombre = $request->input('txt_category');
+            $category2->url = $request->input('url');
+            $category2->descripcion = $request->input('txta_descripcion');;
             $category2->save();
 
             return redirect(route('admin_category_index_path'))->with('status', 'Category created successfully');
@@ -36,8 +35,9 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
+        $host = $_SERVER["HTTP_HOST"];
         $categoria = TCategoria::where('id', $id)->get();
-        return view('admin.category-edit', compact('categoria'));
+        return view('admin.category-edit', compact('categoria', 'host'));
     }
 
     public function update(Request $request, $id)
@@ -47,6 +47,7 @@ class CategoryController extends Controller
 
             $category2 = TCategoria::FindOrFail($id);
             $category2->nombre = $request->input('txt_category');
+            $category2->url = $request->input('url');
             $category2->descripcion = $request->input('txta_descripcion');
             if ($request->has('chk_order')){
                 $category2->estado = $request->input('chk_order');

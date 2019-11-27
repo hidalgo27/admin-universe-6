@@ -115,6 +115,15 @@
                                     <label>Category</label>
                                     <input type="text" class="form-control" name="txt_category" required>
                                 </div>
+
+                                <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon3">https://{{$host}}/categoria/</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3">
+                                </div>
+
                                 <div class="form-group">
                                     <label>Description</label>
                                     <textarea name="txta_descripcion" class="form-control"></textarea>
