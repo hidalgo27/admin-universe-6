@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\TPaquete;
 use App\TVideoTestimonio;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
@@ -15,7 +17,7 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $video = TVideoTestimonio::all();
+        $video = TVideoTestimonio::paginate(10);
         return view('admin.video', compact('video'));
     }
 
@@ -125,10 +127,21 @@ class VideoController extends Controller
     }
     public function image_store(Request $request)
     {
-        $image = $request->file('file');
+//        $image = $request->file('file');
         $id_video = $request->input('id_video_file');
-        $imageName = $image->getClientOriginalName();
-        $image->move(public_path('images/video-testimonio/'), $imageName);
+//        $imageName = $image->getClientOriginalName();
+//        $image->move(public_path('images/video-testimonio/'), $imageName);
+
+
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+
+        Storage::disk('s3')->put('video-testimonio/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('video-testimonio/'.$filenametostore);
+
+
 
         $imageUpload = TVideoTestimonio::FindOrFail($id_video);
         $imageUpload->imagen = $imageName;
@@ -138,18 +151,19 @@ class VideoController extends Controller
 
     public function image_delete(Request $request)
     {
-        $filename = $request->get('filename');
-        $id_video = TVideoTestimonio::where('imagen', $filename)->first();
 
-        $video = TVideoTestimonio::FindOrFail($id_video->id);
-        $video->imagen = NULL;
-        $video->save();
+//        $filename = $request->get('filename');
+//        $id_video = TVideoTestimonio::where('imagen', $filename)->first();
 
-        $path = public_path() . '/images/video-testimonio/' . $filename;
-        if (file_exists($path)) {
-            unlink($path);
-        }
-        return $filename;
+        $id_video = $request->get('id_video_file');
+
+        $video = TVideoTestimonio::FindOrFail($id_video);
+
+        $filename = explode('video-testimonio/', $video->imagen);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('video-testimonio/'.$filename);
+
+        TVideoTestimonio::where('id', $id_video)->update(['imagen' => NULL]);
     }
 
     public function image_delete_form(Request $request)
@@ -158,12 +172,12 @@ class VideoController extends Controller
 
         $video = TVideoTestimonio::FindOrFail($id_video);
 
-        $path = public_path() . '/images/video-testimonio/' . $video->imagen;
-        if (file_exists($path) and $video->imagen <> NULL) {
-            unlink($path);
-        }
-        $video->imagen = NULL;
-        $video->save();
+        $filename = explode('video-testimonio/', $video->imagen);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('video-testimonio/'.$filename);
+
+        TVideoTestimonio::where('id', $id_video)->update(['imagen' => NULL]);
+
 
         return redirect(route('admin_video_edit_path', $id_video))->with('status', 'Successfully updated video');
     }

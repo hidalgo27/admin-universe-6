@@ -71,7 +71,7 @@
     @if ($videos->imagen)
         <div class="row my-5 justify-content-center">
             <div class="col-6 text-center">
-                <img src="{{asset('images/video-testimonio/'.$videos->imagen.'')}}" alt="" class="img-thumbnail w-100 mb-2">
+                <img src="{{$videos->imagen}}" alt="" class="img-thumbnail w-100 mb-2">
                 <form action="{{route('admin_video_image_delete_form_path')}}" method="post">
                     {{--@method('DELETE')--}}
                     @csrf
@@ -128,6 +128,7 @@
                 timeout: 50000,
                 removedfile: function(file){
                     var name = file.upload.filename;
+                    var dataString = $('#dropzone3').serialize();
 
                     $.ajax({
                         headers: {
@@ -135,7 +136,7 @@
                         },
                         type: 'POST',
                         url: "{{ route('admin_video_image_delete_path') }}",
-                        data: {filename: name},
+                        data: dataString,
                         success: function (data) {
                             console.log("File has been successfully removed!!");
                         },

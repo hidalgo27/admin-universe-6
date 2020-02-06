@@ -114,30 +114,30 @@
             <table class="table table-striped table-hover small table-sm font-weight-bold text-secondary">
                 <thead>
                 <tr>
-                    <th>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-                    </th>
-                    <th>Category</th>
+{{--                    <th>--}}
+{{--							<span class="custom-checkbox">--}}
+{{--								<input type="checkbox" id="selectAll">--}}
+{{--								<label for="selectAll"></label>--}}
+{{--							</span>--}}
+{{--                    </th>--}}
+                    <th>Videos</th>
                     {{--<th>Address</th>--}}
-                    <th class="text-center">Actions</th>
+                    <th class="text-right">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($video as $videos)
                     <tr>
-                        <td>
-                            <span class="custom-checkbox">
-                                <input type="checkbox" id="checkbox1" name="options[]" value="1" >
-                                <label for="checkbox1"></label>
-                            </span>
-                        </td>
-                        <td><a href="{{route('admin_video_edit_path', $videos->id)}}"><img src="{{asset('images/video-testimonio/'.$videos->imagen.'')}}" alt="" width="100" class="mr-4">{{$videos->titulo}}</a></td>
+{{--                        <td>--}}
+{{--                            <span class="custom-checkbox">--}}
+{{--                                <input type="checkbox" id="checkbox1" name="options[]" value="1" >--}}
+{{--                                <label for="checkbox1"></label>--}}
+{{--                            </span>--}}
+{{--                        </td>--}}
+                        <td><a href="{{route('admin_video_edit_path', $videos->id)}}"><img src="{{$videos->imagen}}" alt="" width="100" class="mr-4">{{$videos->titulo}}</a></td>
                         {{--<td>{{$videos->estado}}</td>--}}
                         {{--<td>(171) 555-2222</td>--}}
-                        <td class="text-center">
+                        <td class="text-right">
                             <a href="{{route('admin_video_edit_path', $videos->id)}}" class="edit"><span data-feather="edit"></span></a>
                             <a href="#delete_video_{{$videos->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
                         </td>
@@ -171,17 +171,21 @@
                 @endforeach
                 </tbody>
             </table>
-            <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    {{ $video->links() }}
+                </div>
+
+                {{--                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>--}}
+                {{--                <ul class="pagination">--}}
+                {{--                    <li class="page-item disabled"><a href="#">Previous</a></li>--}}
+                {{--                    <li class="page-item"><a href="#" class="page-link">1</a></li>--}}
+                {{--                    <li class="page-item"><a href="#" class="page-link">2</a></li>--}}
+                {{--                    <li class="page-item active"><a href="#" class="page-link">3</a></li>--}}
+                {{--                    <li class="page-item"><a href="#" class="page-link">4</a></li>--}}
+                {{--                    <li class="page-item"><a href="#" class="page-link">5</a></li>--}}
+                {{--                    <li class="page-item"><a href="#" class="page-link">Next</a></li>--}}
+                {{--                </ul>--}}
             </div>
         </div>
     </div>
