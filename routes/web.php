@@ -300,7 +300,6 @@ Route::delete('admin/difficulty/edit/{id}', [
     'as' => 'admin_difficulty_delete_path',
 ]);
 //video
-
 Route::get('admin/video', [
     'uses' => 'Admin\VideoController@index',
     'as' => 'admin_video_index_path',
@@ -366,4 +365,46 @@ Route::delete('admin/inquire/delete/{id}', [
 Route::get('admin/testimonial', [
     'uses' => 'Admin\TestimonialController@index',
     'as' => 'admin_testimonial_index_path',
+]);
+
+//hoteles
+Route::get('admin/hotel', [
+    'uses' => 'Admin\HotelController@index',
+    'as' => 'admin_hotel_index_path',
+]);
+Route::get('admin/hotel/create', [
+    'uses' => 'Admin\HotelController@create',
+    'as' => 'admin_hotel_create_path',
+]);
+Route::post('admin/hotel/store', [
+    'uses' => 'Admin\HotelController@store',
+    'as' => 'admin_hotel_store_path',
+]);
+Route::get('admin/hotel/edit/{id}', [
+    'uses' => 'Admin\HotelController@edit',
+    'as' => 'admin_hotel_edit_path',
+]);
+Route::post('admin/hotel/update/{id}', [
+    'uses' => 'Admin\HotelController@update',
+    'as' => 'admin_hotel_update_path',
+]);
+Route::delete('admin/hotel/edit/{id}', [
+    'uses' => 'Admin\HotelController@destroy',
+    'as' => 'admin_hotel_delete_path',
+]);
+Route::post('admin/hotel/image/image_store', [
+    'uses' => 'Admin\HotelController@image_store',
+    'as' => 'admin_hotel_image_store_path',
+]);
+Route::post('admin/hotel/image/hotel/image_delete', [
+    'uses' => 'Admin\HotelController@image_delete_hotel',
+    'as' => 'admin_hotel_image_delete_path',
+]);
+Route::post('admin/hotel/image/image_delete_form', [
+    'uses' => 'Admin\HotelController@image_delete_form',
+    'as' => 'admin_hotel_image_delete_form_path',
+]);
+Route::get('admin/hotel/image/image_list', [
+    'uses' => 'Admin\HotelController@image_list',
+    'as' => 'admin_hotel_list_path',
 ]);

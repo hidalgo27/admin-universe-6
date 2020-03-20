@@ -198,7 +198,26 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold text-secondary small" for="highest">Highest Altitude</label>
+                                                <input type="text" name="highest" class="form-control font-weight-bold {{ $errors->has('highest') ? 'is-invalid' : '' }}" id="highest" value="{{$paquetes->altitud}}">
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('highest') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold text-secondary small" for="group_size">Group Size</label>
+                                                <input type="text" name="group_size" class="form-control font-weight-bold {{ $errors->has('group_size') ? 'is-invalid' : '' }}" id="group_size" value="{{$paquetes->group_size}}">
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('group_size') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col">
                                             <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
@@ -210,6 +229,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+
 
                                     <div class="row">
                                         <div class="col">
