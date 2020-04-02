@@ -44,7 +44,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin_itinerary_index_path')}}">
                     <span data-feather="layers"></span>
-                    Itinerary
+                    Day By Day
                 </a>
             </li>
 {{--            <li class="nav-item">--}}
