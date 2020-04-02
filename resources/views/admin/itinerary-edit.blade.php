@@ -121,13 +121,28 @@
     <div class="col-9">
         <form action="{{route('admin_itinerary_update_path', $itinerario->id)}}" method="post">
             @csrf
+
             <div class="row">
-                {{--            <div class="col-2">--}}
-                {{--                <div class="form-group">--}}
-                {{--                    <label class="font-weight-bold text-secondary small" for="txt_codigo">Code</label>--}}
-                {{--                    <input type="text" name="txt_codigo" class="form-control font-weight-bold" id="txt_codigo" placeholder="" value="{{$itinerario->codigo}}">--}}
-                {{--                </div>--}}
-                {{--            </div>--}}
+                <div class="col">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label class="font-weight-bold text-secondary small" for="codigo">Code</label>
+                        <input type="text" name="codigo" class="form-control font-weight-bold" id="codigo" placeholder="" value="{{$itinerario->codigo}}">
+                    </div>
+                </div>
                 <div class="col">
                     <div class="form-group">
                         <label class="font-weight-bold text-secondary small" for="txt_title">Title Package</label>

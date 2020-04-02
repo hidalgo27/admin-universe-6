@@ -9,6 +9,7 @@ use Faker\Provider\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ItineraryController extends Controller
 {
@@ -21,7 +22,11 @@ class ItineraryController extends Controller
 
     public function store(Request $request)
     {
-//        $codigo = $_POST["txt_codigo"];
+        $validatedData = $request->validate([
+            'codigo' => 'required|unique:titinerario',
+        ]);
+
+        $codigo = $_POST["codigo"];
         $title = $_POST["txt_title"];
         $short = $_POST["txta_short"];
         $extended = $_POST["txta_extended"];
@@ -29,7 +34,7 @@ class ItineraryController extends Controller
         if ($request->filled(['txt_title'])){
 
             $itinerary = new TItinerario();
-//            $itinerary->codigo = $codigo;
+            $itinerary->codigo = $codigo;
             $itinerary->titulo = $title;
             $itinerary->resumen = $short;
             $itinerary->descripcion = $extended;
@@ -56,7 +61,20 @@ class ItineraryController extends Controller
 
     public function update(Request $request, $id)
     {
-//        $codigo = $_POST["txt_codigo"];
+//        $validator = Validator::make($request->all(), [
+//            'codigo' => 'unique:titinerario',
+//        ]);
+//        if ($validator->fails()) {
+//            return redirect(route('admin_itinerary_edit_path', $id))
+//                ->withErrors($validator)
+//                ->withInput();
+//        }
+
+        $validatedData = $request->validate([
+            'codigo' => 'required',
+        ]);
+
+        $codigo = $_POST["codigo"];
         $title = $_POST["txt_title"];
         $short = $_POST["txta_short"];
         $extended = $_POST["txta_extended"];
@@ -64,7 +82,7 @@ class ItineraryController extends Controller
         if ($request->filled(['txt_title'])){
 
             $itinerary = TItinerario::FindOrFail($id);
-//            $itinerary->codigo = $codigo;
+            $itinerary->codigo = $codigo;
             $itinerary->titulo = $title;
             $itinerary->resumen = $short;
             $itinerary->descripcion = $extended;
