@@ -13,7 +13,7 @@
             <div class="col">
                 <select class="selectpicker" data-live-search="true" title="choose itinerary of day {{$i}}" data-width="100%" name="itinerary[]">
                     @foreach($itinerario_full as $itinerary_full)
-                            <option value="{{$itinerary_full->id}}-{{$itinerary->id}}">{{ucwords(strtolower($itinerary_full->titulo))}}
+                            <option value="{{$itinerary_full->id}}-{{$itinerary->id}}">{{ucwords($itinerary_full->codigo)}}: {{ucwords(strtolower($itinerary_full->titulo))}}
                     @endforeach
                 </select>
 {{--                <div class="p-2 small shadow-sm mt-2">--}}

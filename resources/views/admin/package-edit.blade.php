@@ -259,7 +259,7 @@
                                                             @else
                                                                 @php $select = ""; @endphp
                                                             @endif
-                                                            <option value="{{$itinerary_full->id}}-{{$paquete_itinerary->id}}" {{$select}}>{{ucwords(strtolower($itinerary_full->titulo))}}
+                                                            <option value="{{$itinerary_full->id}}-{{$paquete_itinerary->id}}" {{$select}}>{{ucwords($itinerary_full->codigo)}}: {{ucwords(strtolower($itinerary_full->titulo))}}
                                                         @endforeach
                                                     </select>
                                                     {{--                                        <div class="p-2 small shadow-sm mt-2">--}}
