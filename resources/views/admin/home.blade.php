@@ -101,12 +101,13 @@
 {{--								<label for="selectAll"></label>--}}
 {{--							</span>--}}
 {{--                    </th>--}}
+                    <th class="text-center"></th>
+                    <th class="text-center">Discount</th>
                     <th>Duration</th>
                     <th>Name</th>
                     {{--<th>Address</th>--}}
-                    <th class="text-center">Homepage?</th>
-                    <th class="text-center">Package?</th>
-                    <th class="text-center">Tours?</th>
+                    <th class="text-center">Packages on homepage?</th>
+                    <th class="text-center">Offers on homepage?</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -118,10 +119,16 @@
                         @php $estado_paquete = "checked"; @endphp
                     @endif
 
-                    @if ($paquetes->is_paquete == 0)
-                        @php $is_paquete = ""; @endphp
+                    @if ($paquetes->offers_home == 0)
+                        @php $offers_home_ckeck = ""; @endphp
                     @else
-                        @php $is_paquete = "checked"; @endphp
+                        @php $offers_home_ckeck = "checked"; @endphp
+                    @endif
+
+                    @if ($paquetes->is_p_t == 0)
+                        @php $is_p_t = ""; @endphp
+                    @else
+                        @php $is_p_t = "checked"; @endphp
                     @endif
 
                     @if ($paquetes->is_tours == 0)
@@ -136,21 +143,55 @@
 {{--                                <label for="checkbox1"></label>--}}
 {{--                            </span>--}}
 {{--                        </td>--}}
+                        <td class="text-center">
+                            <form id="form_is_package_{{$paquetes->id}}">
+                                <input type="checkbox" {{$is_p_t}} value="{{$paquetes->id}}" name="txt_is_package" data-toggle="toggle" data-size="xs" onchange="is_package({{$paquetes->id}})" data-on="Package" data-off="Tours" data-onstyle="success" data-offstyle="g-yellow">
+                            </form>
+                        </td>
+                        <td class="text-center">
+                            @if($paquetes->descuento)
+                                @switch($paquetes->descuento)
+                                    @case(10)
+                                    @php $color_d = 'btn-info' @endphp
+                                    @break
+
+                                    @case(15)
+                                    @php $color_d = 'btn-g-yellow' @endphp
+                                    @break
+
+                                    @case(20)
+                                    @php $color_d = 'btn-success' @endphp
+                                    @break
+
+                                    @case(25)
+                                    @php $color_d = 'btn-danger' @endphp
+                                    @break
+
+                                    @default
+                                    @php $color_d = 'btn-text' @endphp
+                                @endswitch
+                                <button type="button" class="btn font-weight-bold btn-xs {{$color_d}}" data-toggle="modal" data-target="#desc_{{$paquetes->id}}">
+                                    {{$paquetes->descuento}}%
+                                </button>
+                            @else
+                                <button type="button" class="btn btn-xs" data-toggle="modal" data-target="#desc_{{$paquetes->id}}">
+                                    0%
+                                </button>
+                            @endif
+                            {{--                            <form id="form_is_tours_{{$paquetes->id}}">--}}
+                            {{--                                <input type="checkbox" {{$is_tours}} value="{{$paquetes->id}}" name="txt_is_tour" data-toggle="toggle" data-size="xs" onchange="is_tours({{$paquetes->id}})">--}}
+                            {{--                            </form>--}}
+                        </td>
                         <td><span class="font-weight-bold">{{$paquetes->duracion}} day</span></td>
                         <td><a href="{{route('admin_package_edit_path', $paquetes->id)}}">{{$paquetes->titulo}}</a></td>
                         <td class="text-center">
                             <form id="form_estado_{{$paquetes->id}}">
-                                <input type="checkbox" {{$estado_paquete}} value="{{$paquetes->id}}" name="txt_estado" data-toggle="toggle" data-size="xs" onchange="estado_home({{$paquetes->id}})">
+                                <input type="checkbox" {{$estado_paquete}} value="{{$paquetes->id}}" name="txt_estado" data-toggle="toggle" data-size="xs" onchange="estado_home({{$paquetes->id}})" data-on="yes" data-off="no" data-onstyle="success" data-offstyle="danger">
                             </form>
                         </td>
                         <td class="text-center">
-                            <form id="form_is_package_{{$paquetes->id}}">
-                                <input type="checkbox" {{$is_paquete}} value="{{$paquetes->id}}" name="txt_is_package" data-toggle="toggle" data-size="xs" onchange="is_package({{$paquetes->id}})">
-                            </form>
-                        </td>
-                        <td class="text-center">
-                            <form id="form_is_tours_{{$paquetes->id}}">
-                                <input type="checkbox" {{$is_tours}} value="{{$paquetes->id}}" name="txt_is_tour" data-toggle="toggle" data-size="xs" onchange="is_tours({{$paquetes->id}})">
+                            <form id="form_offer_{{$paquetes->id}}">
+                                <input type="checkbox" {{$offers_home_ckeck}} value="{{$paquetes->id}}" name="txt_offer" data-toggle="toggle" data-size="xs" onchange="offer_home({{$paquetes->id}})" data-on="yes" data-off="no" data-onstyle="success" data-offstyle="danger">
                             </form>
                         </td>
                         {{--<td>(171) 555-2222</td>--}}
@@ -160,6 +201,76 @@
                             <a href="{{route('admin_inquire_index_path', $paquetes->id)}}"><span data-feather="code"></span></a>
                         </td>
                     </tr>
+
+                    <div class="modal fade" id="desc_{{$paquetes->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$paquetes->titulo}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{route('descuento_path', [$paquetes->id])}}" method="post">
+                                <div class="modal-body">
+
+                                    @switch($paquetes->descuento)
+                                        @case(10)
+                                        @php $d_check = 'checked' @endphp
+                                        @break
+
+                                        @case(15)
+                                        @php $d_check = 'checked' @endphp
+                                        @break
+
+                                        @case(20)
+                                        @php $d_check = 'checked' @endphp
+                                        @break
+
+                                        @case(25)
+                                        @php $d_check = 'checked' @endphp
+                                        @break
+
+                                        @default
+                                        @php $d_check = '' @endphp
+                                    @endswitch
+
+                                        @csrf
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="hidden" name="id_paquete" value="{{$paquetes->id}}">
+                                            <input class="form-check-input" type="radio" name="descuento_rdo" id="de_10_{{$paquetes->id}}" value="10" @if ($paquetes->descuento == 10 )checked @endif>
+                                            <label class="form-check-label text-info font-weight-bold" for="de_10_{{$paquetes->id}}">
+                                                10%
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="descuento_rdo" id="de_15_{{$paquetes->id}}" value="15" @if ($paquetes->descuento == 15) checked @endif>
+                                            <label class="form-check-label text-g-yellow font-weight-bold" for="de_15_{{$paquetes->id}}">
+                                                15%
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="descuento_rdo" id="de_20_{{$paquetes->id}}" value="20" @if ($paquetes->descuento == 20) checked @endif>
+                                            <label class="form-check-label text-success font-weight-bold" for="de_20_{{$paquetes->id}}">
+                                                20%
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="descuento_rdo" id="de_25_{{$paquetes->id}}" value="25" @if ($paquetes->descuento == 25) checked @endif>
+                                            <label class="form-check-label text-danger font-weight-bold" for="de_25_{{$paquetes->id}}">
+                                                25%
+                                            </label>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="delete_package_{{$paquetes->id}}" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -309,6 +420,24 @@
             $.ajax({
                 type: "POST",
                 url: '{{route('estado_home_path')}}',
+                data: dataString,
+                success: function(data) {
+                    // document.getElementById('precio_persona').innerHTML = data;
+                }
+            });
+        }
+
+        function offer_home($id_paquete) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var dataString = $('#form_offer_'+$id_paquete).serialize()+'&'+$.param({ 'id_paquete': $id_paquete });
+            // alert('Datos serializados: '+dataString);
+            $.ajax({
+                type: "POST",
+                url: '{{route('offer_home_path')}}',
                 data: dataString,
                 success: function(data) {
                     // document.getElementById('precio_persona').innerHTML = data;

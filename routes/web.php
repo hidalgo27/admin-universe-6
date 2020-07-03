@@ -30,6 +30,10 @@ Route::post('admin/estado_home/', [
     'uses' => 'Admin\PackageController@estado_home',
     'as' => 'estado_home_path',
 ]);
+Route::post('admin/offer_home/', [
+    'uses' => 'Admin\PackageController@offer_home',
+    'as' => 'offer_home_path',
+]);
 Route::post('admin/is_package/', [
     'uses' => 'Admin\PackageController@is_package',
     'as' => 'is_package_path',
@@ -37,6 +41,10 @@ Route::post('admin/is_package/', [
 Route::post('admin/is_tours/', [
     'uses' => 'Admin\PackageController@is_tours',
     'as' => 'is_tours_path',
+]);
+Route::post('admin/descuento/', [
+    'uses' => 'Admin\PackageController@descuento',
+    'as' => 'descuento_path',
 ]);
 
 Route::get('admin/package/create', [

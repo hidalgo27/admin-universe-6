@@ -22,15 +22,29 @@ class PackageController extends Controller
         }
 
     }
+    public function offer_home(Request $request){
+        if ( !empty($request->input('txt_offer')) ){
+            $status_homepage = TPaquete::FindOrFail($request->input('id_paquete'));
+            $status_homepage->offers_home = 1;
+            $status_homepage->save();
+            return 1;
+        }else{
+            $status_homepage = TPaquete::FindOrFail($request->input('id_paquete'));
+            $status_homepage->offers_home = 0;
+            $status_homepage->save();
+            return 0;
+        }
+
+    }
     public function is_package(Request $request){
         if ( !empty($request->input('txt_is_package')) ){
             $status_homepage = TPaquete::FindOrFail($request->input('id_is_package'));
-            $status_homepage->is_paquete = 1;
+            $status_homepage->is_p_t = 1;
             $status_homepage->save();
             return 1;
         }else{
             $status_homepage = TPaquete::FindOrFail($request->input('id_is_package'));
-            $status_homepage->is_paquete = 0;
+            $status_homepage->is_p_t = 0;
             $status_homepage->save();
             return 0;
         }
@@ -49,5 +63,13 @@ class PackageController extends Controller
             return 0;
         }
 
+    }
+
+    public function descuento(Request $request){
+        $descuento = TPaquete::FindOrFail($request->input('id_paquete'));
+        $descuento->descuento = $request->input('descuento_rdo');
+        $descuento->save();
+
+        return back()->withInput();
     }
 }
