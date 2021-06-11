@@ -38,6 +38,13 @@ class DestinationsController extends Controller
             $destinations->descripcion = $request->input('txta_extended');
             $destinations->historia = $request->input('txta_history');
             $destinations->geografia = $request->input('txta_geography');
+
+            $destinations->donde_ir = $request->input('txta_get');
+            $destinations->atracciones = $request->input('txta_attractions');
+            $destinations->entretenimiento = $request->input('txta_entertainment');
+            $destinations->gastronomia = $request->input('txta_gastronomy');
+            $destinations->fiestas = $request->input('txta_festivals');
+
             $destinations->estado = '1';
             $destinations->save();
 
@@ -68,6 +75,13 @@ class DestinationsController extends Controller
             $destinations->descripcion = $request->input('txta_extended');
             $destinations->historia = $request->input('txta_history');
             $destinations->geografia = $request->input('txta_geography');
+
+            $destinations->donde_ir = $request->input('txta_get');
+            $destinations->atracciones = $request->input('txta_attractions');
+            $destinations->entretenimiento = $request->input('txta_entertainment');
+            $destinations->gastronomia = $request->input('txta_gastronomy');
+            $destinations->fiestas = $request->input('txta_festivals');
+
             $destinations->estado = '1';
             $destinations->save();
 
