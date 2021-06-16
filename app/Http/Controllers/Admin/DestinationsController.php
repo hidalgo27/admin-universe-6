@@ -95,6 +95,26 @@ class DestinationsController extends Controller
     public function destroy($id)
     {
         $destinations=TDestino::find($id);
+
+        if ($destinations->imagen != NULL) {
+            $filename = explode('destinations/', $destinations->imagen);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('destinations/' . $filename);
+            TDestino::where('id', $id)->update(['imagen' => NULL]);
+        }
+
+        $destino_imagen = TDestinoImagen::where('iddestinos', $id)->get();
+        $destino_imagen_1 = TDestinoImagen::where('iddestinos', $id)->first();
+
+        if ($destino_imagen_1){
+            foreach ($destino_imagen as $destino_aws) {
+                $filename = explode('destinations/slider/', $destino_aws->nombre);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('destinations/slider/'.$filename);
+            }
+        }
+        TDestinoImagen::where('id', $destino_imagen_1->id)->delete();
+
         $destinations->delete();
         return redirect(route('admin_destinations_index_path'))->with('delete', 'Destination successfully removed');
     }

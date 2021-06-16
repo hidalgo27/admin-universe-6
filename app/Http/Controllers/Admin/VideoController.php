@@ -117,10 +117,12 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-        $video=TVideoTestimonio::find($id);
-        $path = public_path() . '/images/video-testimonio/' . $video->imagen;
-        if (file_exists($path) and $video->imagen <> NULL) {
-            unlink($path);
+        $video = TVideoTestimonio::find($id);
+
+        if ($video->imagen != NULL){
+            $filename = explode('video-testimonio/', $video->imagen);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('video-testimonio/' . $filename);
         }
         $video->delete();
         return redirect(route('admin_video_index_path'))->with('delete', 'Itinerary successfully removed');

@@ -98,6 +98,19 @@ class ItineraryController extends Controller
     public function destroy($id)
     {
         $itinerary=TItinerario::find($id);
+
+        $itinerario_imagen = TItinerarioImagen::where('iditinerario', $id)->get();
+        $itinerario_imagen_1 = TItinerarioImagen::where('iditinerario', $id)->first();
+
+        if ($itinerario_imagen_1){
+            foreach ($itinerario_imagen as $itinerario_aws){
+                $filename = explode('itinerary/', $itinerario_aws->nombre);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('itinerary/'.$filename);
+            }
+        }
+        TItinerarioImagen::where('id', $itinerario_imagen_1->id)->delete();
+
         $itinerary->delete();
         return redirect(route('admin_itinerary_index_path'))->with('delete', 'Itinerary successfully removed');
     }

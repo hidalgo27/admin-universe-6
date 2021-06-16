@@ -74,6 +74,20 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category2=TCategoria::find($id);
+
+        if ($category2->imagen != NULL) {
+            $filename = explode('category/', $category2->imagen);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('category/' . $filename);
+            TCategoria::where('id', $id)->update(['imagen' => NULL]);
+        }
+        if ($category2->imagen_banner != NULL) {
+            $filename = explode('category/banner/', $category2->imagen_banner);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('category/banner/'.$filename);
+            TCategoria::where('id', $id)->update(['imagen_banner' => NULL]);
+        }
+
         $category2->delete();
         return redirect(route('admin_category_index_path'))->with('delete', 'Category successfully removed');
     }
