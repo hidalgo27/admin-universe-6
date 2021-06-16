@@ -420,18 +420,22 @@ class HomeController extends Controller
     {
         $packages=TPaquete::find($id);
 
-        $filename = explode('package/', $packages->imagen);
-        $filename = $filename[1];
-        Storage::disk('s3')->delete('package/'.$filename);
-        TPaquete::where('id', $id)->update(['imagen' => NULL]);
+        if ($packages->imagen != NULL){
+            $filename = explode('package/', $packages->imagen);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('package/'.$filename);
+            TPaquete::where('id', $id)->update(['imagen' => NULL]);
+        }
 
         $tpaquete_imagen = TPaqueteImagen::where('idpaquetes', $id)->get();
         $tpaquete_imagen_1 = TPaqueteImagen::where('idpaquetes', $id)->first();
 
-        foreach ($tpaquete_imagen as $paquete_aws){
-            $filename = explode('package/slider/', $paquete_aws->nombre);
-            $filename = $filename[1];
-            Storage::disk('s3')->delete('package/slider/'.$filename);
+        if ($tpaquete_imagen_1){
+            foreach ($tpaquete_imagen as $paquete_aws){
+                $filename = explode('package/slider/', $paquete_aws->nombre);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('package/slider/'.$filename);
+            }
         }
 
         TPaqueteImagen::where('id', $tpaquete_imagen_1->id)->delete();
