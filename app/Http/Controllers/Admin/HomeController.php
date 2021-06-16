@@ -419,6 +419,23 @@ class HomeController extends Controller
     public function destroy($id)
     {
         $packages=TPaquete::find($id);
+
+        $filename = explode('package/', $packages->imagen);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('package/'.$filename);
+        TPaquete::where('id', $id)->update(['imagen' => NULL]);
+
+        $tpaquete_imagen = TPaqueteImagen::where('idpaquetes', $id)->get();
+
+        foreach ($tpaquete_imagen as $paquete_aws){
+            $filename = explode('package/slider/', $paquete_aws->nombre);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('package/slider/'.$filename);
+        }
+
+        TPaqueteImagen::where('id', $tpaquete_imagen->id)->delete();
+
+
         $packages->delete();
         return redirect('/home')->with('delete', 'Package successfully removed');
     }
