@@ -426,6 +426,7 @@ class HomeController extends Controller
         TPaquete::where('id', $id)->update(['imagen' => NULL]);
 
         $tpaquete_imagen = TPaqueteImagen::where('idpaquetes', $id)->get();
+        $tpaquete_imagen_1 = TPaqueteImagen::where('idpaquetes', $id)->first();
 
         foreach ($tpaquete_imagen as $paquete_aws){
             $filename = explode('package/slider/', $paquete_aws->nombre);
@@ -433,8 +434,7 @@ class HomeController extends Controller
             Storage::disk('s3')->delete('package/slider/'.$filename);
         }
 
-        TPaqueteImagen::where('id', $tpaquete_imagen->id)->delete();
-
+        TPaqueteImagen::where('id', $tpaquete_imagen_1->id)->delete();
 
         $packages->delete();
         return redirect('/home')->with('delete', 'Package successfully removed');
