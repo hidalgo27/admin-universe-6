@@ -438,7 +438,9 @@ class HomeController extends Controller
             }
         }
 
-        TPaqueteImagen::where('id', $tpaquete_imagen_1->id)->delete();
+        if ($tpaquete_imagen_1){
+            TPaqueteImagen::where('id', $tpaquete_imagen_1->id)->delete();
+        }
 
         $packages->delete();
         return redirect('/home')->with('delete', 'Package successfully removed');
