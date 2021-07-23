@@ -369,6 +369,11 @@ Route::delete('admin/inquire/delete/{id}', [
     'uses' => 'Admin\InquireController@destroy',
     'as' => 'admin_inquire_delete_path',
 ]);
+//yourtrip
+Route::get('/yourtrip/itinerary/{id}', [
+    'uses' => 'HomepageController@yourtrip',
+    'as' => 'yourtrip_us_path',
+]);
 //testimonials
 Route::get('admin/testimonial', [
     'uses' => 'Admin\TestimonialController@index',
