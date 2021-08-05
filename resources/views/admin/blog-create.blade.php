@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-9">
+        <div class="col-11 mx-auto">
             <form action="{{route('admin_blog_store_path')}}"  method="post">
                 @csrf
                 <div class="row">
