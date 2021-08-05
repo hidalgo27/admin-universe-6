@@ -421,3 +421,80 @@ Route::get('admin/hotel/image/image_list', [
     'uses' => 'Admin\HotelController@image_list',
     'as' => 'admin_hotel_list_path',
 ]);
+//BLOG
+Route::get('admin/blog', [
+    'uses' => 'Admin\BlogController@index',
+    'as' => 'admin_blog_index_path',
+]);
+Route::get('admin/blog/create', [
+    'uses' => 'Admin\BlogController@create',
+    'as' => 'admin_blog_create_path',
+]);
+Route::post('admin/blog/store', [
+    'uses' => 'Admin\BlogController@store',
+    'as' => 'admin_blog_store_path',
+]);
+Route::get('admin/blog/edit/{id}', [
+    'uses' => 'Admin\BlogController@edit',
+    'as' => 'admin_blog_edit_path',
+]);
+Route::post('admin/blog/update/{id}', [
+    'uses' => 'Admin\BlogController@update',
+    'as' => 'admin_blog_update_path',
+]);
+Route::delete('admin/blog/edit/{id}', [
+    'uses' => 'Admin\BlogController@destroy',
+    'as' => 'admin_blog_delete_path',
+]);
+Route::post('admin/blog/image/image_blog_image_store', [
+    'uses' => 'Admin\BlogController@image_blog_image_store',
+    'as' => 'admin_image_blog_image_store_path',
+]);
+//BLOG categoria
+Route::get('admin/blog/category', [
+    'uses' => 'Admin\BlogCategoryController@index',
+    'as' => 'admin_blog_category_index_path',
+]);
+Route::post('admin/blog/category/store', [
+    'uses' => 'Admin\BlogCategoryController@store',
+    'as' => 'admin_blog_category_store_path',
+]);
+Route::post('admin/blog/category/update/{id}', [
+    'uses' => 'Admin\BlogCategoryController@update',
+    'as' => 'admin_blog_category_update_path',
+]);
+Route::delete('admin/blog/category/edit/{id}', [
+    'uses' => 'Admin\BlogCategoryController@destroy',
+    'as' => 'admin_blog_category_delete_path',
+]);
+//blog image
+Route::post('admin/blog/image/blog_image_store', [
+    'uses' => 'Admin\BlogController@blog_image_store',
+    'as' => 'admin_blog_image_store_path',
+]);
+Route::post('admin/blog/image/blog_image_delete', [
+    'uses' => 'Admin\BlogController@blog_image_delete',
+    'as' => 'admin_blog_image_delete_path',
+]);
+Route::post('admin/blog/image/blog_image_delete_form', [
+    'uses' => 'Admin\BlogController@blog_image_form_delete',
+    'as' => 'admin_blog_image_form_delete_path',
+]);
+//
+Route::post('admin/blog/image/blog_slider_store', [
+    'uses' => 'Admin\BlogController@blog_slider_store',
+    'as' => 'admin_blog_slider_store_path',
+]);
+Route::post('admin/blog/image/blog_slider_delete', [
+    'uses' => 'Admin\BlogController@blog_slider_delete',
+    'as' => 'admin_blog_slider_delete_path',
+]);
+Route::post('admin/blog/image/blog_slider_form_delete', [
+    'uses' => 'Admin\BlogController@blog_slider_form_delete',
+    'as' => 'admin_blog_slider_form_delete_path',
+]);
+//
+Route::post('admin/blog/image/blog_imagen_getFile', [
+    'uses' => 'Admin\BlogController@blog_imagen_getFile',
+    'as' => 'admin_blog_imagen_getFile_path',
+]);

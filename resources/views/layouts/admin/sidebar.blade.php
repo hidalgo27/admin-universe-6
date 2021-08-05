@@ -95,6 +95,20 @@
                     Hoteles
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin_blog_index_path')}}">
+                    <span data-feather="file-text"></span>
+                    Blog
+                </a>
+                <ul class="nav flex-column mb-2 ml-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin_blog_category_index_path')}}">
+                            <span data-feather="tag"></span>
+                            Blog Category
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
