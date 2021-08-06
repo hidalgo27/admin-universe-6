@@ -51,7 +51,25 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-11 mx-auto">
+        <div class="col-3">
+            <div class="col">
+                <p class="font-weight-bold text-secondary small pb-1 mb-2">Post Miniature Image <span class="badge badge-warning">800x900 PX</span></p>
+                <form method="post" action="{{route('admin_blog_imagen_getFile_path')}}" enctype="multipart/form-data"
+                        class="dropzone" id="dropzone_imagen_blog">
+                    <input type="hidden" value="" name="id_blog_file">
+                    @csrf
+                </form>
+            </div>
+            <div class="col">
+                <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Slider Post Images <span class="badge badge-warning">1900x1080 PX</span></p>
+                <form method="post" action="{{route('admin_blog_slider_getFile_path')}}" enctype="multipart/form-data"
+                        class="dropzone" id="dropzone_blog">
+                    <input type="hidden" name="aux" id="imagenes_aux">
+                    @csrf
+                </form>
+            </div>
+        </div>
+        <div class="col-9">
             <form action="{{route('admin_blog_store_path')}}"  method="post">
                 @csrf
                 <div class="row">
@@ -103,6 +121,8 @@
                 <hr>
                 <div class="row mb-3">
                     <div class="col text-center">
+                        <input type="hidden" name="id_blog_file" id="imagen">
+                        <input type="hidden" name="id_blog_file2" id="imagenes">
                         <button type="submit" class="btn btn-primary font-weight-bold">Create Post</button>
                     </div>
                 </div>
@@ -114,14 +134,17 @@
     <script>
         Dropzone.autoDiscover = false;
         jQuery(document).ready(function() {
-
+            const images=[];
+            const images_aux=[];
+            var dataT="";
+            var aux2="";
             $("#dropzone_blog").dropzone({
-
                 maxFilesize: 12,
                 maxFiles: 3,
                 renameFile: function(file) {
                     var dt = new Date();
                     var time = dt.getTime();
+                    dataT=time;
                     return time+file.name;
                 },
                 acceptedFiles: ".jpeg,.jpg,.png,.gif",
@@ -129,26 +152,40 @@
                 timeout: 50000,
                 removedfile: function(file){
                     var name = file.name;
-                    var dataString = $('#dropzone_blog').serialize()+'&'+$.param({ 'name_file': name });
+                    var dataString = $('#imagenes_aux').serialize()+'&'+$.param({ 'name_file': name });
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                         },
                         type: 'POST',
-                        url: "{{ route('admin_blog_slider_delete_path') }}",
+                        url: "{{ route('admin_blog_slider_deleteFile_path') }}",
                         data: dataString,
                         success: function (data) {
+                            aux2=data;
                             console.log("File has been successfully removed!!");
                         },
                         error: function (e) {
                             console.log(e);
                         }
                     });
+                    var index_name_aux = images_aux.indexOf(aux2);
+                    images_aux.splice(index_name_aux, 1);
+                    var aux_name=aux2.split(" ");
+                    var index_name = images.indexOf(aux_name[0]);
+                    images.splice(index_name, 1);
+                    document.getElementById("imagenes").value=images;
+                    document.getElementById("imagenes_aux").value = images_aux;
                     var fileRef;
                     return (fileRef = file.previewElement) != null ?
                         fileRef.parentNode.removeChild(file.previewElement) : void 0;
                 },
-
+                success: function(file, response){
+                    images_aux.push(response+" "+dataT);
+                    var img=response.split(" ");
+                    images.push(img[0]);
+                    document.getElementById("imagenes").value = images;
+                    document.getElementById("imagenes_aux").value = images_aux;
+                },
                 // success: function (file, response) {
                 //     console.log(response);
                 // },
@@ -171,14 +208,14 @@
                 timeout: 50000,
                 removedfile: function(file){
                     // var name = file.name;
-                    var dataString = $('#dropzone_imagen_blog').serialize();
+                    var dataString = $('#imagen').serialize();
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                         },
                         type: 'POST',
-                        url: "{{ route('admin_blog_image_delete_path') }}",
-                        data: dataString,
+                        url: "{{ route('admin_blog_imagen_deleteFile_path') }}",
+                        data:dataString,
                         success: function (data) {
                             console.log("File has been successfully removed!!");
                         },
@@ -187,10 +224,13 @@
                         }
                     });
                     var fileRef;
+                    document.getElementById("imagen").value = null;
                     return (fileRef = file.previewElement) != null ?
                         fileRef.parentNode.removeChild(file.previewElement) : void 0;
                 },
-
+                success: function(file, response){
+                    document.getElementById("imagen").value = response;
+                }
                 // success: function (file, response) {
                 //     console.log(response);
                 // },
@@ -199,8 +239,7 @@
                 // },
 
             });
-            
-                     
+                   
         });
     </script>
 

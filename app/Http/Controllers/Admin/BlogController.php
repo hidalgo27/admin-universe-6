@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\URL;
 
 class BlogController extends Controller
 {
-    protected $imagen;
     public function index()
     {
         $posts=TBlog_post::paginate(10);
@@ -35,7 +34,20 @@ class BlogController extends Controller
             $post->url = $request->input('url');
             $post->detalle = $request->input('txta_short');
             $post->user_id= Auth::user()->id;
+            $post->imagen_miniatura=$request->input('id_blog_file');
             $post->save();
+            $post_recover=TBlog_post::latest()->first();
+            $imagenes=$request->input('id_blog_file2');
+            if($imagenes!=null){
+                $porciones = explode(",", $imagenes);
+                foreach($porciones as $key) {
+                    $imageUpload = new TBlog_imagen();
+                    $imageUpload->nombre = $key;
+                    $imageUpload->post_id = $post_recover->id;
+                    $imageUpload->miniatura=0;
+                    $imageUpload->save();
+                }
+            }
             return redirect(route('admin_blog_index_path'))->with('status', 'Post created successfully');
         }else{
             return "false";
@@ -70,6 +82,24 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $post=TBlog_post::find($id);
+
+        if ($post->imagen_miniatura != NULL) {
+            $filename = explode('blog/', $post->imagen_miniatura);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('blog/' . $filename);
+        }
+
+        $post_imagen = TBlog_imagen::where('post_id', $id)->get();
+
+        if ($post_imagen){
+            foreach ($post_imagen as $imagen) {
+                $filename = explode('blog/slider/', $imagen->nombre);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('blog/slider/'.$filename);
+                $imagen->delete();
+            }
+        }
+
         $post->delete();
         return redirect(route('admin_blog_index_path'))->with('delete', 'Post successfully removed');
     }
@@ -186,5 +216,56 @@ class BlogController extends Controller
         return redirect(route('admin_blog_edit_path', $id_blog))->with('delete', 'Image successfully removed');
 
 
+    }
+    public function blog_imagen_getFile(Request $request){
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        
+        Storage::disk('s3')->put('blog/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('blog/'.$filenametostore);
+        return $imageName;
+    }
+    public function blog_imagen_deleteFile(Request $request){
+        $id_blog_file = $request->get('id_blog_file');
+
+        $filename = explode('blog/', $id_blog_file);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('blog/'.$filename);
+
+        return $filename;
+    }
+    public function blog_slider_getFile(Request $request){
+        $t=time();
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.$t.'.'.$extension;
+        
+        Storage::disk('s3')->put('blog/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('blog/slider/'.$filenametostore);
+        return $imageName." ".$t;
+    }
+    public function blog_slider_deleteFile(Request $request){
+        $imagenes = $request->get('aux');
+        $file_name = $request->get('name_file');
+        $filename2=explode(".",$file_name);
+        $name="";
+        $porciones = explode(",", $imagenes);
+        foreach($porciones as $key) {
+            $part = explode(" ", $key);
+            $part2= explode($part[2], $part[0]);
+            $part3=explode($part[1],$part2[1]);
+            error_log($part3[0]);
+            error_log($filename2[0].'_');
+            if($part3[0]==($filename2[0].'_')){
+                $name=$key;
+            }
+        }
+        $filename = explode('blog/slider/', $name);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('blog/slider/'.$filename);
+        return $name;
     }
 }

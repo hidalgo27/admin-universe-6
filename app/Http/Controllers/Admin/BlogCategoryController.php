@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TBlog_categoria;
+use App\TBlog_post;
 use Illuminate\Support\Facades\URL;
 class BlogCategoryController extends Controller
 {
@@ -45,7 +46,12 @@ class BlogCategoryController extends Controller
     public function destroy($id)
     {
         $cat=TBlog_categoria::find($id);
-        $cat->delete();
-        return redirect(route('admin_blog_category_index_path'))->with('delete', 'Category successfully removed');
+        $post=TBlog_post::where('categoria_id', $id)->count();
+        if($post==0){
+            $cat->delete();
+            return redirect(route('admin_blog_category_index_path'))->with('delete', 'Category successfully removed');
+        }else{
+            return redirect(route('admin_blog_category_index_path'))->with('delete2', 'It cannot be deleted because there are posts that belong to that category');
+        }
     }
 }

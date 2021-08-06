@@ -498,3 +498,15 @@ Route::post('admin/blog/image/blog_imagen_getFile', [
     'uses' => 'Admin\BlogController@blog_imagen_getFile',
     'as' => 'admin_blog_imagen_getFile_path',
 ]);
+Route::post('admin/blog/image/blog_imagen_deleteFile', [
+    'uses' => 'Admin\BlogController@blog_imagen_deleteFile',
+    'as' => 'admin_blog_imagen_deleteFile_path',
+]);
+Route::post('admin/blog/image/blog_slider_getFile', [
+    'uses' => 'Admin\BlogController@blog_slider_getFile',
+    'as' => 'admin_blog_slider_getFile_path',
+]);
+Route::post('admin/blog/image/blog_slider_deleteFile', [
+    'uses' => 'Admin\BlogController@blog_slider_deleteFile',
+    'as' => 'admin_blog_slider_deleteFile_path',
+]);

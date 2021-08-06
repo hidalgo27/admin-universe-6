@@ -42,17 +42,22 @@
         </div>
         @if (session('status'))
             <div class="alert alert-success m-2" role="alert">
-                Category created successfully
+                {{session('status')}}
             </div>
         @endif
         @if (session('status2'))
             <div class="alert alert-success m-2" role="alert">
-                Category updated successfully
+                {{session('status2')}}
             </div>
         @endif
         @if (session('delete'))
             <div class="alert alert-success m-2" role="alert">
-                Category successfully removed
+                {{session('delete')}}
+            </div>
+        @endif
+        @if (session('delete2'))
+            <div class="alert alert-danger m-2" role="alert">
+                {{session('delete2')}}
             </div>
         @endif
         <table class="table table-striped table-hover small table-sm font-weight-bold text-secondary">
