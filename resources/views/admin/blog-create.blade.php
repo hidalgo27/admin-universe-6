@@ -162,19 +162,17 @@
                         data: dataString,
                         success: function (data) {
                             aux2=data;
+                            var index_name_aux = images_aux.indexOf(aux2);
+                            images_aux.splice(index_name_aux, 1);
+                            images.splice(index_name_aux, 1);
+                            document.getElementById("imagenes").value=images;
+                            document.getElementById("imagenes_aux").value = images_aux;
                             console.log("File has been successfully removed!!");
                         },
                         error: function (e) {
                             console.log(e);
                         }
                     });
-                    var index_name_aux = images_aux.indexOf(aux2);
-                    images_aux.splice(index_name_aux, 1);
-                    var aux_name=aux2.split(" ");
-                    var index_name = images.indexOf(aux_name[0]);
-                    images.splice(index_name, 1);
-                    document.getElementById("imagenes").value=images;
-                    document.getElementById("imagenes_aux").value = images_aux;
                     var fileRef;
                     return (fileRef = file.previewElement) != null ?
                         fileRef.parentNode.removeChild(file.previewElement) : void 0;
