@@ -89,6 +89,7 @@ Route::post('admin/package/image/image_delete', [
     'as' => 'admin_image_delete_path',
 ]);
 
+
 Route::post('admin/package/image/image_store_slider', [
     'uses' => 'Admin\HomeController@image_store_slider',
     'as' => 'admin_image_slider_store_path',
@@ -526,6 +527,27 @@ Route::post('admin/package/image/package_slider_getFile', [
 Route::post('admin/package/image/package_slider_deleteFile', [
     'uses' => 'Admin\HomeController@package_slider_deleteFile',
     'as' => 'admin_package_slider_deleteFile_path',
+]);
+Route::post('admin/package/image/package_map_getFile', [
+    'uses' => 'Admin\HomeController@package_map_getFile',
+    'as' => 'admin_package_map_getFile_path',
+]);
+Route::post('admin/package/image/package_map_deleteFile', [
+    'uses' => 'Admin\HomeController@package_map_deleteFile',
+    'as' => 'admin_package_map_deleteFile_path',
+]);
+//package map update
+Route::post('admin/package/image/map_store', [
+    'uses' => 'Admin\HomeController@map_store',
+    'as' => 'admin_map_store_path',
+]);
+Route::post('admin/package/image/map_delete', [
+    'uses' => 'Admin\HomeController@map_delete',
+    'as' => 'admin_map_delete_path',
+]);
+Route::post('admin/package/image/delete_map_package_form', [
+    'uses' => 'Admin\HomeController@delete_map_package_form',
+    'as' => 'admin_delete_map_package_form_path',
 ]);
 //itinerary imagenes crear
 Route::post('admin/itinerary/image/itinerary_slider_getFile', [

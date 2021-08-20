@@ -38,6 +38,14 @@
                     @csrf
                 </form>
             </div>
+            <div class="col">
+                <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Package Map <span class="badge badge-warning">420x420 PX</span></p>
+                <form method="post" action="{{route('admin_package_map_getFile_path')}}" enctype="multipart/form-data"
+                        class="dropzone" id="dropzone3">
+                        <input type="hidden" value="" name="id_file_map">
+                    @csrf
+                </form>
+            </div>
         </div>
         <div class="col-9">
 
@@ -490,6 +498,7 @@
             {{--<a href="" class="btn btn-primary font-weight-bold">Update Package</a>--}}
             <input type="hidden" name="id_blog_file" id="imagen">
             <input type="hidden" name="id_blog_file2" id="imagenes">
+            <input type="hidden" name="id_file_map" id="map">
             <button type="submit" class="btn btn-primary font-weight-bold">Update Package</button>
         </div>
     </div>
@@ -607,6 +616,52 @@
                 // },
 
             });
+            $("#dropzone3").dropzone({
+
+                maxFilesize: 12,
+                maxFiles: 1,
+                // renameFile: function(file) {
+                //     var dt = new Date();
+                //     var time = dt.getTime();
+                //     return time+file.name;
+                // },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 50000,
+                removedfile: function(file){
+                    var name = file.name;
+                    // alert(name);
+                    var dataString = $('#map').serialize();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_package_map_deleteFile_path') }}",
+                        data: dataString,
+                        success: function (data) {
+                            console.log("File has been successfully removed!!");
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    return (fileRef = file.previewElement) != null ?
+                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
+                },
+                success: function(file, response){
+                    console.log(response);
+                    document.getElementById("map").value = response;
+                }
+                // success: function (file, response) {
+                //     console.log(response);
+                // },
+                // error: function (file, response) {
+                //     return false;
+                // },
+
+                });
         });
     </script>
     <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=4im5y0hsu2i10v7je2aecag5d41lh7hc0oh1mpj0lgv8pmgj "></script>
