@@ -257,14 +257,13 @@ class BlogController extends Controller
             $part = explode(" ", $key);
             $part2= explode($part[2], $part[0]);
             $part3=explode($part[1],$part2[1]);
-            error_log($part3[0]);
-            error_log($filename2[0].'_');
             if($part3[0]==($filename2[0].'_')){
                 $name=$key;
             }
         }
         $filename = explode('blog/slider/', $name);
-        $filename = $filename[1];
+        $filename = explode(' ', $filename[1]);
+        $filename = $filename[0];
         Storage::disk('s3')->delete('blog/slider/'.$filename);
         return $name;
     }

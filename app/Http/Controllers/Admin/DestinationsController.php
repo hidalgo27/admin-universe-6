@@ -34,6 +34,7 @@ class DestinationsController extends Controller
             $destinations->region = $request->input('txt_region');
             $destinations->pais = $request->input('txt_country');
             $destinations->url = $request->input('url');
+            $destinations->imagen=$request->input('id_blog_file');
             $destinations->resumen = $request->input('txta_short');
             $destinations->descripcion = $request->input('txta_extended');
             $destinations->historia = $request->input('txta_history');
@@ -47,6 +48,18 @@ class DestinationsController extends Controller
 
             $destinations->estado = '1';
             $destinations->save();
+
+            $desti_recover=TDestino::latest()->first();
+            $imagenes=$request->input('id_blog_file2');
+            if($imagenes!=null){
+                $porciones = explode(",", $imagenes);
+                foreach($porciones as $key) {
+                    $imageUpload = new TDestinoImagen();
+                    $imageUpload->nombre = $key;
+                    $imageUpload->iddestinos = $desti_recover->id;
+                    $imageUpload->save();
+                }
+            }
 
             return redirect(route('admin_destinations_index_path'))->with('status', 'Destination created successfully');
 
@@ -229,5 +242,58 @@ class DestinationsController extends Controller
 
 
         return redirect(route('admin_destinations_edit_path', $id_destino))->with('delete', 'Image successfully removed');
+    }
+    //
+    public function destinations_imagen_getFile(Request $request){
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        
+        Storage::disk('s3')->put('destinations/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('destinations/'.$filenametostore);
+        return $imageName;
+    }
+    public function destinations_imagen_deleteFile(Request $request){
+        $id_blog_file = $request->get('id_blog_file');
+
+        $filename = explode('destinations/', $id_blog_file);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('destinations/'.$filename);
+
+        return $filename;
+    }
+    public function destinations_slider_getFile(Request $request){
+        $t=time();
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.$t.'.'.$extension;
+        
+        Storage::disk('s3')->put('destinations/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('destinations/slider/'.$filenametostore);
+        return $imageName." ".$t;
+    }
+    public function destinations_slider_deleteFile(Request $request){
+        $imagenes = $request->get('aux');
+        $file_name = $request->get('name_file');
+        error_log($imagenes);
+        $filename2=explode(".",$file_name);
+        $name="";
+        $porciones = explode(",", $imagenes);
+        foreach($porciones as $key) {
+            $part = explode(" ", $key);
+            $part2= explode($part[2], $part[0]);
+            $part3=explode($part[1],$part2[1]);
+            if($part3[0]==($filename2[0].'_')){
+                $name=$key;
+            }
+        }
+        $filename = explode('destinations/slider/', $name);
+        $filename = explode(' ', $filename[1]);
+        $filename = $filename[0];
+        error_log($filename[1]);
+        Storage::disk('s3')->delete('destinations/slider/'.$filename);
+        return $name;
     }
 }

@@ -510,3 +510,72 @@ Route::post('admin/blog/image/blog_slider_deleteFile', [
     'uses' => 'Admin\BlogController@blog_slider_deleteFile',
     'as' => 'admin_blog_slider_deleteFile_path',
 ]);
+//paquete imagen crear
+Route::post('admin/package/image/package_imagen_getFile', [
+    'uses' => 'Admin\HomeController@package_imagen_getFile',
+    'as' => 'admin_package_imagen_getFile_path',
+]);
+Route::post('admin/package/image/package_imagen_deleteFile', [
+    'uses' => 'Admin\HomeController@package_imagen_deleteFile',
+    'as' => 'admin_package_imagen_deleteFile_path',
+]);
+Route::post('admin/package/image/package_slider_getFile', [
+    'uses' => 'Admin\HomeController@package_slider_getFile',
+    'as' => 'admin_package_slider_getFile_path',
+]);
+Route::post('admin/package/image/package_slider_deleteFile', [
+    'uses' => 'Admin\HomeController@package_slider_deleteFile',
+    'as' => 'admin_package_slider_deleteFile_path',
+]);
+//itinerary imagenes crear
+Route::post('admin/itinerary/image/itinerary_slider_getFile', [
+    'uses' => 'Admin\ItineraryController@itinerary_slider_getFile',
+    'as' => 'admin_itinerary_slider_getFile_path',
+]);
+Route::post('admin/itinerary/image/itinerary_slider_deleteFile', [
+    'uses' => 'Admin\ItineraryController@itinerary_slider_deleteFile',
+    'as' => 'admin_itinerary_slider_deleteFile_path',
+]);
+//destionation imagen create
+Route::post('admin/destinations/image/destinations_imagen_getFile', [
+    'uses' => 'Admin\DestinationsController@destinations_imagen_getFile',
+    'as' => 'admin_destinations_imagen_getFile_path',
+]);
+Route::post('admin/destinations/image/destinations_imagen_deleteFile', [
+    'uses' => 'Admin\DestinationsController@destinations_imagen_deleteFile',
+    'as' => 'admin_destinations_imagen_deleteFile_path',
+]);
+Route::post('admin/destinations/image/destinations_slider_getFile', [
+    'uses' => 'Admin\DestinationsController@destinations_slider_getFile',
+    'as' => 'admin_destinations_slider_getFile_path',
+]);
+Route::post('admin/destinations/image/destinations_slider_deleteFile', [
+    'uses' => 'Admin\DestinationsController@destinations_slider_deleteFile',
+    'as' => 'admin_destinations_slider_deleteFile_path',
+]);
+//hotel imagen create
+Route::post('admin/hotel/image/hotel_imagen_getFile', [
+    'uses' => 'Admin\HotelController@hotel_imagen_getFile',
+    'as' => 'admin_hotel_imagen_getFile_path',
+]);
+Route::post('admin/hotel/image/hotel_imagen_deleteFile', [
+    'uses' => 'Admin\HotelController@hotel_imagen_deleteFile',
+    'as' => 'admin_hotel_imagen_deleteFile_path',
+]);
+//category images create
+Route::post('admin/category/image/category_imagen_getFile', [
+    'uses' => 'Admin\CategoryController@category_imagen_getFile',
+    'as' => 'admin_category_imagen_getFile_path',
+]);
+Route::post('admin/category/image/category_imagen_deleteFile', [
+    'uses' => 'Admin\CategoryController@category_imagen_deleteFile',
+    'as' => 'admin_category_imagen_deleteFile_path',
+]);
+Route::post('admin/category/image/category_slider_getFile', [
+    'uses' => 'Admin\CategoryController@category_slider_getFile',
+    'as' => 'admin_category_slider_getFile_path',
+]);
+Route::post('admin/category/image/category_slider_deleteFile', [
+    'uses' => 'Admin\CategoryController@category_slider_deleteFile',
+    'as' => 'admin_category_slider_deleteFile_path',
+]);

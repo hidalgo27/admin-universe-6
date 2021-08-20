@@ -35,6 +35,7 @@ class HotelController extends Controller
         $hotel->estrellas = $request->input('slc_category');
         $hotel->direccion = $request->input('txt_address');
         $hotel->url = $request->input('url');
+        $hotel->imagen=$request->input('id_blog_file');
         $servicios = "";
         foreach ($request->input('slc_services') as $services){
             $servicios .=  $services.',';
@@ -160,5 +161,24 @@ class HotelController extends Controller
         THotel::where('id', $id_hotel_file)->update(['imagen' => NULL]);
         return $filename;
     }
+    public function hotel_imagen_getFile(Request $request){
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        
+        Storage::disk('s3')->put('hotel/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('hotel/'.$filenametostore);
+        return $imageName;
+    }
+    public function hotel_imagen_deleteFile(Request $request){
+        $id_blog_file = $request->get('id_blog_file');
+        error_log($id_blog_file);
+        $filename = explode('hotel/', $id_blog_file);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('hotel/'.$filename);
 
+        return $filename;
+    }
 }
+
