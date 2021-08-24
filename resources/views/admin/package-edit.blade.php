@@ -137,7 +137,31 @@
                             </form>
                         @endif
                     </div>
+                    @if (empty($paquetes->mapa))
+                    <div class="col-12">
+                        <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Package Map <span class="badge badge-warning">420x420 PX</span></p>
+                        <form method="post" action="{{route('admin_map_store_path')}}" enctype="multipart/form-data"
+                                class="dropzone" id="dropzone3">
+                                <input type="hidden" value="{{$paquetes->id}}" name="id_package_file">
+                            @csrf
+                        </form>
+                    </div>
+                    @endif
+                    <div class="col-12 mt-4 mb-4">
+                        @if ($paquetes->mapa)
+                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Package Map Image <span class="badge badge-warning">420x420 PX</span></p>
+                            <img src="{{$paquetes->mapa}}" alt="" class="img-thumbnail w-100 mb-2">
+                            <form action="{{route('admin_delete_map_package_form_path')}}" method="post" class="text-center">
+                                {{--@method('DELETE')--}}
+                                @csrf
+                                <input type="hidden" name="id_package" value="{{$paquetes->id}}">
+                                <input type="hidden" name="filename" value="{{$paquetes->mapa}}">
+                                <button type="submit" class="btn btn-xs btn-danger">Eliminar</button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
+                
             </div>
             <div class="col">
                 <form action="{{route('admin_package_update_path', $id)}}" method="post">
@@ -840,6 +864,49 @@
                 // },
 
             });
+            $("#dropzone3").dropzone({
+
+                maxFilesize: 12,
+                maxFiles: 1,
+                // renameFile: function(file) {
+                //     var dt = new Date();
+                //     var time = dt.getTime();
+                //     return time+file.name;
+                // },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 50000,
+                removedfile: function(file){
+                    var name = file.name;
+                    // alert(name);
+                    var dataString = $('#dropzone3').serialize();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_map_delete_path') }}",
+                        data: dataString,
+                        success: function (data) {
+                            console.log("File has been successfully removed!!");
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    return (fileRef = file.previewElement) != null ?
+                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
+                },
+
+                // success: function (file, response) {
+                //     console.log(response);
+                // },
+                // error: function (file, response) {
+                //     return false;
+                // },
+
+                });
         });
 
     </script>

@@ -39,7 +39,17 @@ class ItineraryController extends Controller
             $itinerary->resumen = $short;
             $itinerary->descripcion = $extended;
             $itinerary->save();
-
+            $itinerary_reco=TItinerario::latest()->first();
+            $imagenes=$request->input('id_blog_file2');
+            if($imagenes!=null){
+                $porciones = explode(",", $imagenes);
+                foreach($porciones as $key) {
+                    $imageUpload = new TItinerarioImagen();
+                    $imageUpload->nombre = $key;
+                    $imageUpload->iditinerario = $itinerary_reco->id;
+                    $imageUpload->save();
+                }
+            }
             return redirect(route('admin_itinerary_edit_path', $itinerary->id))->with('status', 'Itinerary created successfully');
 
         }else{
@@ -203,5 +213,39 @@ class ItineraryController extends Controller
             'images' => $imageAnswer
         ]);
 
+    }
+    //
+    public function itinerary_slider_getFile(Request $request){
+        $t=time();
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.$t.'.'.$extension;
+        
+        Storage::disk('s3')->put('itinerary/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('itinerary/'.$filenametostore);
+        return $imageName." ".$t;
+    }
+    public function itinerary_slider_deleteFile(Request $request){
+        $imagenes = $request->get('aux');
+        $file_name = $request->get('name_file');
+        $filename2=explode(".",$file_name);
+        $name="";
+        $porciones = explode(",", $imagenes);
+        foreach($porciones as $key) {
+            $part = explode(" ", $key);
+            $part2= explode($part[2], $part[0]);
+            $part3=explode($part[1],$part2[1]);
+            error_log($part3[0]);
+            error_log($filename2[0].'_');
+            if($part3[0]==($filename2[0].'_')){
+                $name=$key;
+            }
+        }
+        $filename = explode('itinerary/', $name);
+        $filename = explode(' ', $filename[1]);
+        $filename = $filename[0];
+        Storage::disk('s3')->delete('itinerary/'.$filename);
+        return $name;
     }
 }

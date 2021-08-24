@@ -125,8 +125,20 @@ class HomeController extends Controller
         $package->incluye = $request->input('txta_included');
         $package->noincluye = $request->input('txta_not_included');
         $package->opcional = $request->input('txta_optional');
-
+        $package->imagen=$request->input('id_blog_file');
+        $package->mapa=$request->input('id_file_map');
         if ($package->save()){
+
+            $imagenes=$request->input('id_blog_file2');
+            if($imagenes!=null){
+                $porciones = explode(",", $imagenes);
+                foreach($porciones as $key) {
+                    $imageUpload = new TPaqueteImagen();
+                    $imageUpload->nombre = $key;
+                    $imageUpload->idpaquetes = $package->id;
+                    $imageUpload->save();
+                }
+            }
 
             for($x=2; $x < 6; $x++){
                 $price = new TPrecioPaquete();
@@ -477,6 +489,8 @@ class HomeController extends Controller
         return $filename;
     }
 
+    
+
     public function image_delete_map_package_form(Request $request)
     {
 //        $filename = $request->get('filename');
@@ -553,5 +567,123 @@ class HomeController extends Controller
 
         return redirect(route('admin_package_edit_path', $id_package))->with('delete', 'Image successfully removed');
     }
+     //PAQUETE
 
+     public function package_imagen_getFile(Request $request){
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        
+        Storage::disk('s3')->put('package/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('package/'.$filenametostore);
+        return $imageName;
+    }
+    public function package_imagen_deleteFile(Request $request){
+        $id_blog_file = $request->get('id_blog_file');
+
+        $filename = explode('package/', $id_blog_file);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('package/'.$filename);
+
+        return $filename;
+    }
+    public function package_map_getFile(Request $request){
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        
+        Storage::disk('s3')->put('package/map/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('package/map/'.$filenametostore);
+        return $imageName;
+    }
+    public function package_map_deleteFile(Request $request){
+        $id_blog_file = $request->get('id_file_map');
+
+        $filename = explode('package/map/', $id_blog_file);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('package/map/'.$filename);
+
+        return $filename;
+    }
+    public function package_slider_getFile(Request $request){
+        $t=time();
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.$t.'.'.$extension;
+        
+        Storage::disk('s3')->put('package/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('package/slider/'.$filenametostore);
+        return $imageName." ".$t;
+    }
+    public function package_slider_deleteFile(Request $request){
+        $imagenes = $request->get('aux');
+        $file_name = $request->get('name_file');
+        $filename2=explode(".",$file_name);
+        $name="";
+        $porciones = explode(",", $imagenes);
+        foreach($porciones as $key) {
+            $part = explode(" ", $key);
+            $part2= explode($part[1], $part[0]);
+            $part3= explode("/package/slider/",$part2[0]);
+            if($part3[1]==($filename2[0]."_")){
+                $name=$key;
+            }
+        }
+        $filename = explode('package/slider/', $name);
+        $filename=explode(' ', $filename[1]);
+        Storage::disk('s3')->delete('package/slider/'.$filename[0]);
+        return $name;
+    }
+    public function map_store(Request $request)
+    {
+        $id_package = $request->get('id_package_file');
+
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+
+        Storage::disk('s3')->put('package/map/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('package/map/'.$filenametostore);
+
+        $imageUpload = TPaquete::FindOrFail($id_package);
+        $imageUpload->mapa = $imageName;
+        $imageUpload->save();
+
+        return response()->json(['success' => $imageName]);
+    }
+
+    public function map_delete(Request $request)
+    {
+        $id_package_file = $request->get('id_package_file');
+        $paquete = TPaquete::find($id_package_file);
+
+        $filename = explode('package/map/', $paquete->mapa);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('package/map/'.$filename);
+
+        TPaquete::where('id', $id_package_file)->update(['mapa' => NULL]);
+        return $filename;
+    }
+    public function delete_map_package_form(Request $request)
+    {
+//        $filename = $request->get('filename');
+//        $id_package = $request->get('id_package');
+
+
+        $id_package_file = $request->get('id_package');
+        $paquete = TPaquete::find($id_package_file);
+
+        $filename = explode('package/map/', $paquete->mapa);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('package/map/'.$filename);
+
+        TPaquete::where('id', $id_package_file)->update(['mapa' => NULL]);
+//        return $filename;
+
+        return redirect(route('admin_package_edit_path', $id_package_file))->with('delete', 'Image successfully removed');
+    }
 }

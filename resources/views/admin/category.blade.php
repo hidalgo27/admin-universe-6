@@ -104,37 +104,62 @@
             <div id="addCategory" class="modal fade">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form action="{{route('admin_category_store_path')}}" method="post">
-                            @csrf
-                            <div class="modal-header">
-                                <h4 class="modal-title">Add Category</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Category</label>
-                                    <input type="text" class="form-control" name="txt_category" required>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Category</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 modal-body">
+                                <div class="col">
+                                    <p class="font-weight-bold text-secondary small pb-1 mb-2">Category Thumbnail Image <span class="badge badge-warning">350x250 PX</span></p>
+                                    <form method="post" action="{{route('admin_category_imagen_getFile_path')}}" enctype="multipart/form-data"
+                                    class="dropzone" id="dropzone_category_2">
+                                        <input type="hidden" value="" name="id_blog_file">
+                                        @csrf
+                                    </form>
                                 </div>
+                                <div class="col">
+                                    <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Banner Category Image <span class="badge badge-warning">1900x1080 PX</span></p>
+                                    <form method="post" action="{{route('admin_category_slider_getFile_path')}}" enctype="multipart/form-data"
+                                    class="dropzone" id="dropzone_category">
+                                        <input type="hidden" value="" name="id_blog_file2">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <form action="{{route('admin_category_store_path')}}" method="post">
+                                    @csrf
+                                    
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <input type="text" class="form-control" name="txt_category" required>
+                                        </div>
 
-                                <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">https://{{$host}}/categoria/</span>
+                                        <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">https://{{$host}}/categoria/</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea name="txta_descripcion" class="form-control"></textarea>
+                                        </div>
+                                        <div class="m-5 text-center">
+                                            <input type="hidden" name="id_blog_file" id="imagen">
+                                            <input type="hidden" name="id_blog_file2" id="imagenes">
+                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                            <input type="submit" class="btn btn-success" value="Add">
+                                        </div>
                                     </div>
-                                    <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="txta_descripcion" class="form-control"></textarea>
-                                </div>
+                                </form>
                             </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-success" value="Add">
-                            </div>
-
-                        </form>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -275,9 +300,105 @@
                     $("#selectAll").prop("checked", false);
                 }
             });
+            Dropzone.autoDiscover = false;
         });
         $(document).ready(function(){
             $('.toast').toast('show');
+        });
+        
+    </script>
+    <script>
+        Dropzone.autoDiscover = false;
+        jQuery(document).ready(function() {
+            $("#dropzone_category").dropzone({
+
+                maxFilesize: 12,
+                maxFiles: 1,
+                // renameFile: function(file) {
+                //     var dt = new Date();
+                //     var time = dt.getTime();
+                //     return time+file.name;
+                // },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 50000,
+                removedfile: function(file){
+                    var name = file.upload.filename;
+                    var dataString = $('#imagenes').serialize();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_category_slider_deleteFile_path') }}",
+                        data: dataString,
+                        success: function (data) {
+                            console.log("File has been successfully removed!!");
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    document.getElementById("imagenes").value = null;
+                    return (fileRef = file.previewElement) != null ?
+                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
+                },
+                success: function(file, response){
+                    document.getElementById("imagenes").value = response;
+                }
+                // success: function (file, response) {
+                //     console.log(response);
+                // },
+                // error: function (file, response) {
+                //     return false;
+                // },
+
+            });
+            $("#dropzone_category_2").dropzone({
+                maxFilesize: 12,
+                maxFiles: 1,
+                // renameFile: function(file) {
+                //     var dt = new Date();
+                //     var time = dt.getTime();
+                //     return time+file.name;
+                // },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 50000,
+                removedfile: function(file){
+                    var name = file.upload.filename;
+                    var dataString = $('#imagen').serialize();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_category_imagen_deleteFile_path') }}",
+                        data: dataString,
+                        success: function (data) {
+                            console.log("File has been successfully removed!!");
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    document.getElementById("imagen").value = null;
+                    return (fileRef = file.previewElement) != null ?
+                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
+                },
+                success: function(file, response){
+                    document.getElementById("imagen").value = response;
+                }
+                // success: function (file, response) {
+                //     console.log(response);
+                // },
+                // error: function (file, response) {
+                //     return false;
+                // },
+
+            });
         });
     </script>
 @endpush

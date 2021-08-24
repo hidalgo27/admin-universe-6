@@ -89,6 +89,7 @@ Route::post('admin/package/image/image_delete', [
     'as' => 'admin_image_delete_path',
 ]);
 
+
 Route::post('admin/package/image/image_store_slider', [
     'uses' => 'Admin\HomeController@image_store_slider',
     'as' => 'admin_image_slider_store_path',
@@ -509,4 +510,94 @@ Route::post('admin/blog/image/blog_slider_getFile', [
 Route::post('admin/blog/image/blog_slider_deleteFile', [
     'uses' => 'Admin\BlogController@blog_slider_deleteFile',
     'as' => 'admin_blog_slider_deleteFile_path',
+]);
+//paquete imagen crear
+Route::post('admin/package/image/package_imagen_getFile', [
+    'uses' => 'Admin\HomeController@package_imagen_getFile',
+    'as' => 'admin_package_imagen_getFile_path',
+]);
+Route::post('admin/package/image/package_imagen_deleteFile', [
+    'uses' => 'Admin\HomeController@package_imagen_deleteFile',
+    'as' => 'admin_package_imagen_deleteFile_path',
+]);
+Route::post('admin/package/image/package_slider_getFile', [
+    'uses' => 'Admin\HomeController@package_slider_getFile',
+    'as' => 'admin_package_slider_getFile_path',
+]);
+Route::post('admin/package/image/package_slider_deleteFile', [
+    'uses' => 'Admin\HomeController@package_slider_deleteFile',
+    'as' => 'admin_package_slider_deleteFile_path',
+]);
+Route::post('admin/package/image/package_map_getFile', [
+    'uses' => 'Admin\HomeController@package_map_getFile',
+    'as' => 'admin_package_map_getFile_path',
+]);
+Route::post('admin/package/image/package_map_deleteFile', [
+    'uses' => 'Admin\HomeController@package_map_deleteFile',
+    'as' => 'admin_package_map_deleteFile_path',
+]);
+//package map update
+Route::post('admin/package/image/map_store', [
+    'uses' => 'Admin\HomeController@map_store',
+    'as' => 'admin_map_store_path',
+]);
+Route::post('admin/package/image/map_delete', [
+    'uses' => 'Admin\HomeController@map_delete',
+    'as' => 'admin_map_delete_path',
+]);
+Route::post('admin/package/image/delete_map_package_form', [
+    'uses' => 'Admin\HomeController@delete_map_package_form',
+    'as' => 'admin_delete_map_package_form_path',
+]);
+//itinerary imagenes crear
+Route::post('admin/itinerary/image/itinerary_slider_getFile', [
+    'uses' => 'Admin\ItineraryController@itinerary_slider_getFile',
+    'as' => 'admin_itinerary_slider_getFile_path',
+]);
+Route::post('admin/itinerary/image/itinerary_slider_deleteFile', [
+    'uses' => 'Admin\ItineraryController@itinerary_slider_deleteFile',
+    'as' => 'admin_itinerary_slider_deleteFile_path',
+]);
+//destionation imagen create
+Route::post('admin/destinations/image/destinations_imagen_getFile', [
+    'uses' => 'Admin\DestinationsController@destinations_imagen_getFile',
+    'as' => 'admin_destinations_imagen_getFile_path',
+]);
+Route::post('admin/destinations/image/destinations_imagen_deleteFile', [
+    'uses' => 'Admin\DestinationsController@destinations_imagen_deleteFile',
+    'as' => 'admin_destinations_imagen_deleteFile_path',
+]);
+Route::post('admin/destinations/image/destinations_slider_getFile', [
+    'uses' => 'Admin\DestinationsController@destinations_slider_getFile',
+    'as' => 'admin_destinations_slider_getFile_path',
+]);
+Route::post('admin/destinations/image/destinations_slider_deleteFile', [
+    'uses' => 'Admin\DestinationsController@destinations_slider_deleteFile',
+    'as' => 'admin_destinations_slider_deleteFile_path',
+]);
+//hotel imagen create
+Route::post('admin/hotel/image/hotel_imagen_getFile', [
+    'uses' => 'Admin\HotelController@hotel_imagen_getFile',
+    'as' => 'admin_hotel_imagen_getFile_path',
+]);
+Route::post('admin/hotel/image/hotel_imagen_deleteFile', [
+    'uses' => 'Admin\HotelController@hotel_imagen_deleteFile',
+    'as' => 'admin_hotel_imagen_deleteFile_path',
+]);
+//category images create
+Route::post('admin/category/image/category_imagen_getFile', [
+    'uses' => 'Admin\CategoryController@category_imagen_getFile',
+    'as' => 'admin_category_imagen_getFile_path',
+]);
+Route::post('admin/category/image/category_imagen_deleteFile', [
+    'uses' => 'Admin\CategoryController@category_imagen_deleteFile',
+    'as' => 'admin_category_imagen_deleteFile_path',
+]);
+Route::post('admin/category/image/category_slider_getFile', [
+    'uses' => 'Admin\CategoryController@category_slider_getFile',
+    'as' => 'admin_category_slider_getFile_path',
+]);
+Route::post('admin/category/image/category_slider_deleteFile', [
+    'uses' => 'Admin\CategoryController@category_slider_deleteFile',
+    'as' => 'admin_category_slider_deleteFile_path',
 ]);

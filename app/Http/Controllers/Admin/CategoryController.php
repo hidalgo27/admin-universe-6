@@ -23,7 +23,9 @@ class CategoryController extends Controller
             $category2 = new TCategoria();
             $category2->nombre = $request->input('txt_category');
             $category2->url = $request->input('url');
-            $category2->descripcion = $request->input('txta_descripcion');;
+            $category2->descripcion = $request->input('txta_descripcion');
+            $category2->imagen=$request->input('id_blog_file');
+            $category2->imagen_banner=$request->input('id_blog_file2');
             $category2->save();
 
             return redirect(route('admin_category_index_path'))->with('status', 'Category created successfully');
@@ -196,6 +198,44 @@ class CategoryController extends Controller
 
         return redirect(route('admin_category_edit_path', $id_category_file))->with('status', 'Successfully updated video');
     }
+    //
+    public function category_imagen_getFile(Request $request){
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        error_log($filenamewithextension);
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        
+        Storage::disk('s3')->put('category/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('category/'.$filenametostore);
+        return $imageName;
+    }
+    public function category_imagen_deleteFile(Request $request){
+        $id_blog_file = $request->get('id_blog_file');
 
+        $filename = explode('category/', $id_blog_file);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('category/'.$filename);
 
+        return $filename;
+    }
+    public function category_slider_getFile(Request $request){
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        
+        Storage::disk('s3')->put('category/banner/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageName = Storage::disk('s3')->url('category/banner/'.$filenametostore);
+        return $imageName;
+    }
+    public function category_slider_deleteFile(Request $request){
+        $id_blog_file = $request->get('id_blog_file2');
+
+        $filename = explode('category/banner/', $id_blog_file);
+        $filename = $filename[1];
+        Storage::disk('s3')->delete('category/banner/'.$filename);
+
+        return $filename;
+    }
 }
