@@ -571,9 +571,9 @@
                         fileRef.parentNode.removeChild(file.previewElement) : void 0;
                 },
 
-                // success: function (file, response) {
-                //     console.log(response);
-                // },
+                success: function(file, response){
+                    console.log(response);
+                }
                 // error: function (file, response) {
                 //     return false;
                 // },
@@ -594,7 +594,7 @@
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 'undo redo | formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+            toolbar: 'undo redo | formatselect | bold italic forecolor backcolor | image table | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tiny.cloud/css/codepen.min.css'

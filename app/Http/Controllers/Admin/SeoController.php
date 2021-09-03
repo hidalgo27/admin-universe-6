@@ -28,7 +28,7 @@ class SeoController extends Controller
             $seo->id_t=$request->input('text_idt');
             $seo->save();
 
-            return redirect(route('admin_blog_index_path'))->with('status', 'Category created successfully');
+            return redirect(route('admin_blog_edit_path',$seo->id_t))->with('status', 'SEO created successfully');
 
         }else{
             return "false";
@@ -49,7 +49,6 @@ class SeoController extends Controller
             $seo->microdata=$request->input('txt_schema');
             $seo->localizacion=$request->input('txt_locale');
             $seo->nombre_sitio=$request->input('txt_siteName');
-            $seo->imagen=$request->input('id_blog_file2');
             $seo->imagen_width=$request->input('txt_imageWidth');
             $seo->imagen_height=$request->input('txt_imageHeight');
             $seo->save();

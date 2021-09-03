@@ -12,7 +12,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb small font-weight-bold p-0 m-0 bg-white">
                                 <li class="breadcrumb-item"><a href="#">1. Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">All Packages</li>
+                                <li class="breadcrumb-item active" aria-current="page">All itineraries</li>
                             </ol>
                         </nav>
                     </div>
