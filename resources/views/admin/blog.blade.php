@@ -26,6 +26,11 @@
                 {{session('delete')}}
             </div>
         @endif
+        @if (session('delete2'))
+            <div class="alert alert-success m-2" role="alert">
+                {{session('delete2')}}
+            </div>
+        @endif
         <table class="table table-striped table-hover small table-sm font-weight-bold text-secondary">
             <thead>
                 <tr>
@@ -38,6 +43,33 @@
                     <tr>
                         <td><a href="{{route('admin_blog_edit_path', $post->id)}}">{{$post->titulo}}</a></td>
                         <td class="text-right">
+                            @foreach($seo->where('id_t', $post->id) as $id_t)
+                                @if($id_t!=null)
+                                <a href="#delete_seo_{{$id_t->id}}" class="delete mr-5" data-toggle="modal">SEO<span data-feather="trash"></span></a>
+                                <div id="delete_seo_{{$id_t->id}}" class="modal fade">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{route('admin_seo_delete_path', $id_t->id)}}" method="post">
+                                                @method('DELETE')
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete post</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete these Records?</p>
+                                                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
                             <a href="{{route('admin_blog_edit_path', $post->id)}}" class="edit"><span data-feather="edit"></span></a>
                             <a href="#delete_blog_{{$post->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
                         </td>

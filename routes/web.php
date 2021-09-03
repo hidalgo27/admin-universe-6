@@ -601,3 +601,36 @@ Route::post('admin/category/image/category_slider_deleteFile', [
     'uses' => 'Admin\CategoryController@category_slider_deleteFile',
     'as' => 'admin_category_slider_deleteFile_path',
 ]);
+//SEO
+Route::post('admin/seo/store', [
+    'uses' => 'Admin\SeoController@store',
+    'as' => 'admin_seo_store_path',
+]);
+Route::post('admin/seo/update/{id}', [
+    'uses' => 'Admin\SeoController@update',
+    'as' => 'admin_seo_update_path',
+]);
+Route::delete('admin/seo/edit/{id}', [
+    'uses' => 'Admin\SeoController@destroy',
+    'as' => 'admin_seo_delete_path',
+]);
+Route::post('admin/seo/image/seo_blog_image_store', [
+    'uses' => 'Admin\SeoController@seo_blog_image_store',
+    'as' => 'admin_seo_blog_image_store_path',
+]);
+Route::post('admin/seo/image/seo_blog_image_delete', [
+    'uses' => 'Admin\SeoController@seo_blog_image_delete',
+    'as' => 'admin_seo_blog_image_delete_path',
+]);
+Route::post('admin/seo/image/seo_blog_image_delete_form', [
+    'uses' => 'Admin\SeoController@seo_blog_image_form_delete',
+    'as' => 'admin_seo_blog_image_form_delete_path',
+]);
+Route::post('admin/seo/image/seo_blog_imagen_getFile', [
+    'uses' => 'Admin\SeoController@seo_blog_imagen_getFile',
+    'as' => 'admin_seo_blog_imagen_getFile_path',
+]);
+Route::post('admin/seo/image/seo_blog_imagen_deleteFile', [
+    'uses' => 'Admin\SeoController@seo_blog_imagen_deleteFile',
+    'as' => 'admin_seo_blog_imagen_deleteFile_path',
+]);

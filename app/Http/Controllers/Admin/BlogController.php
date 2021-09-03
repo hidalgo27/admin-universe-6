@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\TBlog_post;
+use App\TSeo;
 use App\TBlog_categoria;
 use App\TBlog_imagen;
 use Illuminate\Support\Facades\Validator;
@@ -16,8 +17,9 @@ class BlogController extends Controller
 {
     public function index()
     {
+        $seo=TSEO::all();
         $posts=TBlog_post::paginate(10);
-        return view('admin.blog', compact('posts'));
+        return view('admin.blog', compact('posts','seo'));
     }
     public function create()
     {
@@ -38,6 +40,35 @@ class BlogController extends Controller
             $post->save();
             $post_recover=TBlog_post::latest()->first();
             $imagenes=$request->input('id_blog_file2');
+            $seo_atributos=$request->input('seo_atributos');
+            $imagen_seo=$request->input('imagen_seo2');
+            if($seo_atributos!=null){
+                $porciones = explode(",", $seo_atributos);
+                $seo = new TSeo();
+                $seo->titulo=$porciones[0];
+                $seo->descripcion = $porciones[1];
+                $seo->url = $porciones[2];
+                $seo->og_tipo=$porciones[3];
+                $seo->keywords=$porciones[4];
+                $seo->microdata=$porciones[5];
+                $seo->localizacion=$porciones[6];
+                $seo->nombre_sitio=$porciones[7];
+                $seo->imagen=$imagen_seo;
+                if($porciones[8]==null){
+                    $seo->imagen_width=null;
+                }else{
+                    $seo->imagen_width=$porciones[8];
+                }
+                if($porciones[9]==null){
+                    $seo->imagen_height=null;
+                }else{
+                    $seo->imagen_height=$porciones[9];
+                }
+                
+                $seo->estado=0;
+                $seo->id_t=$post_recover->id;
+                $seo->save();
+            }
             if($imagenes!=null){
                 $porciones = explode(",", $imagenes);
                 foreach($porciones as $key) {
@@ -48,6 +79,7 @@ class BlogController extends Controller
                     $imageUpload->save();
                 }
             }
+            
             return redirect(route('admin_blog_index_path'))->with('status', 'Post created successfully');
         }else{
             return "false";
@@ -58,7 +90,8 @@ class BlogController extends Controller
     {
         $categorias=TBlog_categoria::all();
         $post = TBlog_post::where('id', $id)->with(['categoria'])->get()->first();
-        return view('admin.blog-edit', compact('post','categorias'));
+        $seo=TSeo::where('estado', 0)->where('id_t',$post->id)->get()->first();
+        return view('admin.blog-edit', compact('post','categorias','seo'));
     }
 
     public function update(Request $request, $id)
@@ -82,7 +115,7 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $post=TBlog_post::find($id);
-
+        $postsEO=TSeo::where('id_t', $id)->first();
         if ($post->imagen_miniatura != NULL) {
             $filename = explode('blog/', $post->imagen_miniatura);
             $filename = $filename[1];
@@ -98,6 +131,15 @@ class BlogController extends Controller
                 Storage::disk('s3')->delete('blog/slider/'.$filename);
                 $imagen->delete();
             }
+        }
+        if($postsEO!=null){
+            if ($postsEO->imagen != NULL) {
+                $filename = explode('seo/blog/', $postsEO->imagen);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('seo/blog/' . $filename);
+                TSeo::where('id', $id)->update(['imagen' => NULL]);
+            }
+            $postsEO->delete();
         }
 
         $post->delete();
