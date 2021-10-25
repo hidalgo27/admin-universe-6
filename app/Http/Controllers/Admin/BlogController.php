@@ -17,14 +17,15 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $seo=TSEO::all();
+        $seo=TSeo::where('estado', 0)->get();
         $posts=TBlog_post::paginate(10);
         return view('admin.blog', compact('posts','seo'));
     }
     public function create()
     {
+        $host = $_SERVER["HTTP_HOST"];
         $categorias=TBlog_categoria::all();
-        return view('admin.blog-create', compact('categorias'));
+        return view('admin.blog-create', compact('categorias','host'));
     }
     public function store(Request $request)
     {  
@@ -89,9 +90,10 @@ class BlogController extends Controller
     public function edit($id)
     {
         $categorias=TBlog_categoria::all();
+        $host = $_SERVER["HTTP_HOST"];
         $post = TBlog_post::where('id', $id)->with(['categoria'])->get()->first();
         $seo=TSeo::where('estado', 0)->where('id_t',$post->id)->get()->first();
-        return view('admin.blog-edit', compact('post','categorias','seo'));
+        return view('admin.blog-edit', compact('post','categorias','seo','host'));
     }
 
     public function update(Request $request, $id)
@@ -115,7 +117,7 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $post=TBlog_post::find($id);
-        $postsEO=TSeo::where('id_t', $id)->first();
+        $postsEO=TSeo::where('estado',0)->where('id_t', $id)->first();
         if ($post->imagen_miniatura != NULL) {
             $filename = explode('blog/', $post->imagen_miniatura);
             $filename = $filename[1];

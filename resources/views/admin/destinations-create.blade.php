@@ -73,6 +73,9 @@
                             <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3">
                         </div>
                     </div>
+                    <div class="col-auto my-auto">
+                        <a href="#addSeo" class="btn btn-success" data-toggle="modal"><span data-feather="plus-circle"></span> Add SEO</a>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -153,10 +156,116 @@
                         {{--<a href="" class="btn btn-primary font-weight-bold">Update Package</a>--}}
                         <input type="hidden" name="id_blog_file" id="imagen">
                         <input type="hidden" name="id_blog_file2" id="imagenes">
+                        <input type="hidden" name="imagen_seo2" id="imagen_seo2">
+                        <input type="hidden" name="seo_atributos" id="seo_atributos">
                         <button type="submit" class="btn btn-primary font-weight-bold">Create Destination</button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div id="addSeo" class="modal fade">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add SEO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body"> 
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Title</label><span class="small text-black-50"> (no more than 70 characters)</span>
+                                    <input type="text" class="form-control" name="txt_title" id="txt_title" maxlength="70" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>keywords</label><span class="small text-black-50"> (separated by commas)</span>
+                                    <textarea type="text" class="form-control" name="txt_keywords" id="txt_keywords"></textarea>
+                                </div>
+                            </div>  
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Description</label><span class="small text-black-50"> (no more than 160 characters)</span>
+                                    <textarea type="text" class="form-control" name="txt_description" id="txt_description" maxlength="160"></textarea>
+                                </div>
+                            </div>   
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>URL canonical</label>
+                                    <input type="text" class="form-control" name="txt_url" id="txt_url">
+                                </div>
+                            </div>     
+                            
+                        </div>
+                        <div class="col-4">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label><b>Schema</b> - JSON-LD</label>
+                                    <textarea type="text" class="form-control" name="txt_schema" id="txt_schema" rows="18" placeholder="<script type='application/ld+json'>&#10;{&#10;'@context': 'https://schema.org',&#10;...&#10;}&#10;</script>"></textarea>
+                                </div>
+                            </div> 
+                            <div class="col text-center">
+                                <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
+                                <input type="submit" id="send_clic" class="btn btn-success" data-dismiss="modal" value="Add">
+                                <input type="hidden" name="id_seo_file" id="imagen_seo">
+                            </div>        
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label><b>Open Graph</b> Type</label>
+                                        <input type="text" class="form-control" name="txt_type" id="txt_type">
+                                    </div>
+                                </div>   
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <label>Site name</label>
+                                        <input type="text" class="form-control" name="txt_siteName" id="txt_siteName">
+                                    </div>
+                                </div>  
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Locale</label>
+                                        <input type="text" class="form-control" name="txt_locale" id="txt_locale">
+                                    </div>
+                                </div>   
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Image Width</label>
+                                        <input type="number" class="form-control" name="txt_imageWidth" id="txt_imageWidth">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Image Height</label>
+                                        <input type="number" class="form-control" name="txt_imageHeight" id="txt_imageHeight">
+                                    </div>
+                                </div>     
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col">
+                                    <p class="font-weight-bold text-secondary small pb-1 mb-2">Image
+                                    <form method="post" action="{{route('admin_seo_destinations_imagen_getFile_path')}}" enctype="multipart/form-data"
+                                            class="dropzone" id="dropzone_imagen_seo">
+                                        <input type="hidden" value="" name="id_seo_file">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -267,6 +376,66 @@
             //     return false;
             // },
 
+        });
+        $("#dropzone_imagen_seo").dropzone({
+            maxFilesize: 12,
+            maxFiles: 1,
+            renameFile: function(file) {
+                var dt = new Date();
+                var time = dt.getTime();
+                return time+file.name;
+            },
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            addRemoveLinks: true,
+            timeout: 50000,
+            removedfile: function(file){
+                // var name = file.name;
+                var dataString = $('#imagen_seo').serialize();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    type: 'POST',
+                    url: "{{ route('admin_seo_destinations_imagen_deleteFile_path') }}",
+                    data:dataString,
+                    success: function (data) {
+                        console.log("File has been successfully removed!!");
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+                var fileRef;
+                document.getElementById("imagen_seo").value = null;
+                document.getElementById("imagen_seo2").value = null;
+                return (fileRef = file.previewElement) != null ?
+                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
+            },
+            success: function(file, response){
+                document.getElementById("imagen_seo").value = response;
+                document.getElementById("imagen_seo2").value = response;
+            }
+            // success: function (file, response) {
+            //     console.log(response);
+            // },
+            // error: function (file, response) {
+            //     return false;
+            // },
+
+        });
+        $('#send_clic').click(function () {
+            var array = [];
+            array.push(document.getElementById("txt_title").value);
+            array.push(document.getElementById("txt_description").value);
+            array.push(document.getElementById("txt_url").value);
+            array.push(document.getElementById("txt_type").value);
+            array.push(document.getElementById("txt_keywords").value);
+            array.push(document.getElementById("txt_schema").value);
+            array.push(document.getElementById("txt_locale").value);
+            array.push(document.getElementById("txt_siteName").value);
+            array.push(document.getElementById("txt_imageWidth").value);
+            array.push(document.getElementById("txt_imageHeight").value);
+            document.getElementById("seo_atributos").value=array;
         });
     });
 </script>

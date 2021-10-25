@@ -11,6 +11,7 @@ use App\TItinerario;
 use App\TItinerarioImagen;
 use App\TNoIncluye;
 use App\TPaquete;
+use App\TSeo;
 use App\TPaqueteCategoria;
 use App\TPaqueteDestino;
 use App\TPaqueteDificultad;
@@ -34,8 +35,8 @@ class HomeController extends Controller
         $request->user()->authorizeRoles(['user', 'admin']);
 
         $paquete = TPaquete::paginate(10);
-
-        return view('admin.home', compact('paquete'));
+        $seo=TSeo::where('estado', 1)->get();
+        return view('admin.home', compact('paquete','seo'));
     }
     /**
      * Show
@@ -128,7 +129,35 @@ class HomeController extends Controller
         $package->imagen=$request->input('id_blog_file');
         $package->mapa=$request->input('id_file_map');
         if ($package->save()){
-
+            $seo_atributos=$request->input('seo_atributos');
+            $imagen_seo=$request->input('imagen_seo2');
+            if($seo_atributos!=null){
+                $porciones = explode(",", $seo_atributos);
+                $seo = new TSeo();
+                $seo->titulo=$porciones[0];
+                $seo->descripcion = $porciones[1];
+                $seo->url = $porciones[2];
+                $seo->og_tipo=$porciones[3];
+                $seo->keywords=$porciones[4];
+                $seo->microdata=$porciones[5];
+                $seo->localizacion=$porciones[6];
+                $seo->nombre_sitio=$porciones[7];
+                $seo->imagen=$imagen_seo;
+                if($porciones[8]==null){
+                    $seo->imagen_width=null;
+                }else{
+                    $seo->imagen_width=$porciones[8];
+                }
+                if($porciones[9]==null){
+                    $seo->imagen_height=null;
+                }else{
+                    $seo->imagen_height=$porciones[9];
+                }
+                
+                $seo->estado=1;
+                $seo->id_t=$package->id;
+                $seo->save();
+            }
             $imagenes=$request->input('id_blog_file2');
             if($imagenes!=null){
                 $porciones = explode(",", $imagenes);
@@ -309,7 +338,9 @@ class HomeController extends Controller
         $precio_paquetes_4 = TPrecioPaquete::where('idpaquetes', $id)->where('estrellas', 4)->get();
         $precio_paquetes_5 = TPrecioPaquete::where('idpaquetes', $id)->where('estrellas', 5)->get();
 
-        return view('admin.package-edit', compact('id','paquete','precio_paquetes_2', 'precio_paquetes_3','precio_paquetes_4','precio_paquetes_5','paquete_dificultad','paquete_category','paquete_destino','paquete_incluye','paquete_no_incluye','host'), ['paquete_itinerario'=>$paquete_itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
+        $seo=TSeo::where('estado', 1)->where('id_t',$id)->get()->first();
+
+        return view('admin.package-edit', compact('id','seo','paquete','precio_paquetes_2', 'precio_paquetes_3','precio_paquetes_4','precio_paquetes_5','paquete_dificultad','paquete_category','paquete_destino','paquete_incluye','paquete_no_incluye','host'), ['paquete_itinerario'=>$paquete_itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
     }
     public function update(Request $request, $id)
     {
@@ -455,6 +486,16 @@ class HomeController extends Controller
         }
 
         $packages->delete();
+        $postsEO=TSeo::where('estado',1)->where('id_t', $id)->first();
+        if($postsEO!=null){
+            if ($postsEO->imagen != NULL) {
+                $filename = explode('seo/package/', $postsEO->imagen);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('seo/package/' . $filename);
+                TSeo::where('id', $id)->update(['imagen' => NULL]);
+            }
+            $postsEO->delete();
+        }
         return redirect('/home')->with('delete', 'Package successfully removed');
     }
     public function image_store(Request $request)

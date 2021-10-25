@@ -35,17 +35,18 @@
             <thead>
                 <tr>
                     <th>Title</th>
+                    <th class="text-right">SEO</th>
                     <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($posts as $post)
                     <tr>
-                        <td><a href="{{route('admin_blog_edit_path', $post->id)}}">{{$post->titulo}}</a></td>
-                        <td class="text-right">
+                        <td class="col-9"><a href="{{route('admin_blog_edit_path', $post->id)}}">{{$post->titulo}}</a></td>
+                        <td class="text-right col-1">
                             @foreach($seo->where('id_t', $post->id) as $id_t)
                                 @if($id_t!=null)
-                                <a href="#delete_seo_{{$id_t->id}}" class="delete mr-5" data-toggle="modal">SEO<span data-feather="trash"></span></a>
+                                <a href="#delete_seo_{{$id_t->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
                                 <div id="delete_seo_{{$id_t->id}}" class="modal fade">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -70,6 +71,8 @@
                                 </div>
                                 @endif
                             @endforeach
+                        </td>
+                        <td class="text-right col-2">
                             <a href="{{route('admin_blog_edit_path', $post->id)}}" class="edit"><span data-feather="edit"></span></a>
                             <a href="#delete_blog_{{$post->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
                         </td>

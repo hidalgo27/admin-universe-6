@@ -63,7 +63,11 @@
             </div>
         </div>
     @endif
-
+    @if (session('delete2'))
+        <div class="alert alert-success m-2" role="alert">
+            {{session('delete2')}}
+        </div>
+    @endif
     @if (session('delete'))
         <div class="toast bg-danger fixed-top" role="alert" aria-live="polite" aria-atomic="true" data-delay="10000" style="left: auto; top: 55px; right: 10px;">
             <div class="toast-header">
@@ -111,6 +115,7 @@
                     <th>Destinations</th>
                     {{--<th>Region</th>--}}
 {{--                    <th>Country</th>--}}
+                    <th class="text-right">SEO</th>
                     <th class="text-right">Actions</th>
                 </tr>
                 </thead>
@@ -123,9 +128,39 @@
 {{--                                <label for="checkbox1"></label>--}}
 {{--                            </span>--}}
 {{--                            </td>--}}
-                            <td><a href="{{route('admin_destinations_edit_path', $destination->id)}}">{{$destination->nombre}} <small>({{$destination->pais}})</small></a></td>
+                       
+                            <td class="col-9"><a href="{{route('admin_destinations_edit_path', $destination->id)}}">{{$destination->nombre}} <small>({{$destination->pais}})</small></a></td>
                             {{--<td>{{$destination->region}}</td>--}}
-                            <td class="text-right">
+                            <td class="text-right col-1">
+                                @foreach($seo->where('id_t', $destination->id) as $id_t)
+                                    @if($id_t!=null)
+                                        <a href="#delete_seo_{{$id_t->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
+                                        <div id="delete_seo_{{$id_t->id}}" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form action="{{route('admin_seo_delete_path', $id_t->id)}}" method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Delete post</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to delete these Records?</p>
+                                                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="text-right col-2">
                                 <a href="{{route('admin_destinations_edit_path', $destination->id)}}" class="edit"><span data-feather="edit"></span></a>
                                 <a href="#delete_destination_{{$destination->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
                             </td>

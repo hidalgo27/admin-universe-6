@@ -20,6 +20,16 @@
             </div>
         </section>
     </div>
+    @if (session('statusseo'))
+        <div class="alert alert-success m-2" role="alert">
+            {{session('statusseo')}}
+        </div>
+    @endif
+    @if (session('statusseo2'))
+        <div class="alert alert-success m-2" role="alert">
+            {{session('statusseo2')}}
+        </div>
+    @endif
     @if (session('status'))
         <div class="toast bg-primary fixed-top" role="alert" aria-live="polite" aria-atomic="true" data-delay="10000" style="left: auto; top: 55px; right: 10px;">
             <div class="toast-header">
@@ -616,7 +626,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4 my-4 py-1 ">
+                            <div class="col-auto mb-5 text-center">
+                                @if ($seo!=NULL)
+                                <a href="#editSeo" class="btn btn-success" data-toggle="modal"><span data-feather="plus-circle"></span> Edit SEO</a>
+                                @endif
+                                @if ($seo==NULL)
+                                    <a href="#addSeo" class="btn btn-success" data-toggle="modal"><span data-feather="plus-circle"></span> Add SEO</a>
+                                @endif
+                            </div>
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <h6><span data-feather="activity"></span> Difficulty</h6>
@@ -767,6 +785,232 @@
         </div>
 
     @endforeach
+    <div id="addSeo" class="modal fade">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form action="{{route('admin_seo_store_path')}}"  method="post">
+                        @csrf
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add SEO</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body"> 
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Title</label><span class="small text-black-50"> (no more than 70 characters)</span>
+                                        <input type="text" class="form-control" name="txt_title"  maxlength="70" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>keywords</label><span class="small text-black-50"> (separated by commas)</span>
+                                        <textarea type="text" class="form-control" name="txt_keywords"></textarea>
+                                    </div>
+                                </div>  
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Description</label><span class="small text-black-50"> (no more than 160 characters)</span>
+                                        <textarea type="text" class="form-control" name="txt_description" maxlength="160"></textarea>
+                                    </div>
+                                </div>   
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>URL canonical</label>
+                                        <input type="text" class="form-control" name="txt_url" >
+                                    </div>
+                                </div>     
+                                <input type="hidden" value="{{$id}}" name="text_idt">
+                            </div>
+                            <div class="col-4">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label><b>Schema</b> - JSON-LD</label>
+                                        <textarea type="text" class="form-control" name="txt_schema" rows="18" placeholder="<script type='application/ld+json'>&#10;{&#10;'@context': 'https://schema.org',&#10;...&#10;}&#10;</script>"></textarea>
+                                    </div>
+                                </div> 
+                                <div class="col text-center">
+                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
+                                    <input type="submit" class="btn btn-success" value="Add">
+                                    <input type="hidden" name="id_seo_file" id="imagen">
+                                </div>        
+                            </div>
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label><b>Open Graph</b> Type</label>
+                                            <input type="text" class="form-control" name="txt_type" >
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <label>Site name</label>
+                                            <input type="text" class="form-control" name="txt_siteName" >
+                                        </div>
+                                    </div>  
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Locale</label>
+                                            <input type="text" class="form-control" name="txt_locale">
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Image Width</label>
+                                            <input type="number" class="form-control" name="txt_imageWidth">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Image Height</label>
+                                            <input type="number" class="form-control" name="txt_imageHeight">
+                                        </div>
+                                    </div>     
+                                </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="font-weight-bold text-secondary small pb-1 mb-2">Image
+                                        <form method="post" action="{{route('admin_seo_package_imagen_getFile_path')}}" enctype="multipart/form-data"
+                                                class="dropzone" id="dropzone_imagen_seo">
+                                            <input type="hidden" value="" name="id_seo_file">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>     
+                    </div>
+            
+            </div>
+        </div>
+    </div>
+    @if ($seo!=NULL)
+        <div id="editSeo" class="modal fade">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <form action="{{route('admin_seo_update_path',$seo->id)}}"  method="post">
+                            @csrf
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit SEO</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Title</label><span class="small text-black-50"> (no more than 70 characters)</span>
+                                            <input value="{{$seo->titulo}}" type="text" class="form-control" name="txt_title"  maxlength="70" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>keywords</label><span class="small text-black-50"> (separated by commas)</span>
+                                            <textarea type="text" class="form-control" name="txt_keywords">{{$seo->keywords}}</textarea>
+                                        </div>
+                                    </div>  
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Description</label><span class="small text-black-50"> (no more than 160 characters)</span>
+                                            <textarea type="text" class="form-control" name="txt_description" maxlength="160">{{$seo->descripcion}}</textarea>
+                                        </div>
+                                    </div>   
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>URL canonical</label>
+                                            <input value="{{$seo->url}}" type="text" class="form-control" name="txt_url" >
+                                        </div>
+                                    </div>     
+                                    <input type="hidden" value="{{$id}}" name="text_idt">
+                                </div>
+                                <div class="col-4">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label><b>Schema</b> - JSON-LD</label>
+                                            <textarea type="text" class="form-control" name="txt_schema" rows="18" placeholder="<script type='application/ld+json'>&#10;{&#10;'@context': 'https://schema.org',&#10;...&#10;}&#10;</script>">{{$seo->microdata}}</textarea>
+                                        </div>
+                                    </div> 
+                                    <div class="col text-center">
+                                        <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
+                                        <input type="submit" class="btn btn-success" value="Update">
+                                    </div>        
+                                </div>
+                                <div class="col-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label><b>Open Graph</b> Type</label>
+                                                <input value="{{$seo->og_tipo}}" type="text" class="form-control" name="txt_type" >
+                                            </div>
+                                        </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <label>Site name</label>
+                                                <input value="{{$seo->nombre_sitio}}" type="text" class="form-control" name="txt_siteName" >
+                                            </div>
+                                        </div>  
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Locale</label>
+                                                <input value="{{$seo->localizacion}}" type="text" class="form-control" name="txt_locale">
+                                            </div>
+                                        </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Image Width</label>
+                                                <input value="{{$seo->imagen_width}}" type="number" class="form-control" name="txt_imageWidth">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Image Height</label>
+                                                <input value="{{$seo->imagen_height}}" type="number" class="form-control" name="txt_imageHeight">
+                                            </div>
+                                        </div>     
+                                    </div>
+                                    </form>
+                                    <div class="row">
+                                        @if ($seo->imagen)
+                                            <div class="col">       
+                                                <p class="font-weight-bold text-secondary small pb-1 mb-2">Image <span class="badge badge-warning">800x900 PX</span></p>
+                                                <img src="{{$seo->imagen}}" alt="" class="img-thumbnail w-100 mb-2">
+                                                <form action="{{route('admin_seo_package_image_form_delete_path')}}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id_seo" value="{{$seo->id}}">
+                                                    <button type="submit" class="btn btn-xs btn-danger">Eliminar Imagen</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                        @if ($seo->imagen==null)
+                                        <div class="col">
+                                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Image
+                                            <form method="post" action="{{route('admin_seo_package_image_store_path')}}" enctype="multipart/form-data"
+                                                    class="dropzone" id="dropzone_imagen_seoEdit">
+                                                    <input type="hidden" value="{{$seo->id}}" name="id_seo">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>
+                
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 @push('scripts')
     <script>
@@ -906,7 +1150,93 @@
                 //     return false;
                 // },
 
-                });
+            });
+            $("#dropzone_imagen_seo").dropzone({
+                maxFilesize: 12,
+                maxFiles: 1,
+                renameFile: function(file) {
+                    var dt = new Date();
+                    var time = dt.getTime();
+                    return time+file.name;
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 50000,
+                removedfile: function(file){
+                    // var name = file.name;
+                    var dataString = $('#imagen').serialize();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_seo_package_imagen_deleteFile_path') }}",
+                        data:dataString,
+                        success: function (data) {
+                            console.log("File has been successfully removed!!");
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    document.getElementById("imagen").value = null;
+                    return (fileRef = file.previewElement) != null ?
+                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
+                },
+                success: function(file, response){
+                    document.getElementById("imagen").value = response;
+                }
+                // success: function (file, response) {
+                //     console.log(response);
+                // },
+                // error: function (file, response) {
+                //     return false;
+                // },
+
+            });
+            $("#dropzone_imagen_seoEdit").dropzone({
+
+                maxFilesize: 12,
+                maxFiles: 1,
+                renameFile: function(file) {
+                    var dt = new Date();
+                    var time = dt.getTime();
+                    return time+file.name;
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 50000,
+                removedfile: function(file){
+                    // var name = file.name;
+                    var dataString = $('#dropzone_imagen_seoEdit').serialize();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_seo_package_image_delete_path') }}",
+                        data: dataString,
+                        success: function (data) {
+                            console.log("File has been successfully removed!!");
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    return (fileRef = file.previewElement) != null ?
+                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
+                },
+
+                success: function(file, response){
+                    console.log(response);
+                }
+                // error: function (file, response) {
+                //     return false;
+                // },
+
+            });
         });
 
     </script>

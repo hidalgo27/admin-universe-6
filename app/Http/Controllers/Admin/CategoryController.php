@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\TCategoria;
+use App\TSeo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +14,8 @@ class CategoryController extends Controller
     {
         $host = $_SERVER["HTTP_HOST"];
         $category = TCategoria::paginate(10);
-        return view('admin.category', compact('category','host'));
+        $seo=TSeo::where('estado', 3)->get();
+        return view('admin.category', compact('category','host','seo'));
     }
 
     public function store(Request $request)
@@ -27,7 +29,36 @@ class CategoryController extends Controller
             $category2->imagen=$request->input('id_blog_file');
             $category2->imagen_banner=$request->input('id_blog_file2');
             $category2->save();
-
+            $cat_recover=TCategoria::latest()->first();
+            $seo_atributos=$request->input('seo_atributos');
+            $imagen_seo=$request->input('imagen_seo2');
+            if($seo_atributos!=null){
+                $porciones = explode(",", $seo_atributos);
+                $seo = new TSeo();
+                $seo->titulo=$porciones[0];
+                $seo->descripcion = $porciones[1];
+                $seo->url = $porciones[2];
+                $seo->og_tipo=$porciones[3];
+                $seo->keywords=$porciones[4];
+                $seo->microdata=$porciones[5];
+                $seo->localizacion=$porciones[6];
+                $seo->nombre_sitio=$porciones[7];
+                $seo->imagen=$imagen_seo;
+                if($porciones[8]==null){
+                    $seo->imagen_width=null;
+                }else{
+                    $seo->imagen_width=$porciones[8];
+                }
+                if($porciones[9]==null){
+                    $seo->imagen_height=null;
+                }else{
+                    $seo->imagen_height=$porciones[9];
+                }
+                
+                $seo->estado=3;
+                $seo->id_t=$cat_recover->id;
+                $seo->save();
+            }
             return redirect(route('admin_category_index_path'))->with('status', 'Category created successfully');
 
         }else{
@@ -39,7 +70,8 @@ class CategoryController extends Controller
     {
         $host = $_SERVER["HTTP_HOST"];
         $categoria = TCategoria::where('id', $id)->get();
-        return view('admin.category-edit', compact('categoria', 'host'));
+        $seo=TSeo::where('estado', 3)->where('id_t',$id)->get()->first();
+        return view('admin.category-edit', compact('categoria', 'host','seo'));
     }
 
     public function update(Request $request, $id)
@@ -91,6 +123,16 @@ class CategoryController extends Controller
         }
 
         $category2->delete();
+        $postsEO=TSeo::where('estado',3)->where('id_t', $id)->first();
+        if($postsEO!=null){
+            if ($postsEO->imagen != NULL) {
+                $filename = explode('seo/category/', $postsEO->imagen);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('seo/category/' . $filename);
+                TSeo::where('id', $id)->update(['imagen' => NULL]);
+            }
+            $postsEO->delete();
+        }
         return redirect(route('admin_category_index_path'))->with('delete', 'Category successfully removed');
     }
 

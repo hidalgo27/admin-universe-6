@@ -142,7 +142,7 @@
                                 <label for="basic-url" class="font-weight-bold text-secondary small">URL</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">https://</span>
+                                        <span class="input-group-text" id="basic-addon3">https://{{$host}}/blog/</span>
                                     </div>
                                 <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3" value="{{$post->url}}">
                                 </div>
@@ -285,124 +285,124 @@
         </div>
     </div>
     @if ($seo!=NULL)
-    <div id="editSeo" class="modal fade">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <form action="{{route('admin_seo_update_path',$seo->id)}}"  method="post">
-                        @csrf
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit SEO</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body"> 
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label>Title</label><span class="small text-black-50"> (no more than 70 characters)</span>
-                                        <input value="{{$seo->titulo}}" type="text" class="form-control" name="txt_title"  maxlength="70" required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label>keywords</label><span class="small text-black-50"> (separated by commas)</span>
-                                        <textarea type="text" class="form-control" name="txt_keywords">{{$seo->keywords}}</textarea>
-                                    </div>
-                                </div>  
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label>Description</label><span class="small text-black-50"> (no more than 160 characters)</span>
-                                        <textarea type="text" class="form-control" name="txt_description" maxlength="160">{{$seo->descripcion}}</textarea>
-                                    </div>
-                                </div>   
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label>URL canonical</label>
-                                        <input value="{{$seo->url}}" type="text" class="form-control" name="txt_url" >
-                                    </div>
-                                </div>     
-                                <input type="hidden" value="{{$post->id}}" name="text_idt">
-                            </div>
-                            <div class="col-4">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label><b>Schema</b> - JSON-LD</label>
-                                        <textarea type="text" class="form-control" name="txt_schema" rows="18" placeholder="<script type='application/ld+json'>&#10;{&#10;'@context': 'https://schema.org',&#10;...&#10;}&#10;</script>">{{$seo->microdata}}</textarea>
-                                    </div>
-                                </div> 
-                                <div class="col text-center">
-                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
-                                    <input type="submit" class="btn btn-success" value="Update">
-                                </div>        
-                            </div>
-                            <div class="col-4">
-                                <div class="row">
+        <div id="editSeo" class="modal fade">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <form action="{{route('admin_seo_update_path',$seo->id)}}"  method="post">
+                            @csrf
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit SEO</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="row">
+                                <div class="col-4">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label><b>Open Graph</b> Type</label>
-                                            <input value="{{$seo->og_tipo}}" type="text" class="form-control" name="txt_type" >
+                                            <label>Title</label><span class="small text-black-50"> (no more than 70 characters)</span>
+                                            <input value="{{$seo->titulo}}" type="text" class="form-control" name="txt_title"  maxlength="70" required>
                                         </div>
-                                    </div>   
-                                </div>
-                                <div class="row">
-                                    <div class="col-8">
+                                    </div>
+                                    <div class="col">
                                         <div class="form-group">
-                                            <label>Site name</label>
-                                            <input value="{{$seo->nombre_sitio}}" type="text" class="form-control" name="txt_siteName" >
+                                            <label>keywords</label><span class="small text-black-50"> (separated by commas)</span>
+                                            <textarea type="text" class="form-control" name="txt_keywords">{{$seo->keywords}}</textarea>
                                         </div>
                                     </div>  
-                                    <div class="col-4">
+                                    <div class="col">
                                         <div class="form-group">
-                                            <label>Locale</label>
-                                            <input value="{{$seo->localizacion}}" type="text" class="form-control" name="txt_locale">
+                                            <label>Description</label><span class="small text-black-50"> (no more than 160 characters)</span>
+                                            <textarea type="text" class="form-control" name="txt_description" maxlength="160">{{$seo->descripcion}}</textarea>
                                         </div>
                                     </div>   
-                                </div>
-                                <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label>Image Width</label>
-                                            <input value="{{$seo->imagen_width}}" type="number" class="form-control" name="txt_imageWidth">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label>Image Height</label>
-                                            <input value="{{$seo->imagen_height}}" type="number" class="form-control" name="txt_imageHeight">
+                                            <label>URL canonical</label>
+                                            <input value="{{$seo->url}}" type="text" class="form-control" name="txt_url" >
                                         </div>
                                     </div>     
+                                    <input type="hidden" value="{{$post->id}}" name="text_idt">
                                 </div>
-                                </form>
-                                <div class="row">
-                                    @if ($seo->imagen)
-                                        <div class="col">       
-                                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Image <span class="badge badge-warning">800x900 PX</span></p>
-                                            <img src="{{$seo->imagen}}" alt="" class="img-thumbnail w-100 mb-2">
-                                            <form action="{{route('admin_seo_blog_image_form_delete_path')}}" method="post">
+                                <div class="col-4">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label><b>Schema</b> - JSON-LD</label>
+                                            <textarea type="text" class="form-control" name="txt_schema" rows="18" placeholder="<script type='application/ld+json'>&#10;{&#10;'@context': 'https://schema.org',&#10;...&#10;}&#10;</script>">{{$seo->microdata}}</textarea>
+                                        </div>
+                                    </div> 
+                                    <div class="col text-center">
+                                        <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
+                                        <input type="submit" class="btn btn-success" value="Update">
+                                    </div>        
+                                </div>
+                                <div class="col-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label><b>Open Graph</b> Type</label>
+                                                <input value="{{$seo->og_tipo}}" type="text" class="form-control" name="txt_type" >
+                                            </div>
+                                        </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <label>Site name</label>
+                                                <input value="{{$seo->nombre_sitio}}" type="text" class="form-control" name="txt_siteName" >
+                                            </div>
+                                        </div>  
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Locale</label>
+                                                <input value="{{$seo->localizacion}}" type="text" class="form-control" name="txt_locale">
+                                            </div>
+                                        </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Image Width</label>
+                                                <input value="{{$seo->imagen_width}}" type="number" class="form-control" name="txt_imageWidth">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Image Height</label>
+                                                <input value="{{$seo->imagen_height}}" type="number" class="form-control" name="txt_imageHeight">
+                                            </div>
+                                        </div>     
+                                    </div>
+                                    </form>
+                                    <div class="row">
+                                        @if ($seo->imagen)
+                                            <div class="col">       
+                                                <p class="font-weight-bold text-secondary small pb-1 mb-2">Image <span class="badge badge-warning">800x900 PX</span></p>
+                                                <img src="{{$seo->imagen}}" alt="" class="img-thumbnail w-100 mb-2">
+                                                <form action="{{route('admin_seo_blog_image_form_delete_path')}}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id_seo" value="{{$seo->id}}">
+                                                    <button type="submit" class="btn btn-xs btn-danger">Eliminar Imagen</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                        @if ($seo->imagen==null)
+                                        <div class="col">
+                                            <p class="font-weight-bold text-secondary small pb-1 mb-2">Image
+                                            <form method="post" action="{{route('admin_seo_blog_image_store_path')}}" enctype="multipart/form-data"
+                                                    class="dropzone" id="dropzone_imagen_seoEdit">
+                                                    <input type="hidden" value="{{$seo->id}}" name="id_seo">
                                                 @csrf
-                                                <input type="hidden" name="id_seo" value="{{$seo->id}}">
-                                                <button type="submit" class="btn btn-xs btn-danger">Eliminar Imagen</button>
                                             </form>
                                         </div>
-                                    @endif
-                                    @if ($seo->imagen==null)
-                                    <div class="col">
-                                        <p class="font-weight-bold text-secondary small pb-1 mb-2">Image
-                                        <form method="post" action="{{route('admin_seo_blog_image_store_path')}}" enctype="multipart/form-data"
-                                                class="dropzone" id="dropzone_imagen_seoEdit">
-                                                <input type="hidden" value="{{$seo->id}}" name="id_seo">
-                                            @csrf
-                                        </form>
+                                        @endif
                                     </div>
-                                    @endif
                                 </div>
-                            </div>
-                        </div>     
-                    </div>
-            
+                            </div>     
+                        </div>
+                
+                </div>
             </div>
         </div>
-    </div>
     @endif
 @endsection
 @push('scripts')
@@ -578,7 +578,7 @@
                 //     return false;
                 // },
 
-                });
+            });
             
         });
     </script>

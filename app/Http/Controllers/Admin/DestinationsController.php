@@ -10,13 +10,15 @@ use App\TPaqueteImagen;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\TSeo;
 
 class DestinationsController extends Controller
 {
     public function index()
     {
         $destinations = TDestino::paginate(10);
-        return view('admin.destinations', compact('destinations'));
+        $seo=TSeo::where('estado', 2)->get();
+        return view('admin.destinations', compact('destinations','seo'));
     }
 
     public function create()
@@ -50,6 +52,35 @@ class DestinationsController extends Controller
             $destinations->save();
 
             $desti_recover=TDestino::latest()->first();
+            $seo_atributos=$request->input('seo_atributos');
+            $imagen_seo=$request->input('imagen_seo2');
+            if($seo_atributos!=null){
+                $porciones = explode(",", $seo_atributos);
+                $seo = new TSeo();
+                $seo->titulo=$porciones[0];
+                $seo->descripcion = $porciones[1];
+                $seo->url = $porciones[2];
+                $seo->og_tipo=$porciones[3];
+                $seo->keywords=$porciones[4];
+                $seo->microdata=$porciones[5];
+                $seo->localizacion=$porciones[6];
+                $seo->nombre_sitio=$porciones[7];
+                $seo->imagen=$imagen_seo;
+                if($porciones[8]==null){
+                    $seo->imagen_width=null;
+                }else{
+                    $seo->imagen_width=$porciones[8];
+                }
+                if($porciones[9]==null){
+                    $seo->imagen_height=null;
+                }else{
+                    $seo->imagen_height=$porciones[9];
+                }
+                
+                $seo->estado=2;
+                $seo->id_t=$desti_recover->id;
+                $seo->save();
+            }
             $imagenes=$request->input('id_blog_file2');
             if($imagenes!=null){
                 $porciones = explode(",", $imagenes);
@@ -72,7 +103,8 @@ class DestinationsController extends Controller
     {
         $destinations = TDestino::where('id', $id)->get();
         $host = $_SERVER["HTTP_HOST"];
-        return view('admin.destinations-edit', compact('destinations','host'));
+        $seo=TSeo::where('estado', 2)->where('id_t',$id)->get()->first();
+        return view('admin.destinations-edit', compact('destinations','host','seo'));
     }
 
     public function update(Request $request, $id)
@@ -124,11 +156,22 @@ class DestinationsController extends Controller
                 $filename = explode('destinations/slider/', $destino_aws->nombre);
                 $filename = $filename[1];
                 Storage::disk('s3')->delete('destinations/slider/'.$filename);
+                TDestinoImagen::where('id', $destino_imagen_1->id)->delete();
             }
         }
-        TDestinoImagen::where('id', $destino_imagen_1->id)->delete();
+        
 
         $destinations->delete();
+        $postsEO=TSeo::where('estado',2)->where('id_t', $id)->first();
+        if($postsEO!=null){
+            if ($postsEO->imagen != NULL) {
+                $filename = explode('seo/destinations/', $postsEO->imagen);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('seo/destinations/' . $filename);
+                TSeo::where('id', $id)->update(['imagen' => NULL]);
+            }
+            $postsEO->delete();
+        }
         return redirect(route('admin_destinations_index_path'))->with('delete', 'Destination successfully removed');
     }
 

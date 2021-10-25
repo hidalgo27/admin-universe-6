@@ -79,6 +79,11 @@
             </div>
         </div>
     @endif
+    @if (session('delete2'))
+        <div class="alert alert-success m-2" role="alert">
+            {{session('delete2')}}
+        </div>
+    @endif
     <div class="">
         <div class="table-wrapper m-0 p-0">
             <div class="table-title m-0">
@@ -108,6 +113,7 @@
                     {{--<th>Address</th>--}}
                     <th class="text-center">Packages on homepage?</th>
                     <th class="text-center">Offers on homepage?</th>
+                    <th class="text-center">SEO</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -193,6 +199,36 @@
                             <form id="form_offer_{{$paquetes->id}}">
                                 <input type="checkbox" {{$offers_home_ckeck}} value="{{$paquetes->id}}" name="txt_offer" data-toggle="toggle" data-size="xs" onchange="offer_home({{$paquetes->id}})" data-on="yes" data-off="no" data-onstyle="success" data-offstyle="danger">
                             </form>
+                        </td>
+                        
+                        <td class="text-center">
+                            @foreach($seo->where('id_t', $paquetes->id) as $id_t)
+                            @if($id_t!=null)
+                                <a href="#delete_seo_{{$id_t->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
+                                <div id="delete_seo_{{$id_t->id}}" class="modal fade">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{route('admin_seo_delete_path', $id_t->id)}}" method="post">
+                                                @method('DELETE')
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete post</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete these Records?</p>
+                                                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                         </td>
                         {{--<td>(171) 555-2222</td>--}}
                         <td class="text-center">

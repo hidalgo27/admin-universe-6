@@ -614,6 +614,7 @@ Route::delete('admin/seo/edit/{id}', [
     'uses' => 'Admin\SeoController@destroy',
     'as' => 'admin_seo_delete_path',
 ]);
+//SEO BLOD
 Route::post('admin/seo/image/seo_blog_image_store', [
     'uses' => 'Admin\SeoController@seo_blog_image_store',
     'as' => 'admin_seo_blog_image_store_path',
@@ -633,4 +634,67 @@ Route::post('admin/seo/image/seo_blog_imagen_getFile', [
 Route::post('admin/seo/image/seo_blog_imagen_deleteFile', [
     'uses' => 'Admin\SeoController@seo_blog_imagen_deleteFile',
     'as' => 'admin_seo_blog_imagen_deleteFile_path',
+]);
+//SEO PAQUETES
+Route::post('admin/seo/image/seo_package_image_store', [
+    'uses' => 'Admin\SeoController@seo_package_image_store',
+    'as' => 'admin_seo_package_image_store_path',
+]);
+Route::post('admin/seo/image/seo_package_image_delete', [
+    'uses' => 'Admin\SeoController@seo_package_image_delete',
+    'as' => 'admin_seo_package_image_delete_path',
+]);
+Route::post('admin/seo/image/seo_package_image_delete_form', [
+    'uses' => 'Admin\SeoController@seo_package_image_form_delete',
+    'as' => 'admin_seo_package_image_form_delete_path',
+]);
+Route::post('admin/seo/image/seo_package_imagen_getFile', [
+    'uses' => 'Admin\SeoController@seo_package_imagen_getFile',
+    'as' => 'admin_seo_package_imagen_getFile_path',
+]);
+Route::post('admin/seo/image/seo_package_imagen_deleteFile', [
+    'uses' => 'Admin\SeoController@seo_package_imagen_deleteFile',
+    'as' => 'admin_seo_package_imagen_deleteFile_path',
+]);
+//SEO DESTINOS
+Route::post('admin/seo/image/seo_destinations_image_store', [
+    'uses' => 'Admin\SeoController@seo_destinations_image_store',
+    'as' => 'admin_seo_destinations_image_store_path',
+]);
+Route::post('admin/seo/image/seo_destinations_image_delete', [
+    'uses' => 'Admin\SeoController@seo_destinations_image_delete',
+    'as' => 'admin_seo_destinations_image_delete_path',
+]);
+Route::post('admin/seo/image/seo_destinations_image_delete_form', [
+    'uses' => 'Admin\SeoController@seo_destinations_image_form_delete',
+    'as' => 'admin_seo_destinations_image_form_delete_path',
+]);
+Route::post('admin/seo/image/seo_destinations_imagen_getFile', [
+    'uses' => 'Admin\SeoController@seo_destinations_imagen_getFile',
+    'as' => 'admin_seo_destinations_imagen_getFile_path',
+]);
+Route::post('admin/seo/image/seo_destinations_imagen_deleteFile', [
+    'uses' => 'Admin\SeoController@seo_destinations_imagen_deleteFile',
+    'as' => 'admin_seo_destinations_imagen_deleteFile_path',
+]);
+//SEO CATEGORY
+Route::post('admin/seo/image/seo_category_image_store', [
+    'uses' => 'Admin\SeoController@seo_category_image_store',
+    'as' => 'admin_seo_category_image_store_path',
+]);
+Route::post('admin/seo/image/seo_category_image_delete', [
+    'uses' => 'Admin\SeoController@seo_category_image_delete',
+    'as' => 'admin_seo_category_image_delete_path',
+]);
+Route::post('admin/seo/image/seo_category_image_delete_form', [
+    'uses' => 'Admin\SeoController@seo_category_image_form_delete',
+    'as' => 'admin_seo_category_image_form_delete_path',
+]);
+Route::post('admin/seo/image/seo_category_imagen_getFile', [
+    'uses' => 'Admin\SeoController@seo_category_imagen_getFile',
+    'as' => 'admin_seo_category_imagen_getFile_path',
+]);
+Route::post('admin/seo/image/seo_category_imagen_deleteFile', [
+    'uses' => 'Admin\SeoController@seo_category_imagen_deleteFile',
+    'as' => 'admin_seo_category_imagen_deleteFile_path',
 ]);
