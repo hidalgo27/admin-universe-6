@@ -35,6 +35,8 @@ class HotelController extends Controller
         $hotel->estrellas = $request->input('slc_category');
         $hotel->direccion = $request->input('txt_address');
         $hotel->url = $request->input('url');
+        $hotel->expedia = $request->input('txt_Expedia');
+        $hotel->tripadvisor = $request->input('txt_Tripadvisor');
         $hotel->imagen=$request->input('id_blog_file');
         $servicios = "";
         foreach ($request->input('slc_services') as $services){
@@ -86,6 +88,8 @@ class HotelController extends Controller
         $hotel->estrellas = $request->input('slc_category');
         $hotel->direccion = $request->input('txt_address');
         $hotel->url = $request->input('url');
+        $hotel->expedia = $request->input('txt_Expedia');
+        $hotel->tripadvisor = $request->input('txt_Tripadvisor');
         if ($request->input('slc_services')){
             $servicios = "";
             foreach ($request->input('slc_services') as $services){
@@ -114,6 +118,24 @@ class HotelController extends Controller
 
         return redirect(route('admin_hotel_edit_path', $id))->with('status', 'Successfully updated package');
 
+    }
+    public function destroy($id)
+    {
+        $hotel=THotel::find($id);
+        $hotel_destino=THotelDestino::where('idhotel',$id)->first();
+        if($hotel_destino){
+            return redirect(route('admin_hotel_index_path'))->with('status', 'It cannot be deleted');
+        }else{
+            
+            if ($hotel->imagen != NULL) {
+                $filename = explode('hotel/', $hotel->imagen);
+                $filename = $filename[1];
+                Storage::disk('s3')->delete('hotel/' . $filename);
+            }
+            $hotel->delete();
+            return redirect(route('admin_hotel_index_path'))->with('status', 'Hotel successfully removed');
+        }
+        
     }
     public function image_store(Request $request)
     {

@@ -131,7 +131,16 @@
 {{--                                    @endif--}}
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="font-weight-bold text-secondary small" for="txt_Expedia">Calification Expedia</label>
+                                    <input type="text" name="txt_Expedia" class="form-control font-weight-bold" id="txt_Expedia" placeholder="" value="{{$hotels->expedia}}">
+                                </div>
+                                <div class="col-6">
+                                    <label class="font-weight-bold text-secondary small" for="txt_Tripadvisor">Calification Tripadvisor</label>
+                                    <input type="text" name="txt_Tripadvisor" class="form-control font-weight-bold" id="txt_Tripadvisor" placeholder="" value="{{$hotels->tripadvisor}}">
+                                </div>
+                            </div>
                             <div class="row mt-3">
                                 <div class="col">
                                     <h3 class="font-weight-bold text-secondary small">Description</h3>

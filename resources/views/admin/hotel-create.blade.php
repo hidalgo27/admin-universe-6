@@ -36,7 +36,7 @@
             <form action="{{route('admin_hotel_store_path')}}" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-8">
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -68,10 +68,7 @@
                             <div class="col">
                                 <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">https://</span>
-                                    </div>
-                                    <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3">
+                                    <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3" placeholder="https://">
                                 </div>
                             </div>
                             <div class="col">
@@ -87,6 +84,17 @@
                             </div>
                         </div>
 
+                        <div class="row my-2">
+                            <div class="col-6">
+                                <label class="font-weight-bold text-secondary small" for="txt_Expedia">Calification Expedia</label>
+                                <input type="text" name="txt_Expedia" class="form-control font-weight-bold" id="txt_Expedia" placeholder="" value="{{old('txt_Expedia')}}">
+                            </div>
+                            <div class="col-6">
+                                <label class="font-weight-bold text-secondary small" for="txt_Tripadvisor">Calification Tripadvisor</label>
+                                <input type="text" name="txt_Tripadvisor" class="form-control font-weight-bold" id="txt_Tripadvisor" placeholder="" value="{{old('txt_Tripadvisor')}}">
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col">
                                 <h3 class="font-weight-bold text-secondary small">Description</h3>
@@ -96,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-4">
                         <div class="card bg-light my-3">
                             <div class="card-body">
                                 <h6><span data-feather="map-pin"></span> Destinations</h6>

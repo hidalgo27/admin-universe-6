@@ -136,7 +136,7 @@
                     <div id="delete_hotel_{{$hotels->id}}" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="{{route('admin_itinerary_delete_path', $hotels->id)}}" method="post">
+                                <form action="{{route('admin_hotel_delete_path', $hotels->id)}}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <div class="modal-header">
