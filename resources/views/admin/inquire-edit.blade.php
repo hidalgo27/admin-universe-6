@@ -103,7 +103,7 @@
                 <div class="col">
                     <div class="alert alert-success">
 {{--                        {{$app_url.'/yourtrip/itinerary/'.$id_crypt}}--}}
-                        <a href="{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}">{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}</a>
+                        <a href="{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}" target="_blank">{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}</a>
 {{--                        <p class="m-0 text-break">{{(route('yourtrip_us_path', $id_crypt))}}</p>--}}
                     </div>
                 </div>
