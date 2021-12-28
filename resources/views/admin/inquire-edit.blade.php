@@ -102,7 +102,9 @@
             <div class="row">
                 <div class="col">
                     <div class="alert alert-success">
-                        <p class="m-0 text-break">{{(route('yourtrip_us_path', $id_crypt))}}</p>
+{{--                        {{$app_url.'/yourtrip/itinerary/'.$id_crypt}}--}}
+                        <a href="{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}">{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}</a>
+{{--                        <p class="m-0 text-break">{{(route('yourtrip_us_path', $id_crypt))}}</p>--}}
                     </div>
                 </div>
             </div>

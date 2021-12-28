@@ -200,7 +200,7 @@
                                 <input type="checkbox" {{$offers_home_ckeck}} value="{{$paquetes->id}}" name="txt_offer" data-toggle="toggle" data-size="xs" onchange="offer_home({{$paquetes->id}})" data-on="yes" data-off="no" data-onstyle="success" data-offstyle="danger">
                             </form>
                         </td>
-                        
+
                         <td class="text-center">
                             @foreach($seo->where('id_t', $paquetes->id) as $id_t)
                             @if($id_t!=null)

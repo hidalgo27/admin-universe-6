@@ -79,9 +79,11 @@ class InquireController extends Controller
 
     public function edit($id)
     {
-        $id_crypt = Crypt::encrypt($id);
+
+        $app_url = env('APP_URL');
+        $id_crypt = base64_encode($id);
         $inquire = TPasajero::find($id);
-        return view('admin.inquire-edit', compact('inquire','id_crypt'));
+        return view('admin.inquire-edit', compact('inquire','id_crypt', 'app_url'));
     }
 
     public function destroy($id)
