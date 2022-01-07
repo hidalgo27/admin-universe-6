@@ -197,7 +197,7 @@
             @endforeach
             {!! $itinerario->itinerarios->descripcion !!}
             @php $day++; $sum++; @endphp
-            <div class="d-block mb-50">
+            <div class="d-block">
         @endforeach
 
         <h3 class="text-secondary d-block pt-120">Incluye</h3>
