@@ -193,7 +193,7 @@
 
             <h3 class=""><span class="text-white bg-color-danger py-3 small p-3">{{$nuevafecha}}:</span> {{$itinerario->itinerarios->titulo}}</h3>
             @foreach($itinerario->itinerarios->itinerario_imagen->take(1) as $imagen)
-                <img src="{{$imagen->nombre}}" class="float-right" width="200">
+                <img src="{{$imagen->nombre}}" class="float-right" width="200" height="100">
             @endforeach
             {!! $itinerario->itinerarios->descripcion !!}
             @php $day++; $sum++; @endphp
