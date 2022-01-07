@@ -159,7 +159,7 @@
                         {{--<td>(171) 555-2222</td>--}}
                         <td class="text-center">
                             <a href="{{route('admin_inquire_edit_index_path', $pasajero->id)}}" class="edit"><span data-feather="edit"></span></a>
-                            <a href="{{route('admin_inquire_package_pdf_path', $pasajero->id)}}" class="text-danger"><span data-feather="file-text"></span></a>
+                            <a href="{{route('admin_inquire_package_pdf_path', $pasajero->id)}}" target="_blank" class="text-danger"><span data-feather="file-text"></span></a>
                             <a href="#delete_difficulty_{{$pasajero->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
                         </td>
                     </tr>

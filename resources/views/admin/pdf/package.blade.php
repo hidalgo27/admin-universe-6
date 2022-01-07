@@ -108,6 +108,12 @@
         .pt-120{
             padding-top: 50px;
         }
+        .pb-50{
+            padding-bottom: 50px;
+        }
+        .mb-50{
+            margin-bottom: 50px;
+        }
         .d-block{
             display: block;
         }
@@ -176,9 +182,8 @@
         @endforeach
         </ul>
         <h2 class="text-danger">Itinerario</h2>
-
+        @php $day = 1; $sum = 0; @endphp
         @foreach($paquetes->paquete_itinerario as $itinerario)
-            @php $day = 1; $sum = 0; @endphp
             @php
                 $fecha = date($pasajero->fecha);
                 $nuevafecha = strtotime ( '+'.$sum.' day' , strtotime ( $fecha ) ) ;
@@ -186,12 +191,13 @@
                 $nuevafecha = strftime("%d %B ", strtotime($nuevafecha));
             @endphp
 
-            <h3><span class="text-white bg-color-danger py-3 small p-3">{{$nuevafecha}}:</span> {{$itinerario->itinerarios->titulo}}</h3>
+            <h3 class=""><span class="text-white bg-color-danger py-3 small p-3">{{$nuevafecha}}:</span> {{$itinerario->itinerarios->titulo}}</h3>
             @foreach($itinerario->itinerarios->itinerario_imagen->take(1) as $imagen)
-                <img src="{{$imagen->nombre}}" class="float-right" width="300">
+                <img src="{{$imagen->nombre}}" class="float-right" width="200">
             @endforeach
             {!! $itinerario->itinerarios->descripcion !!}
             @php $day++; $sum++; @endphp
+            <div class="d-block mb-50">
         @endforeach
 
         <h3 class="text-secondary d-block pt-120">Incluye</h3>
