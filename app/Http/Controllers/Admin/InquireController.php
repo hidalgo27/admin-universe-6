@@ -12,6 +12,8 @@ use App\TPaqueteDificultad;
 use App\TPaqueteVuelo;
 use App\TPasajero;
 use App\TVuelo;
+use App\User;
+use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
@@ -93,4 +95,25 @@ class InquireController extends Controller
         return redirect(route('admin_list_index_path'))->with('delete', 'Inquire successfully removed');
     }
 
+    public function package_pdf($id)
+    {
+        $pasajero=TPasajero::find($id);
+        $user=User::find($pasajero->id_usuario);
+        $paquete_destinos = TPaqueteDestino::with('destinos')->get();
+        $paquete = TPaquete::with('paquete_itinerario','paquetes_destinos', 'precio_paquetes')->where('id', $pasajero->id_paquete)->get();
+
+        $pdf = PDF::
+
+        loadView('admin.pdf.package',
+            compact(
+                'pasajero',
+                'paquete',
+                'paquete_destinos',
+                'user'
+            )
+        );
+
+//        return $pdf->download('certificado_'.time().'.pdf');
+        return $pdf->stream();
+    }
 }

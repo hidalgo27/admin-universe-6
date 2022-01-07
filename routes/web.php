@@ -370,6 +370,10 @@ Route::delete('admin/inquire/delete/{id}', [
     'uses' => 'Admin\InquireController@destroy',
     'as' => 'admin_inquire_delete_path',
 ]);
+Route::get('admin/inquire/package-file/{id}', [
+    'uses' => 'Admin\InquireController@package_pdf',
+    'as' => 'admin_inquire_package_pdf_path',
+]);
 //yourtrip
 Route::get('/yourtrip/itinerary/{id}', [
     'uses' => 'HomepageController@yourtrip',
