@@ -181,7 +181,7 @@
                     <li>{{$paquete_destino->destinos->nombre}}</li>
         @endforeach
         </ul>
-        <h2 class="text-danger">Itinerario</h2>
+        <h2 class="text-green">Itinerario</h2>
         @php $day = 1; $sum = 0; @endphp
         @foreach($paquetes->paquete_itinerario as $itinerario)
             @php
@@ -191,9 +191,9 @@
                 $nuevafecha = strftime("%d %B ", strtotime($nuevafecha));
             @endphp
 
-            <h3 class=""><span class="text-white bg-color-danger py-3 small p-3">{{$nuevafecha}}:</span> {{$itinerario->itinerarios->titulo}}</h3>
+            <h3 class="text-green"><span class="text-orange">{{$nuevafecha}}:</span> {{$itinerario->itinerarios->titulo}}</h3>
             @foreach($itinerario->itinerarios->itinerario_imagen->take(1) as $imagen)
-                <img src="{{$imagen->nombre}}" class="float-right" width="200" height="100">
+                <img src="{{$imagen->nombre}}" class="float-right" width="200" height="120">
             @endforeach
             {!! $itinerario->itinerarios->descripcion !!}
             @php $day++; $sum++; @endphp

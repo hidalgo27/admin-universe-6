@@ -106,6 +106,9 @@
                         <a href="{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}" target="_blank">{{$app_url.'/yourtrip/itinerary/'.$id_crypt}}</a>
 {{--                        <p class="m-0 text-break">{{(route('yourtrip_us_path', $id_crypt))}}</p>--}}
                     </div>
+                    <div class="alert alert-danger">
+                        <a href="{{route('admin_inquire_package_pdf_path', $inquire->id)}}" target="_blank" class="text-danger"><span data-feather="file-text"></span> PDF Version</a>
+                    </div>
                 </div>
             </div>
         </form>
