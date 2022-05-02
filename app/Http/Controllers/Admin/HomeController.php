@@ -153,7 +153,7 @@ class HomeController extends Controller
                 }else{
                     $seo->imagen_height=$porciones[9];
                 }
-                
+
                 $seo->estado=1;
                 $seo->id_t=$package->id;
                 $seo->save();
@@ -377,6 +377,19 @@ class HomeController extends Controller
                 $price->precio_s = $request->input('txt_'.$x.'_s');
                 $price->precio_d = $request->input('txt_'.$x.'_d');
                 $price->precio_t = $request->input('txt_'.$x.'_t');
+
+                $price->codigo_s = $request->input('txt_cod_'.$x.'_s');
+                $price->codigo_d = $request->input('txt_cod_'.$x.'_d');
+                $price->codigo_t = $request->input('txt_cod_'.$x.'_t');
+
+                $check = $request->input('chk_estado_'.$x);
+//                dd($request->input('chk_estado_'.$x));
+                if (isset($check)) {
+                    $price->estado = 1;
+                }else{
+                    $price->estado = 0;
+                }
+
                 $price->idpaquetes = $package->id;
                 $price->save();
             }
@@ -530,7 +543,7 @@ class HomeController extends Controller
         return $filename;
     }
 
-    
+
 
     public function image_delete_map_package_form(Request $request)
     {
@@ -615,7 +628,7 @@ class HomeController extends Controller
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $filenametostore = $filename.'_'.time().'.'.$extension;
-        
+
         Storage::disk('s3')->put('package/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('package/'.$filenametostore);
         return $imageName;
@@ -634,7 +647,7 @@ class HomeController extends Controller
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $filenametostore = $filename.'_'.time().'.'.$extension;
-        
+
         Storage::disk('s3')->put('package/map/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('package/map/'.$filenametostore);
         return $imageName;
@@ -654,7 +667,7 @@ class HomeController extends Controller
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $filenametostore = $filename.'_'.$t.'.'.$extension;
-        
+
         Storage::disk('s3')->put('package/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('package/slider/'.$filenametostore);
         return $imageName." ".$t;
