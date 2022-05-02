@@ -477,7 +477,7 @@
                                                     </div>
                                                     <div class="col-auto">
                                                         <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_2" value="{{$precio_paquete_2->estado}}" {{ ($precio_paquete_2->estado == 1 ? ' checked' : '') }}>
+                                                            <input type="checkbox" id="category_" name="chk_estado_2" {{ ($precio_paquete_2->estado == 1 ? ' checked' : '') }}>
                                                             <label></label>
                                                         </span>
                                                     </div>
@@ -554,7 +554,7 @@
                                                     </div>
                                                     <div class="col-auto">
                                                         <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_3" value="{{$precio_paquete_3->estado}}" {{ ($precio_paquete_3->estado == 1 ? ' checked' : '') }}>
+                                                            <input type="checkbox" id="category_" name="chk_estado_3" {{ ($precio_paquete_3->estado == 1 ? ' checked' : '') }}>
                                                             <label></label>
                                                         </span>
                                                     </div>
@@ -632,7 +632,7 @@
                                                     </div>
                                                     <div class="col-auto">
                                                         <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_4" value="{{$precio_paquete_4->estado}}" {{ ($precio_paquete_4->estado == 1 ? ' checked' : '') }}>
+                                                            <input type="checkbox" id="category_" name="chk_estado_4"  {{ ($precio_paquete_4->estado == 1 ? ' checked' : '') }}>
                                                             <label></label>
                                                         </span>
                                                     </div>
@@ -708,7 +708,7 @@
                                                     </div>
                                                     <div class="col-auto">
                                                         <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_5" value="{{$precio_paquete_5->estado}}" {{ ($precio_paquete_5->estado == 1 ? ' checked' : '') }}>
+                                                            <input type="checkbox" id="category_" name="chk_estado_5" {{ ($precio_paquete_5->estado == 1 ? ' checked' : '') }}>
                                                             <label></label>
                                                         </span>
                                                     </div>
