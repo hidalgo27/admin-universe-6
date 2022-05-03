@@ -358,8 +358,9 @@ class HomeController extends Controller
 
         $package = TPaquete::FindOrFail($id);
         $package->codigo = $request->input('codigo');
-//        $package->codigo_f = $request->input('codigo_f');
+        $package->codigo_f = $request->input('codigo_f');
         $package->titulo = $request->input('titulo');
+        $package->precio_tours = $request->input('precio_tours');
         $package->duracion = $request->input('duracion');
         $package->altitud = $request->input('highest');
         $package->group_size = $request->input('group_size');
@@ -378,17 +379,17 @@ class HomeController extends Controller
                 $price->precio_d = $request->input('txt_'.$x.'_d');
                 $price->precio_t = $request->input('txt_'.$x.'_t');
 
-                $price->codigo_s = $request->input('txt_cod_'.$x.'_s');
-                $price->codigo_d = $request->input('txt_cod_'.$x.'_d');
-                $price->codigo_t = $request->input('txt_cod_'.$x.'_t');
+//                $price->codigo_s = $request->input('txt_cod_'.$x.'_s');
+//                $price->codigo_d = $request->input('txt_cod_'.$x.'_d');
+//                $price->codigo_t = $request->input('txt_cod_'.$x.'_t');
 
-                $check = $request->input('chk_estado_'.$x);
+//                $check = $request->input('chk_estado_'.$x);
 //                dd($request->input('chk_estado_'.$x));
-                if (isset($check)) {
-                    $price->estado = 1;
-                }else{
-                    $price->estado = 0;
-                }
+//                if (isset($check)) {
+//                    $price->estado = 1;
+//                }else{
+//                    $price->estado = 0;
+//                }
 
                 $price->idpaquetes = $package->id;
                 $price->save();

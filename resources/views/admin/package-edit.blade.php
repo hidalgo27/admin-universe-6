@@ -204,15 +204,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{--                            <div class="col-2">--}}
-                                        {{--                                <div class="form-group">--}}
-                                        {{--                                    <label class="font-weight-bold text-secondary small" for="codigo_f">Code Fare</label>--}}
-                                        {{--                                    <input type="text" name="codigo_f" class="form-control font-weight-bold {{ $errors->has('codigo_f') ? 'is-invalid' : '' }}" id="codigo_f" value="{{$paquetes->codigo_f}}">--}}
-                                        {{--                                    <div class="invalid-feedback">--}}
-                                        {{--                                        {{ $errors->first('codigo_f') }}--}}
-                                        {{--                                    </div>--}}
-                                        {{--                                </div>--}}
-                                        {{--                            </div>--}}
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label class="font-weight-bold text-secondary small" for="titulo">Title Package</label>
@@ -233,6 +225,15 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold text-secondary small" for="codigo_f">Code Travel</label>
+                                                <input type="text" name="codigo_f" class="form-control font-weight-bold {{ $errors->has('codigo_f') ? 'is-invalid' : '' }}" id="codigo_f" value="{{$paquetes->codigo_f}}">
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('codigo_f') }}
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label class="font-weight-bold text-secondary small" for="highest">Highest Altitude</label>
@@ -378,6 +379,34 @@
                                         <div class="col">
                                             <h4>Price</h4>
                                             <hr>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="font-weight-bold text-danger small">Tours</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group">
+{{--                                                        <label class="font-weight-bold text-success small" for="precio_tours">Price Tours</label>--}}
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><small>$</small></span>
+                                                        </div>
+                                                        <input type="text" name="precio_tours" class="form-control font-weight-bold {{ $errors->has('precio_tours') ? 'is-invalid' : '' }}" id="precio_tours" placeholder="" value="{{$paquetes->precio_tours}}">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><small>USD</small></span>
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('precio_tours') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="font-weight-bold text-danger small">Packages</div>
+                                                </div>
+                                            </div>
                                             <div class="row text-center font-weight-bold text-g-dark mb-2">
                                                 <div class="col">
 
@@ -394,9 +423,9 @@
                                                 <div class="col">
                                                     Triple
                                                 </div>
-                                                <div class="col text-right">
+{{--                                                <div class="col text-right">--}}
 {{--                                                    View--}}
-                                                </div>
+{{--                                                </div>--}}
                                             </div>
                                             @foreach($precio_paquetes_2 as $precio_paquete_2)
                                                 <div class="row mb-2 py-2">
@@ -406,43 +435,43 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_2_s" value="{{$precio_paquete_2->precio_s}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
 {{--                                                            <div class="input-group-prepend">--}}
 {{--                                                                <span class="input-group-text"><small>Code</small></span>--}}
 {{--                                                            </div>--}}
-                                                            <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_cod_2_s" value="{{$precio_paquete_2->codigo_s}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_cod_2_s" value="{{$precio_paquete_2->codigo_s}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_2_d" value="{{$precio_paquete_2->precio_d}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            {{--                                                            <div class="input-group-prepend">--}}
-                                                            {{--                                                                <span class="input-group-text"><small>Code</small></span>--}}
-                                                            {{--                                                            </div>--}}
-                                                            <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_cod_2_d" value="{{$precio_paquete_2->codigo_d}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            --}}{{--                                                            <div class="input-group-prepend">--}}
+{{--                                                            --}}{{--                                                                <span class="input-group-text"><small>Code</small></span>--}}
+{{--                                                            --}}{{--                                                            </div>--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_cod_2_d" value="{{$precio_paquete_2->codigo_d}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     {{--<div class="col">--}}
                                                     {{--<div class="input-group input-group-sm">--}}
@@ -457,30 +486,30 @@
                                                     {{--</div>--}}
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_2_t" value="{{$precio_paquete_2->precio_t}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            {{--                                                            <div class="input-group-prepend">--}}
-                                                            {{--                                                                <span class="input-group-text"><small>Code</small></span>--}}
-                                                            {{--                                                            </div>--}}
-                                                            <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_cod_2_t" value="{{$precio_paquete_2->codigo_t}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            --}}{{--                                                            <div class="input-group-prepend">--}}
+{{--                                                            --}}{{--                                                                <span class="input-group-text"><small>Code</small></span>--}}
+{{--                                                            --}}{{--                                                            </div>--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_cod_2_t" value="{{$precio_paquete_2->codigo_t}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
-                                                    <div class="col-auto">
-                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_2" {{ ($precio_paquete_2->estado == 1 ? ' checked' : '') }}>
-                                                            <label></label>
-                                                        </span>
-                                                    </div>
+{{--                                                    <div class="col-auto">--}}
+{{--                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">--}}
+{{--                                                            <input type="checkbox" id="category_" name="chk_estado_2" {{ ($precio_paquete_2->estado == 1 ? ' checked' : '') }}>--}}
+{{--                                                            <label></label>--}}
+{{--                                                        </span>--}}
+{{--                                                    </div>--}}
                                                 </div>
                                             @endforeach
                                             @foreach($precio_paquetes_3 as $precio_paquete_3)
@@ -492,37 +521,37 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_3_s" value="{{$precio_paquete_3->precio_s}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_3_s" value="{{$precio_paquete_3->codigo_s}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_3_s" value="{{$precio_paquete_3->codigo_s}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_3_d" value="{{$precio_paquete_3->precio_d}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_3_d" value="{{$precio_paquete_3->codigo_d}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_3_d" value="{{$precio_paquete_3->codigo_d}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     {{--<div class="col">--}}
                                                     {{--<div class="input-group input-group-sm">--}}
@@ -537,27 +566,27 @@
                                                     {{--</div>--}}
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_3_t" value="{{$precio_paquete_3->precio_t}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_3_t" value="{{$precio_paquete_3->codigo_t}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_3_t" value="{{$precio_paquete_3->codigo_t}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
-                                                    <div class="col-auto">
-                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_3" {{ ($precio_paquete_3->estado == 1 ? ' checked' : '') }}>
-                                                            <label></label>
-                                                        </span>
-                                                    </div>
+{{--                                                    <div class="col-auto">--}}
+{{--                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">--}}
+{{--                                                            <input type="checkbox" id="category_" name="chk_estado_3" {{ ($precio_paquete_3->estado == 1 ? ' checked' : '') }}>--}}
+{{--                                                            <label></label>--}}
+{{--                                                        </span>--}}
+{{--                                                    </div>--}}
                                                 </div>
                                             @endforeach
                                             @foreach($precio_paquetes_4 as $precio_paquete_4)
@@ -570,37 +599,37 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_4_s" value="{{$precio_paquete_4->precio_s}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_4_s" value="{{$precio_paquete_4->codigo_s}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_4_s" value="{{$precio_paquete_4->codigo_s}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_4_d" value="{{$precio_paquete_4->precio_d}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_4_d" value="{{$precio_paquete_4->codigo_d}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_4_d" value="{{$precio_paquete_4->codigo_d}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     {{--<div class="col">--}}
                                                     {{--<div class="input-group input-group-sm">--}}
@@ -615,27 +644,27 @@
                                                     {{--</div>--}}
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_4_t" value="{{$precio_paquete_4->precio_t}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_4_t" value="{{$precio_paquete_4->codigo_t}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_4_t" value="{{$precio_paquete_4->codigo_t}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
-                                                    <div class="col-auto">
-                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_4"  {{ ($precio_paquete_4->estado == 1 ? ' checked' : '') }}>
-                                                            <label></label>
-                                                        </span>
-                                                    </div>
+{{--                                                    <div class="col-auto">--}}
+{{--                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">--}}
+{{--                                                            <input type="checkbox" id="category_" name="chk_estado_4"  {{ ($precio_paquete_4->estado == 1 ? ' checked' : '') }}>--}}
+{{--                                                            <label></label>--}}
+{{--                                                        </span>--}}
+{{--                                                    </div>--}}
                                                 </div>
                                             @endforeach
                                             @foreach($precio_paquetes_5 as $precio_paquete_5)
@@ -649,34 +678,37 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_5_s" value="{{$precio_paquete_5->precio_s}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_5_s" value="{{$precio_paquete_5->codigo_s}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_5_s" value="{{$precio_paquete_5->codigo_s}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_5_d" value="{{$precio_paquete_5->precio_d}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_5_d" value="{{$precio_paquete_5->codigo_d}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_5_d" value="{{$precio_paquete_5->codigo_d}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                     {{--<div class="col">--}}
                                                     {{--<div class="input-group input-group-sm">--}}
@@ -691,27 +723,27 @@
                                                     {{--</div>--}}
                                                     <div class="col">
                                                         <div class="input-group input-group-sm">
-{{--                                                            <div class="input-group-prepend">--}}
-{{--                                                                <span class="input-group-text"><small>$</small></span>--}}
-{{--                                                            </div>--}}
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><small>$</small></span>
+                                                            </div>
                                                             <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" name="txt_5_t" value="{{$precio_paquete_5->precio_t}}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><small>USD</small></span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group input-group-sm mt-2">
-                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_5_t" value="{{$precio_paquete_5->codigo_t}}">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><small>Cod.</small></span>
-                                                            </div>
-                                                        </div>
+{{--                                                        <div class="input-group input-group-sm mt-2">--}}
+{{--                                                            <input type="text" class="form-control text-right" aria-label="Code" name="txt_cod_5_t" value="{{$precio_paquete_5->codigo_t}}">--}}
+{{--                                                            <div class="input-group-append">--}}
+{{--                                                                <span class="input-group-text"><small>Cod.</small></span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
                                                     </div>
-                                                    <div class="col-auto">
-                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">
-                                                            <input type="checkbox" id="category_" name="chk_estado_5" {{ ($precio_paquete_5->estado == 1 ? ' checked' : '') }}>
-                                                            <label></label>
-                                                        </span>
-                                                    </div>
+{{--                                                    <div class="col-auto">--}}
+{{--                                                        <span class="custom-checkbox d-block pr-3 text-ellipsis">--}}
+{{--                                                            <input type="checkbox" id="category_" name="chk_estado_5" {{ ($precio_paquete_5->estado == 1 ? ' checked' : '') }}>--}}
+{{--                                                            <label></label>--}}
+{{--                                                        </span>--}}
+{{--                                                    </div>--}}
                                                 </div>
                                             @endforeach
 
