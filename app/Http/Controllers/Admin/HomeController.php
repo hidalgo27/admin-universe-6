@@ -118,9 +118,12 @@ class HomeController extends Controller
 
         $package = new TPaquete();
         $package->codigo = $request->input('codigo');
-//            $package->codigo_f = $request->input('codigo_f');
+        $package->codigo_f = $request->input('codigo_f');
         $package->titulo = $request->input('titulo');
+        $package->precio_tours = $request->input('precio_tours');
         $package->duracion = $request->input('duracion');
+        $package->altitud = $request->input('highest');
+        $package->group_size = $request->input('group_size');
         $package->url = $request->input('url');
         $package->descripcion = $request->input('descripcion');
         $package->incluye = $request->input('txta_included');

@@ -49,7 +49,7 @@
         </div>
         <div class="col-9">
 
-        
+
     <form action="{{route('admin_package_store_path')}}" method="post">
         @csrf
     <div class="row">
@@ -110,12 +110,42 @@
 
                     <div class="row">
                         <div class="col">
+                            <div class="form-group">
+                                <label class="font-weight-bold text-secondary small" for="codigo_f">Code Travel</label>
+                                <input type="text" name="codigo_f" class="form-control font-weight-bold {{ $errors->has('codigo_f') ? 'is-invalid' : '' }}" id="codigo_f" value="{{old('codigo_f')}}">
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('codigo_f') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="font-weight-bold text-secondary small" for="highest">Highest Altitude</label>
+                                <input type="text" name="highest" class="form-control font-weight-bold {{ $errors->has('highest') ? 'is-invalid' : '' }}" id="highest" value="{{old('highest')}}">
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('highest') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="font-weight-bold text-secondary small" for="group_size">Group Size</label>
+                                <input type="text" name="group_size" class="form-control font-weight-bold {{ $errors->has('group_size') ? 'is-invalid' : '' }}" id="group_size" value="{{old('group_size')}}">
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('group_size') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
                             <label for="basic-url" class="font-weight-bold text-secondary small">Your vanity URL</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon3">https://{{$host}}/paquetes/</span>
                                 </div>
-                                <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3"">
+                                <input type="text" class="form-control" name="url" id="basic-url" aria-describedby="basic-addon3">
                             </div>
                         </div>
                     </div>
@@ -159,6 +189,29 @@
                     <div class="row my-3">
                         <div class="col">
                             <h4>Price</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="font-weight-bold text-danger small">Tours</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group">
+                                        {{--                                                        <label class="font-weight-bold text-success small" for="precio_tours">Price Tours</label>--}}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><small>$</small></span>
+                                        </div>
+                                        <input type="text" name="precio_tours" class="form-control font-weight-bold {{ $errors->has('precio_tours') ? 'is-invalid' : '' }}" id="precio_tours" placeholder="" value="{{old('precio_tours')}}">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><small>USD</small></span>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('precio_tours') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <hr>
                             <div class="row text-center font-weight-bold text-g-dark mb-2">
                                 <div class="col">
@@ -518,7 +571,7 @@
                 <h4 class="modal-title">Add SEO</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
                 <div class="row">
                     <div class="col-4">
                         <div class="col">
@@ -532,20 +585,20 @@
                                 <label>keywords</label><span class="small text-black-50"> (separated by commas)</span>
                                 <textarea type="text" class="form-control" name="txt_keywords" id="txt_keywords"></textarea>
                             </div>
-                        </div>  
+                        </div>
                         <div class="col">
                             <div class="form-group">
                                 <label>Description</label><span class="small text-black-50"> (no more than 160 characters)</span>
                                 <textarea type="text" class="form-control" name="txt_description" id="txt_description" maxlength="160"></textarea>
                             </div>
-                        </div>   
+                        </div>
                         <div class="col">
                             <div class="form-group">
                                 <label>URL canonical</label>
                                 <input type="text" class="form-control" name="txt_url" id="txt_url">
                             </div>
-                        </div>     
-                        
+                        </div>
+
                     </div>
                     <div class="col-4">
                         <div class="col">
@@ -553,12 +606,12 @@
                                 <label><b>Schema</b> - JSON-LD</label>
                                 <textarea type="text" class="form-control" name="txt_schema" id="txt_schema" rows="18" placeholder="<script type='application/ld+json'>&#10;{&#10;'@context': 'https://schema.org',&#10;...&#10;}&#10;</script>"></textarea>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col text-center">
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                             <input type="submit" id="send_clic" class="btn btn-success" data-dismiss="modal" value="Add">
                             <input type="hidden" name="id_seo_file" id="imagen_seo">
-                        </div>        
+                        </div>
                     </div>
                     <div class="col-4">
                         <div class="row">
@@ -567,7 +620,7 @@
                                     <label><b>Open Graph</b> Type</label>
                                     <input type="text" class="form-control" name="txt_type" id="txt_type">
                                 </div>
-                            </div>   
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-8">
@@ -575,13 +628,13 @@
                                     <label>Site name</label>
                                     <input type="text" class="form-control" name="txt_siteName" id="txt_siteName">
                                 </div>
-                            </div>  
+                            </div>
                             <div class="col-4">
                                 <div class="form-group">
                                     <label>Locale</label>
                                     <input type="text" class="form-control" name="txt_locale" id="txt_locale">
                                 </div>
-                            </div>   
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -595,9 +648,9 @@
                                     <label>Image Height</label>
                                     <input type="number" class="form-control" name="txt_imageHeight" id="txt_imageHeight">
                                 </div>
-                            </div>     
+                            </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col">
                                 <p class="font-weight-bold text-secondary small pb-1 mb-2">Image
@@ -609,7 +662,7 @@
                             </div>
                         </div>
                     </div>
-                </div>     
+                </div>
             </div>
         </div>
     </div>
