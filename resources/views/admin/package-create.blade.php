@@ -202,7 +202,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><small>$</small></span>
                                         </div>
-                                        <input type="text" name="precio_tours" class="form-control font-weight-bold {{ $errors->has('precio_tours') ? 'is-invalid' : '' }}" id="precio_tours" placeholder="" value="{{old('precio_tours')}}">
+                                        <input type="text" name="precio_tours" class="form-control font-weight-bold {{ $errors->has('precio_tours') ? 'is-invalid' : '' }}" id="precio_tours" placeholder="" value="0">
+{{--                                        <input type="text" name="precio_tours" class="form-control font-weight-bold {{ $errors->has('precio_tours') ? 'is-invalid' : '' }}" id="precio_tours" placeholder="" value="{{old('precio_tours')}}">--}}
                                         <div class="input-group-append">
                                             <span class="input-group-text"><small>USD</small></span>
                                         </div>
