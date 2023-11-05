@@ -72,6 +72,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{route('admin_countries_index_path')}}">
+                    <span data-feather="map-pin"></span>
+                    Countries
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('admin_destinations_index_path')}}">
                     <span data-feather="map-pin"></span>
                     Destinations

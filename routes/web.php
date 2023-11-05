@@ -148,6 +148,7 @@ Route::get('admin/itinerary/image/image_list', [
     'uses' => 'Admin\ItineraryController@image_list',
     'as' => 'admin_itinerary_list_path',
 ]);
+
 //destinations
 Route::get('admin/destinations', [
     'uses' => 'Admin\DestinationsController@index',
@@ -203,6 +204,99 @@ Route::post('admin/destinations/image/image_delete_form', [
     'as' => 'admin_destinations_image_form_delete_path',
 ]);
 
+//country
+Route::get('admin/countries', [
+    'uses' => 'Admin\CountryController@index',
+    'as' => 'admin_countries_index_path',
+]);
+Route::get('admin/countries/create', [
+    'uses' => 'Admin\CountryController@create',
+    'as' => 'admin_countries_create_path',
+]);
+Route::post('admin/countries/store', [
+    'uses' => 'Admin\CountryController@store',
+    'as' => 'admin_countries_store_path',
+]);
+Route::get('admin/countries/edit/{id}', [
+    'uses' => 'Admin\CountryController@edit',
+    'as' => 'admin_countries_edit_path',
+]);
+Route::post('admin/countries/update/{id}', [
+    'uses' => 'Admin\CountryController@update',
+    'as' => 'admin_countries_update_path',
+]);
+Route::delete('admin/countries/edit/{id}', [
+    'uses' => 'Admin\CountryController@destroy',
+    'as' => 'admin_countries_delete_path',
+]);
+
+//country imagen edit
+Route::post('admin/countries/image/image_countries_slider_store', [
+    'uses' => 'Admin\CountryController@image_countries_slider_store',
+    'as' => 'admin_image_countries_slider_store_path',
+]);
+Route::post('admin/countries/image/image_countries_slider_delete', [
+    'uses' => 'Admin\CountryController@image_countries_slider_delete',
+    'as' => 'admin_countries_slider_delete_path',
+]);
+Route::post('admin/countries/image/image_countries_slider_form_delete', [
+    'uses' => 'Admin\CountryController@image_countries_slider_form_delete',
+    'as' => 'admin_countries_slider_form_delete_path',
+]);
+
+Route::post('admin/countries/image/image_countries_image_store', [
+    'uses' => 'Admin\CountryController@image_countries_image_store',
+    'as' => 'admin_image_countries_image_store_path',
+]);
+Route::post('admin/countries/image/image_countries_image_delete', [
+    'uses' => 'Admin\CountryController@image_countries_image_delete',
+    'as' => 'admin_countries_image_delete_path',
+]);
+Route::post('admin/countries/image/image_delete_form', [
+    'uses' => 'Admin\CountryController@image_countries_image_form_delete',
+    'as' => 'admin_countries_image_form_delete_path',
+]);
+
+//country imagen create
+Route::post('admin/countries/image/countries_imagen_getFile', [
+    'uses' => 'Admin\CountryController@countries_imagen_getFile',
+    'as' => 'admin_countries_imagen_getFile_path',
+]);
+Route::post('admin/countries/image/countries_imagen_deleteFile', [
+    'uses' => 'Admin\CountryController@countries_imagen_deleteFile',
+    'as' => 'admin_countries_imagen_deleteFile_path',
+]);
+Route::post('admin/countries/image/countries_slider_getFile', [
+    'uses' => 'Admin\CountryController@countries_slider_getFile',
+    'as' => 'admin_countries_slider_getFile_path',
+]);
+Route::post('admin/countries/image/countries_slider_deleteFile', [
+    'uses' => 'Admin\CountryController@countries_slider_deleteFile',
+    'as' => 'admin_countries_slider_deleteFile_path',
+]);
+
+
+//country seo imagen create
+Route::post('admin/seo/image/seo_country_image_store', [
+    'uses' => 'Admin\SeoController@seo_country_image_store',
+    'as' => 'admin_seo_country_image_store_path',
+]);
+Route::post('admin/seo/image/seo_country_image_delete', [
+    'uses' => 'Admin\SeoController@seo_country_image_delete',
+    'as' => 'admin_seo_country_image_delete_path',
+]);
+Route::post('admin/seo/image/seo_country_image_delete_form', [
+    'uses' => 'Admin\SeoController@seo_country_image_form_delete',
+    'as' => 'admin_seo_country_image_form_delete_path',
+]);
+Route::post('admin/seo/image/seo_country_imagen_getFile', [
+    'uses' => 'Admin\SeoController@seo_country_imagen_getFile',
+    'as' => 'admin_seo_country_imagen_getFile_path',
+]);
+Route::post('admin/seo/image/seo_country_imagen_deleteFile', [
+    'uses' => 'Admin\SeoController@seo_country_imagen_deleteFile',
+    'as' => 'admin_seo_country_imagen_deleteFile_path',
+]);
 
 
 

@@ -17,4 +17,9 @@ class TDestino extends Model
     {
         return $this->hasMany(TDestinoImagen::class, 'iddestinos');
     }
+
+    public function pais()
+    {
+        return $this->belongsTo(TPais::class, 'idpais');
+    }
 }
