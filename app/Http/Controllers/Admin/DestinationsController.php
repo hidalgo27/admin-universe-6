@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\TCategoria;
 use App\TDestino;
 use App\TDestinoImagen;
+use App\TPais;
 use App\TPaquete;
 use App\TPaqueteImagen;
 use Illuminate\Http\Request;
@@ -76,7 +77,7 @@ class DestinationsController extends Controller
                 }else{
                     $seo->imagen_height=$porciones[9];
                 }
-                
+
                 $seo->estado=2;
                 $seo->id_t=$desti_recover->id;
                 $seo->save();
@@ -102,19 +103,23 @@ class DestinationsController extends Controller
     public function edit($id)
     {
         $destinations = TDestino::where('id', $id)->get();
+        $country = TPais::all()->sortBy('nombre');
         $host = $_SERVER["HTTP_HOST"];
         $seo=TSeo::where('estado', 2)->where('id_t',$id)->get()->first();
-        return view('admin.destinations-edit', compact('destinations','host','seo'));
+        return view('admin.destinations-edit', compact('destinations','host','seo','country'));
     }
 
     public function update(Request $request, $id)
     {
         if ($request->filled(['txt_destination', 'txt_country'])){
 
+            $pais = TPais::where('id', $request->input('txt_country'))->first();
+
             $destinations = TDestino::FindOrFail($id);
             $destinations->nombre = $request->input('txt_destination');
             $destinations->region = $request->input('txt_region');
-            $destinations->pais = $request->input('txt_country');
+            $destinations->pais = $pais->nombre;
+            $destinations->idpais = $request->input('txt_country');
             $destinations->url = $request->input('url');
             $destinations->resumen = $request->input('txta_short');
             $destinations->descripcion = $request->input('txta_extended');
@@ -159,7 +164,7 @@ class DestinationsController extends Controller
                 TDestinoImagen::where('id', $destino_imagen_1->id)->delete();
             }
         }
-        
+
 
         $destinations->delete();
         $postsEO=TSeo::where('estado',2)->where('id_t', $id)->first();
@@ -292,7 +297,7 @@ class DestinationsController extends Controller
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $filenametostore = $filename.'_'.time().'.'.$extension;
-        
+
         Storage::disk('s3')->put('destinations/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('destinations/'.$filenametostore);
         return $imageName;
@@ -312,7 +317,7 @@ class DestinationsController extends Controller
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $filenametostore = $filename.'_'.$t.'.'.$extension;
-        
+
         Storage::disk('s3')->put('destinations/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('destinations/slider/'.$filenametostore);
         return $imageName." ".$t;

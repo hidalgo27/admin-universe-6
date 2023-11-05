@@ -167,9 +167,21 @@
 {{--                            </div>--}}
 {{--                        </div>--}}
                         <div class="col">
+{{--                            <div class="form-group">--}}
+{{--                                <label class="font-weight-bold text-secondary small" for="txt_country">Country</label>--}}
+{{--                                <input type="text" name="txt_country" class="form-control font-weight-bold" id="txt_country" value="{{$destination->pais}}">--}}
+{{--                            </div>--}}
                             <div class="form-group">
-                                <label class="font-weight-bold text-secondary small" for="txt_country">Country</label>
-                                <input type="text" name="txt_country" class="form-control font-weight-bold" id="txt_country" value="{{$destination->pais}}">
+                                <label for="txt_country" class="font-weight-bold text-secondary small">Country</label>
+                                <select class="form-control" name="txt_country" id="txt_country">
+                                    @foreach($country as $countries)
+                                        @if($countries->id == $destination->idpais)
+                                        <option value="{{$countries->id}}" selected>{{$countries->nombre}}</option>
+                                        @else
+                                            <option value="{{$countries->id}}">{{$countries->nombre}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
