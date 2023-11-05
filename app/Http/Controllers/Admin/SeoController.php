@@ -43,6 +43,11 @@ class SeoController extends Controller
                 $seo->save();
                 return redirect(route('admin_destinations_edit_path',$seo->id_t))->with('statusseo', 'SEO created successfully');
             }
+            if($tipo[4]=="countries"){
+                $seo->estado=2;
+                $seo->save();
+                return redirect(route('admin_countries_edit_path',$seo->id_t))->with('statusseo', 'SEO created successfully');
+            }
             if($tipo[4]=="category"){
                 $seo->estado=3;
                 $seo->save();
