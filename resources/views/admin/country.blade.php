@@ -151,7 +151,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-danger" value="Delete"> {{$id_t->id}}
+                                        <input type="submit" class="btn btn-danger" value="Delete">
                                     </div>
                                 </form>
                             </div>
