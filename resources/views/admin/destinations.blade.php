@@ -120,7 +120,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($destinations->sortBy('nombre') as $destination)
+                @foreach($destinations as $destination)
                         <tr>
 {{--                            <td>--}}
 {{--                            <span class="custom-checkbox">--}}
@@ -128,7 +128,7 @@
 {{--                                <label for="checkbox1"></label>--}}
 {{--                            </span>--}}
 {{--                            </td>--}}
-                       
+
                             <td class="col-9"><a href="{{route('admin_destinations_edit_path', $destination->id)}}">{{$destination->nombre}} <small>({{$destination->pais}})</small></a></td>
                             {{--<td>{{$destination->region}}</td>--}}
                             <td class="text-right col-1">
@@ -192,11 +192,11 @@
                 @endforeach
                 </tbody>
             </table>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    {{ $destinations->links() }}
-                </div>
-            </div>
+{{--            <div class="row justify-content-center">--}}
+{{--                <div class="col-auto">--}}
+{{--                    {{ $destinations->links() }}--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
     </div>
     <!-- Edit Modal HTML -->

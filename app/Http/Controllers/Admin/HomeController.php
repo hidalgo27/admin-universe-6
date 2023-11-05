@@ -34,7 +34,7 @@ class HomeController extends Controller
     {
         $request->user()->authorizeRoles(['user', 'admin']);
 
-        $paquete = TPaquete::paginate(10);
+        $paquete = TPaquete::all()->sortBy('duracion');
         $seo=TSeo::where('estado', 1)->get();
         return view('admin.home', compact('paquete','seo'));
     }

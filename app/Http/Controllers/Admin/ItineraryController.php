@@ -16,7 +16,7 @@ class ItineraryController extends Controller
 
     public function index()
     {
-        $itinerary = TItinerario::paginate(10);
+        $itinerary = TItinerario::all()->sortBy('codigo');
         return view('admin.itinerary', compact('itinerary'));
     }
 
@@ -221,7 +221,7 @@ class ItineraryController extends Controller
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $filenametostore = $filename.'_'.$t.'.'.$extension;
-        
+
         Storage::disk('s3')->put('itinerary/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('itinerary/'.$filenametostore);
         return $imageName." ".$t;

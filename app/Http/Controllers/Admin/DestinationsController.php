@@ -17,7 +17,7 @@ class DestinationsController extends Controller
 {
     public function index()
     {
-        $destinations = TDestino::paginate(10);
+        $destinations = TDestino::all()->sortBy('idpais');
         $seo=TSeo::where('estado', 2)->get();
         return view('admin.destinations', compact('destinations','seo'));
     }

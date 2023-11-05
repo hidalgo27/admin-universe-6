@@ -108,7 +108,7 @@
 {{--								<label for="selectAll"></label>--}}
 {{--							</span>--}}
 {{--                    </th>--}}
-{{--                    <th>Code</th>--}}
+                    <th>Code</th>
                     <th>Title</th>
                     {{--<th>Address</th>--}}
                     <th class="text-right">Actions</th>
@@ -124,7 +124,7 @@
 {{--                                <label for="checkbox1"></label>--}}
 {{--                            </span>--}}
 {{--                        </td>--}}
-{{--                        <td>{{$itinerario->codigo}} </td>--}}
+                        <td>{{$itinerario->codigo}} </td>
                         <td><a href="{{route('admin_itinerary_edit_path', $itinerario->id)}}">{{$itinerario->titulo}}</a></td>
                         {{--<td>(171) 555-2222</td>--}}
                         <td class="text-right">
@@ -159,11 +159,11 @@
                 @endforeach
                 </tbody>
             </table>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    {{ $itinerary->links() }}
-                </div>
-            </div>
+{{--            <div class="row justify-content-center">--}}
+{{--                <div class="col-auto">--}}
+{{--                    {{ $itinerary->links() }}--}}
+{{--                </div>--}}
+{{--            </div>--}}
 {{--            <div class="clearfix">--}}
 {{--                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>--}}
 {{--                <ul class="pagination">--}}

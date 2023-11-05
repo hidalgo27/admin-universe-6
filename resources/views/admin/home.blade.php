@@ -332,10 +332,10 @@
                 @endforeach
                 </tbody>
             </table>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    {{ $paquete->links() }}
-                </div>
+{{--            <div class="row justify-content-center">--}}
+{{--                <div class="col-auto">--}}
+{{--                    {{ $paquete->links() }}--}}
+{{--                </div>--}}
 
 {{--                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>--}}
 {{--                <ul class="pagination">--}}
@@ -347,7 +347,7 @@
 {{--                    <li class="page-item"><a href="#" class="page-link">5</a></li>--}}
 {{--                    <li class="page-item"><a href="#" class="page-link">Next</a></li>--}}
 {{--                </ul>--}}
-            </div>
+{{--            </div>--}}
         </div>
     </div>
     <!-- Edit Modal HTML -->
