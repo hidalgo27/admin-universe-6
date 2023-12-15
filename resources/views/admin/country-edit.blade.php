@@ -181,14 +181,117 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <h3 class="font-weight-bold text-secondary small">Weather</h3>
-                            <div class="form-group">
-                                <textarea class="textarea-package" name="txta_weather">{{$country->clima}}</textarea>
+
+                    <div class="">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Short</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_short">{{$country->resumen}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Intro</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_intro">{{$country->intro}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Best time to visit</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_best_time">{{$country->best_time}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Top tours</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_top_tours">{{$country->top_tours}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Things to do</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_things">{{$country->things}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Weather</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_weather">{{$country->weather}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Airports</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_airports">{{$country->airports}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Hotels</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_hotels">{{$country->hotels}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Restaurants</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_restaurants">{{$country->restaurants}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Best way of payment</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_payment">{{$country->payment}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Festivities</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_festivities">{{$country->festivities}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Other useful information</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_information">{{$country->information}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Best places to visit</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_places">{{$country->places}}</textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
+
+                    <div class="d-none">
                     <div class="row">
                         <div class="col">
                             <h3 class="font-weight-bold text-secondary small">Recommend</h3>
@@ -198,14 +301,14 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <h3 class="font-weight-bold text-secondary small">Short</h3>
-                            <div class="form-group">
-                                <textarea class="textarea-package" name="txta_short">{{$country->resumen}}</textarea>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col">--}}
+{{--                            <h3 class="font-weight-bold text-secondary small">Short</h3>--}}
+{{--                            <div class="form-group">--}}
+{{--                                <textarea class="textarea-package" name="txta_short">{{$country->resumen}}</textarea>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="row">
                         <div class="col">
                             <h3 class="font-weight-bold text-secondary small">Extended</h3>
@@ -269,6 +372,8 @@
                                 <textarea class="textarea-package" name="txta_festivals">{{$country->fiestas}}</textarea>
                             </div>
                         </div>
+                    </div>
+
                     </div>
                     <hr>
                     <div class="row mb-3">

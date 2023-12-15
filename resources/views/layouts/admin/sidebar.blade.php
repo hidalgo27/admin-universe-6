@@ -74,15 +74,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin_countries_index_path')}}">
                     <span data-feather="map-pin"></span>
-                    Countries
+                    Countries -> Destinations
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin_destinations_index_path')}}">
-                    <span data-feather="map-pin"></span>
-                    Destinations
-                </a>
-            </li>
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link" href="{{route('admin_destinations_index_path')}}">--}}
+{{--                    <span data-feather="map-pin"></span>--}}
+{{--                    Destinations--}}
+{{--                </a>--}}
+{{--            </li>--}}
 {{--            <li class="nav-item">--}}
 {{--                <a class="nav-link" href="{{route('admin_testimonial_index_path')}}">--}}
 {{--                    <span data-feather="message-circle"></span>--}}

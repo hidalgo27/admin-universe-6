@@ -49,16 +49,31 @@
                             <input type="text" name="txt_destination" class="form-control font-weight-bold" id="txt_destination" placeholder="" value="{{old('txt_destination')}}">
                         </div>
                     </div>
+{{--                    <div class="col">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold text-secondary small" for="txt_region">Region</label>--}}
+{{--                            <input type="text" name="txt_region" class="form-control font-weight-bold" id="txt_region" placeholder="" value="{{old('txt_region')}}">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold text-secondary small" for="txt_country">Country</label>--}}
+{{--                            <input type="text" name="txt_country" class="form-control font-weight-bold" id="txt_country" alue="{{old('txt_country')}}">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    --}}
                     <div class="col">
+                        {{--                            <div class="form-group">--}}
+                        {{--                                <label class="font-weight-bold text-secondary small" for="txt_country">Country</label>--}}
+                        {{--                                <input type="text" name="txt_country" class="form-control font-weight-bold" id="txt_country" value="{{$destination->pais}}">--}}
+                        {{--                            </div>--}}
                         <div class="form-group">
-                            <label class="font-weight-bold text-secondary small" for="txt_region">Region</label>
-                            <input type="text" name="txt_region" class="form-control font-weight-bold" id="txt_region" placeholder="" value="{{old('txt_region')}}">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label class="font-weight-bold text-secondary small" for="txt_country">Country</label>
-                            <input type="text" name="txt_country" class="form-control font-weight-bold" id="txt_country" alue="{{old('txt_country')}}">
+                            <label for="txt_country" class="font-weight-bold text-secondary small">Country</label>
+                            <select class="form-control" name="txt_country" id="txt_country">
+                                @foreach($country as $countries)
+                                    <option value="{{$countries->id}}">{{$countries->nombre}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -78,14 +93,123 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <h3 class="font-weight-bold text-secondary small">Short</h3>
-                        <div class="form-group">
-                            <textarea class="textarea-package" name="txta_short"></textarea>
+
+                <div class="">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Short</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_short"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Intro</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_intro"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Best time to visit</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_best_time"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Top tours</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_top_tours"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Things to do</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_things"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Weather</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_weather"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Airports</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_airports"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Hotels</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_hotels"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Restaurants</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_restaurants"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Best way of payment</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_payment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Festivities</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_festivities"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Other useful information</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_information"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-secondary small">Best places to visit</h3>
+                            <div class="form-group">
+                                <textarea class="textarea-package" name="txta_places"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="d-none">
+{{--                <div class="row">--}}
+{{--                    <div class="col">--}}
+{{--                        <h3 class="font-weight-bold text-secondary small">Short</h3>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <textarea class="textarea-package" name="txta_short"></textarea>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="row">
                     <div class="col">
                         <h3 class="font-weight-bold text-secondary small">Extended</h3>
@@ -150,6 +274,7 @@
                         </div>
                     </div>
                 </div>
+                </div>
                 <hr>
                 <div class="row mb-3">
                     <div class="col text-center">
@@ -172,7 +297,7 @@
                     <h4 class="modal-title">Add SEO</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body"> 
+                <div class="modal-body">
                     <div class="row">
                         <div class="col-4">
                             <div class="col">
@@ -186,20 +311,20 @@
                                     <label>keywords</label><span class="small text-black-50"> (separated by commas)</span>
                                     <textarea type="text" class="form-control" name="txt_keywords" id="txt_keywords"></textarea>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>Description</label><span class="small text-black-50"> (no more than 160 characters)</span>
                                     <textarea type="text" class="form-control" name="txt_description" id="txt_description" maxlength="160"></textarea>
                                 </div>
-                            </div>   
+                            </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>URL canonical</label>
                                     <input type="text" class="form-control" name="txt_url" id="txt_url">
                                 </div>
-                            </div>     
-                            
+                            </div>
+
                         </div>
                         <div class="col-4">
                             <div class="col">
@@ -207,12 +332,12 @@
                                     <label><b>Schema</b> - JSON-LD</label>
                                     <textarea type="text" class="form-control" name="txt_schema" id="txt_schema" rows="18" placeholder="<script type='application/ld+json'>&#10;{&#10;'@context': 'https://schema.org',&#10;...&#10;}&#10;</script>"></textarea>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col text-center">
                                 <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                                 <input type="submit" id="send_clic" class="btn btn-success" data-dismiss="modal" value="Add">
                                 <input type="hidden" name="id_seo_file" id="imagen_seo">
-                            </div>        
+                            </div>
                         </div>
                         <div class="col-4">
                             <div class="row">
@@ -221,7 +346,7 @@
                                         <label><b>Open Graph</b> Type</label>
                                         <input type="text" class="form-control" name="txt_type" id="txt_type">
                                     </div>
-                                </div>   
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-8">
@@ -229,13 +354,13 @@
                                         <label>Site name</label>
                                         <input type="text" class="form-control" name="txt_siteName" id="txt_siteName">
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label>Locale</label>
                                         <input type="text" class="form-control" name="txt_locale" id="txt_locale">
                                     </div>
-                                </div>   
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -249,9 +374,9 @@
                                         <label>Image Height</label>
                                         <input type="number" class="form-control" name="txt_imageHeight" id="txt_imageHeight">
                                     </div>
-                                </div>     
+                                </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col">
                                     <p class="font-weight-bold text-secondary small pb-1 mb-2">Image
@@ -263,7 +388,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>     
+                    </div>
                 </div>
             </div>
         </div>

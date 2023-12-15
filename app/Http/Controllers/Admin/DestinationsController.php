@@ -24,18 +24,22 @@ class DestinationsController extends Controller
 
     public function create()
     {
+        $country = TPais::all()->sortBy('nombre');
         $host = $_SERVER["HTTP_HOST"];
-        return view('admin.destinations-create', compact('host'));
+        return view('admin.destinations-create', compact('host', 'country'));
     }
 
     public function store(Request $request)
     {
         if ($request->filled(['txt_destination', 'txt_country'])){
 
+            $pais = TPais::where('id', $request->input('txt_country'))->first();
+
             $destinations = new TDestino();
             $destinations->nombre = $request->input('txt_destination');
             $destinations->region = $request->input('txt_region');
-            $destinations->pais = $request->input('txt_country');
+            $destinations->pais = $pais->nombre;
+            $destinations->idpais = $pais->id;
             $destinations->url = $request->input('url');
             $destinations->imagen=$request->input('id_blog_file');
             $destinations->resumen = $request->input('txta_short');
@@ -48,6 +52,22 @@ class DestinationsController extends Controller
             $destinations->entretenimiento = $request->input('txta_entertainment');
             $destinations->gastronomia = $request->input('txta_gastronomy');
             $destinations->fiestas = $request->input('txta_festivals');
+
+            $destinations->intro = $request->input('txta_intro');
+            $destinations->best_time = $request->input('txta_best_time');
+            $destinations->top_tours = $request->input('txta_top_tours');
+            $destinations->things = $request->input('txta_things');
+            $destinations->weather=$request->input('txta_weather');
+            $destinations->airports=$request->input('txta_airports');
+
+            $destinations->hotels = $request->input('txta_hotels');
+            $destinations->restaurants = $request->input('txta_restaurants');
+
+            $destinations->payment = $request->input('txta_payment');
+            $destinations->festivities = $request->input('txta_festivities');
+
+            $destinations->information = $request->input('txta_information');
+            $destinations->places = $request->input('txta_places');
 
             $destinations->estado = '1';
             $destinations->save();
@@ -93,7 +113,7 @@ class DestinationsController extends Controller
                 }
             }
 
-            return redirect(route('admin_destinations_index_path'))->with('status', 'Destination created successfully');
+            return redirect(route('admin_countries_index_path'))->with('status', 'Destination created successfully');
 
         }else{
             return "false";
@@ -119,7 +139,7 @@ class DestinationsController extends Controller
             $destinations->nombre = $request->input('txt_destination');
             $destinations->region = $request->input('txt_region');
             $destinations->pais = $pais->nombre;
-            $destinations->idpais = $request->input('txt_country');
+            $destinations->idpais = $pais->id;
             $destinations->url = $request->input('url');
             $destinations->resumen = $request->input('txta_short');
             $destinations->descripcion = $request->input('txta_extended');
@@ -131,6 +151,22 @@ class DestinationsController extends Controller
             $destinations->entretenimiento = $request->input('txta_entertainment');
             $destinations->gastronomia = $request->input('txta_gastronomy');
             $destinations->fiestas = $request->input('txta_festivals');
+
+            $destinations->intro = $request->input('txta_intro');
+            $destinations->best_time = $request->input('txta_best_time');
+            $destinations->top_tours = $request->input('txta_top_tours');
+            $destinations->things = $request->input('txta_things');
+            $destinations->weather=$request->input('txta_weather');
+            $destinations->airports=$request->input('txta_airports');
+
+            $destinations->hotels = $request->input('txta_hotels');
+            $destinations->restaurants = $request->input('txta_restaurants');
+
+            $destinations->payment = $request->input('txta_payment');
+            $destinations->festivities = $request->input('txta_festivities');
+
+            $destinations->information = $request->input('txta_information');
+            $destinations->places = $request->input('txta_places');
 
             $destinations->estado = '1';
             $destinations->save();

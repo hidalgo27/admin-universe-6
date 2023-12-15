@@ -66,14 +66,123 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col">
-                    <h3 class="font-weight-bold text-secondary small">Weather</h3>
-                    <div class="form-group">
-                        <textarea class="textarea-package" name="txta_weather"></textarea>
+
+            <div class="">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Short</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_short"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Intro</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_intro"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Best time to visit</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_best_time"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Top tours</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_top_tours"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Things to do</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_things"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Weather</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_weather"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Airports</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_airports"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Hotels</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_hotels"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Restaurants</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_restaurants"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Best way of payment</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_payment"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Festivities</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_festivities"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Other useful information</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_information"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-secondary small">Best places to visit</h3>
+                        <div class="form-group">
+                            <textarea class="textarea-package" name="txta_places"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="d-none">
+{{--            <div class="row">--}}
+{{--                <div class="col">--}}
+{{--                    <h3 class="font-weight-bold text-secondary small">Weather</h3>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <textarea class="textarea-package" name="txta_weather"></textarea>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="row">
                 <div class="col">
                     <h3 class="font-weight-bold text-secondary small">Recommend</h3>
@@ -83,14 +192,14 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col">
-                    <h3 class="font-weight-bold text-secondary small">Short</h3>
-                    <div class="form-group">
-                        <textarea class="textarea-package" name="txta_short"></textarea>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="row">--}}
+{{--                <div class="col">--}}
+{{--                    <h3 class="font-weight-bold text-secondary small">Short</h3>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <textarea class="textarea-package" name="txta_short"></textarea>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="row">
                 <div class="col">
                     <h3 class="font-weight-bold text-secondary small">Extended</h3>
@@ -154,6 +263,7 @@
                         <textarea class="textarea-package" name="txta_festivals"></textarea>
                     </div>
                 </div>
+            </div>
             </div>
             <hr>
             <div class="row mb-3">

@@ -98,6 +98,7 @@
                     <h2>Manage <b>Countries</b></h2>
                 </div>
                 <div class="col-sm-6">
+                    <a href="{{route('admin_destinations_create_path')}}" class="btn btn-secondary"><span data-feather="plus-circle"></span> Add New Destination</a>
                     <a href="{{route('admin_countries_create_path')}}" class="btn btn-success"><span data-feather="plus-circle"></span> Add New Country</a>
                     <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><span data-feather="trash"></span> Delete</a>
                 </div>
@@ -129,7 +130,82 @@
 {{--                            </span>--}}
                     {{--                            </td>--}}
 
-                <td class="col-9"><a href="{{route('admin_countries_edit_path', $countries->id)}}">{{$countries->nombre}}</a></td>
+                <td class="col-9">
+                    <a href="{{route('admin_countries_edit_path', $countries->id)}}" class="text-primary mb-2 font-weight-bolder">{{$countries->nombre}}</a>
+                    <table>
+                        @foreach($destinations->where('idpais', $countries->id) as $destination)
+                            <tr>
+                                {{--                            <td>--}}
+                                {{--                            <span class="custom-checkbox">--}}
+                                {{--                                <input type="checkbox" id="checkbox1" name="options[]" value="1" >--}}
+                                {{--                                <label for="checkbox1"></label>--}}
+                                {{--                            </span>--}}
+                                {{--                            </td>--}}
+
+                                <td class="col-9"><a href="{{route('admin_destinations_edit_path', $destination->id)}}">{{$destination->nombre}} <small>({{$destination->pais}})</small></a></td>
+                                {{--<td>{{$destination->region}}</td>--}}
+                                <td class="text-right col-1">
+                                    @foreach($seo->where('id_t', $destination->id) as $id_t)
+                                        @if($id_t!=null)
+                                            <a href="#delete_seo_{{$id_t->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
+                                            <div id="delete_seo_{{$id_t->id}}" class="modal fade">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <form action="{{route('admin_seo_delete_path', $id_t->id)}}" method="post">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Delete post</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure you want to delete these Records?</p>
+                                                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                                                <input type="submit" class="btn btn-danger" value="Delete">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td class="text-right col-2">
+                                    <a href="{{route('admin_destinations_edit_path', $destination->id)}}" class="edit"><span data-feather="edit"></span></a>
+                                    <a href="#delete_destination_{{$destination->id}}" class="delete" data-toggle="modal"><span data-feather="trash"></span></a>
+                                </td>
+                            </tr>
+                            <!-- Delete Modal HTML -->
+                            <div id="delete_destination_{{$destination->id}}" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="{{route('admin_destinations_delete_path', $destination->id)}}" method="post">
+                                            @method('DELETE')
+                                            @csrf
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Delete Destination</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete these Records?</p>
+                                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                                <input type="submit" class="btn btn-danger" value="Delete">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @endforeach
+                    </table>
+                </td>
+
                 {{--<td>{{$countries->region}}</td>--}}
                 <td class="text-right col-1">
                     @foreach($seo->where('id_t', $countries->id) as $id_t)
@@ -157,6 +233,10 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
                     @endif
                     @endforeach
                 </td>
