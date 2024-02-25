@@ -61,6 +61,11 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .img-home{
+                width: 100%;
+                height: 100vh;
+                object-fit: cover;
+            }
         </style>
     </head>
     <body>
@@ -79,7 +84,7 @@
                 </div>
             @endif
 
-                <img src="http://gotoperu-mx.s3-us-west-1.amazonaws.com/destinations/slider/1574272727139montana7colores_1574272726.jpg" alt="" class="w-100 vh-100">
+                <img src="http://gotoperu-mx.s3-us-west-1.amazonaws.com/destinations/slider/1574272727139montana7colores_1574272726.jpg" alt="" class="img-home">
 {{--            <div class="content">--}}
 {{--                <div class="title m-b-md">--}}
 {{--                    Laravel--}}
