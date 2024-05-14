@@ -119,7 +119,10 @@ class ItineraryController extends Controller
                 Storage::disk('s3')->delete('itinerary/'.$filename);
             }
         }
-        TItinerarioImagen::where('id', $itinerario_imagen_1->id)->delete();
+        if ($itinerario_imagen_1){
+            TItinerarioImagen::where('id', $itinerario_imagen_1->id)->delete();
+        }
+
 
         $itinerary->delete();
         return redirect(route('admin_itinerary_index_path'))->with('delete', 'Itinerary successfully removed');
