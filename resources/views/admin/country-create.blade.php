@@ -402,7 +402,7 @@
                 dataT=time;
                 return time+file.name;
             },
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
             addRemoveLinks: true,
             timeout: 50000,
             removedfile: function(file){
@@ -456,7 +456,7 @@
                 var time = dt.getTime();
                 return time+file.name;
             },
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
             addRemoveLinks: true,
             timeout: 50000,
             removedfile: function(file){
@@ -500,7 +500,7 @@
                 var time = dt.getTime();
                 return time+file.name;
             },
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
             addRemoveLinks: true,
             timeout: 50000,
             removedfile: function(file){

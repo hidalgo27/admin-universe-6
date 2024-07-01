@@ -32,7 +32,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-9">            
+        <div class="col-9">
             <form action="{{route('admin_hotel_store_path')}}" method="post">
                 @csrf
                 <div class="row">
@@ -153,7 +153,7 @@
                 //     var time = dt.getTime();
                 //     return time+file.name;
                 // },
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
                 addRemoveLinks: true,
                 timeout: 50000,
                 removedfile: function(file){

@@ -31,7 +31,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-9">   
+        <div class="col-9">
             <form action="{{route('admin_itinerary_store_path')}}" method="post">
                 @csrf
                 <div class="row">
@@ -144,7 +144,7 @@
 
                     {{--});--}}
                 {{--},--}}
-                
+
                 maxFilesize: 12,
                 renameFile: function(file) {
                     var dt = new Date();
@@ -152,7 +152,7 @@
                     dataT=time;
                     return time+file.name;
                 },
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
                 addRemoveLinks: true,
                 timeout: 50000,
                 removedfile: function(file){
