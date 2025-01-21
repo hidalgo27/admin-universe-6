@@ -62,6 +62,7 @@ return [
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
+            'suppress_php_deprecation_warning' => env('AWS_SUPPRESS_PHP_DEPRECATION_WARNING', false),
         ],
 
     ],
