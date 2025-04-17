@@ -204,6 +204,14 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="font-weight-bold text-secondary small" for="txt_titulo">Title</label>
+                                <input type="text" name="txt_titulo" class="form-control font-weight-bold" id="txt_titulo" placeholder="" value="{{$destination->titulo}}">
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="">
                         <div class="row">
@@ -211,6 +219,14 @@
                                 <h3 class="font-weight-bold text-secondary small">Short</h3>
                                 <div class="form-group">
                                     <textarea class="textarea-package" name="txta_short">{{$destination->resumen}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Description</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_extended">{{$destination->descripcion}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -320,14 +336,7 @@
 {{--                            </div>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
-                    <div class="row">
-                        <div class="col">
-                            <h3 class="font-weight-bold text-secondary small">Extended</h3>
-                            <div class="form-group">
-                                <textarea class="textarea-package" name="txta_extended">{{$destination->descripcion}}</textarea>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col">
                             <h3 class="font-weight-bold text-secondary small">History</h3>

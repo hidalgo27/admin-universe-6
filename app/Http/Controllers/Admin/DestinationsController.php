@@ -41,6 +41,7 @@ class DestinationsController extends Controller
             $destinations->pais = $pais->nombre;
             $destinations->idpais = $pais->id;
             $destinations->url = $request->input('url');
+            $destinations->titulo = $request->input('txt_titulo');
             $destinations->imagen=$request->input('id_blog_file');
             $destinations->resumen = $request->input('txta_short');
             $destinations->descripcion = $request->input('txta_extended');
@@ -70,6 +71,7 @@ class DestinationsController extends Controller
             $destinations->places = $request->input('txta_places');
 
             $destinations->estado = '1';
+            
             $destinations->save();
 
             $desti_recover=TDestino::latest()->first();
@@ -127,6 +129,7 @@ class DestinationsController extends Controller
         $host = $_SERVER["HTTP_HOST"];
         $seo=TSeo::where('estado', 2)->where('id_t',$id)->get()->first();
         return view('admin.destinations-edit', compact('destinations','host','seo','country'));
+
     }
 
     public function update(Request $request, $id)
@@ -141,6 +144,7 @@ class DestinationsController extends Controller
             $destinations->pais = $pais->nombre;
             $destinations->idpais = $pais->id;
             $destinations->url = $request->input('url');
+            $destinations->titulo = $request->input('txt_titulo');
             $destinations->resumen = $request->input('txta_short');
             $destinations->descripcion = $request->input('txta_extended');
             $destinations->historia = $request->input('txta_history');
