@@ -71,7 +71,7 @@ class DestinationsController extends Controller
             $destinations->places = $request->input('txta_places');
 
             $destinations->estado = '1';
-            
+
             $destinations->save();
 
             $desti_recover=TDestino::latest()->first();

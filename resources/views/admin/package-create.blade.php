@@ -680,7 +680,7 @@
             $("#dropzone").dropzone({
 
                 maxFilesize: 12,
-                maxFiles: 3,
+                maxFiles: 15,
                 // renameFile: function(file) {
                 //     var dt = new Date();
                 //     var time = dt.getTime();
