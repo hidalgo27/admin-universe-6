@@ -32,15 +32,14 @@
                 </form>
             </div>
             <div class="col pt-4">
-                <p class="font-weight-bold text-secondary small pb-1 mb-2">Hotel Gallery Images</p>
-                <form method="post"
-                      action="{{ route('admin_hotel_gallery_upload_path') }}"
-                      enctype="multipart/form-data"
-                      class="dropzone"
-                      id="dropzone_gallery">
+
+                <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Hotel Gallery Images <span class="badge badge-warning">1900x1080 PX</span></p>
+                <form method="post" action="{{ route('admin_hotel_slider_getFile_path') }}" enctype="multipart/form-data"
+                      class="dropzone" id="dropzone_hotel_gallery">
+                    <input type="hidden" name="aux" id="imagenes_aux">
                     @csrf
-                    <input type="hidden" name="idhotel" value="{{ $hotels->id ?? '' }}"> {{-- si estás en edición --}}
                 </form>
+
             </div>
 
 
@@ -145,6 +144,8 @@
                     <div class="col text-center">
                         {{--<a href="" class="btn btn-primary font-weight-bold">Update Package</a>--}}
                         <input type="hidden" name="id_blog_file" id="imagen">
+                        <input type="hidden" name="hotel_slider_images" id="imagenes">
+                        <input type="hidden" name="hotel_slider_aux" id="imagenes_aux">
                         <button type="submit" class="btn btn-primary font-weight-bold">Create Hotel</button>
                     </div>
                 </div>
@@ -205,18 +206,62 @@
             });
         });
 
-        $("#dropzone_gallery").dropzone({
-            maxFilesize: 12,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
-            addRemoveLinks: true,
-            timeout: 50000,
-            success: function (file, response) {
-                console.log("Imagen guardada en galería:", response.url);
-            },
-            error: function (file, response) {
-                console.error("Error al subir imagen:", response);
-            }
+        Dropzone.autoDiscover = false;
+        jQuery(document).ready(function () {
+            const images = [];
+            const images_aux = [];
+            var dataT = "";
+            var aux2 = "";
+
+            $("#dropzone_hotel_gallery").dropzone({
+                maxFilesize: 12,
+                maxFiles: 10,
+                renameFile: function (file) {
+                    var dt = new Date();
+                    var time = dt.getTime();
+                    dataT = time;
+                    return time + file.name;
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
+                addRemoveLinks: true,
+                timeout: 50000,
+                removedfile: function (file) {
+                    var name = file.name;
+                    var dataString = $('#imagenes_aux').serialize() + '&' + $.param({ 'name_file': name });
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_hotel_slider_deleteFile_path') }}", // asegúrate de tener esta ruta
+                        data: dataString,
+                        success: function (data) {
+                            aux2 = data;
+                            var index_name_aux = images_aux.indexOf(aux2);
+                            images_aux.splice(index_name_aux, 1);
+                            images.splice(index_name_aux, 1);
+                            document.getElementById("imagenes").value = images;
+                            document.getElementById("imagenes_aux").value = images_aux;
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    return (fileRef = file.previewElement) != null
+                        ? fileRef.parentNode.removeChild(file.previewElement)
+                        : void 0;
+                },
+                success: function (file, response) {
+                    images_aux.push(response + " " + dataT);
+                    var img = response.split(" ");
+                    images.push(img[0]);
+                    document.getElementById("imagenes").value = images;
+                    document.getElementById("imagenes_aux").value = images_aux;
+                }
+            });
         });
+
 
 
     </script>

@@ -536,6 +536,17 @@ Route::post('admin/hotel/image/gallery/store', [
     'as' => 'admin_hotel_gallery_upload_path',
 ]);
 
+
+Route::post('admin/hotel/image/hotel_slider_getFile', [
+    'uses' => 'Admin\HotelController@hotel_slider_getFile',
+    'as' => 'admin_hotel_slider_getFile_path',
+]);
+
+Route::post('admin/hotel/image/slider/delete', [
+    'uses' => 'Admin\HotelController@hotel_slider_deleteFile',
+    'as' => 'admin_hotel_slider_deleteFile_path',
+]);
+
 //BLOG
 Route::get('admin/blog', [
     'uses' => 'Admin\BlogController@index',

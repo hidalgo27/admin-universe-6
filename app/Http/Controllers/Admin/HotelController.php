@@ -70,21 +70,29 @@ class HotelController extends Controller
             }
         }
 
-        $gallery = $request->input('gallery_images');
+        $gallery = $request->input('hotel_slider_images');
         if ($gallery) {
-            $imagenes = json_decode($gallery, true);
+            $imagenes = is_array($gallery) ? $gallery : explode(',', $gallery);
             foreach ($imagenes as $img) {
-                $imagen = new THotelImagen();
-                $imagen->idhotel = $hotel->id;
-                $imagen->imagen = $img;
-                $imagen->save();
+                THotelImagen::create([
+                    'idhotel' => $hotel->id,
+                    'imagen' => trim($img),
+                ]);
             }
         }
+
 
 
         return redirect(route('admin_hotel_index_path'))->with('status', 'Hotel created successfully');
 
     }
+    public function hotel_slider_deleteFile(Request $request)
+    {
+        $name = $request->get('name_file');
+        Storage::disk('s3')->delete('hotel/slider/'.$name);
+        return $name;
+    }
+
     public function edit($id)
     {
         $hotel = THotel::where('id', $id)->get();
@@ -285,6 +293,20 @@ class HotelController extends Controller
         ]);
 
         return response()->json(['success' => true, 'url' => $url]);
+    }
+
+    public function hotel_slider_getFile(Request $request)
+    {
+        $t = time();
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.$t.'.'.$extension;
+
+        Storage::disk('s3')->put('hotel/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageUrl = Storage::disk('s3')->url('hotel/slider/'.$filenametostore);
+
+        return $imageUrl . ' ' . $t; // igual que destinos
     }
 
 

@@ -472,7 +472,7 @@
             //     return false;
             // },
 
-        });dropzone_destinations
+        });
         $("#dropzone_imagen").dropzone({
 
             maxFilesize: 12,
