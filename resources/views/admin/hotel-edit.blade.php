@@ -389,7 +389,7 @@
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                         },
                         type: 'POST',
-                        url: "{{ route('admin_hotel_gallery_delete_temp_path') }}", // si usas eliminación temporal
+                        url: "{{ route('admin_hotel_gallery_delete_path') }}", // si usas eliminación temporal
                         data: dataString,
                         success: function (data) {
                             const index_name_aux = images_aux.indexOf(data);
