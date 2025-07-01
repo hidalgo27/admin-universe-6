@@ -68,6 +68,51 @@
                             </form>
                         @endif
                     </div>
+                    @if ($hotels->imagenes->count() > 0)
+                        <div class="col-12 ">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="font-weight-bold text-secondary small pb-1 mb-2">Hotel Image Gallery <span class="badge badge-warning">Recomendado: 1900x1080 PX</span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="bd-example">
+                                        <div id="hotelGalleryCarousel" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                @foreach($hotels->imagenes as $index => $imagen)
+                                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                                        <img src="{{ $imagen->imagen }}" alt="Imagen del hotel" class="img-thumbnail w-100 mb-2">
+                                                        <div class="carousel-caption d-none d-md-block">
+                                                            <form action="{{ route('admin_hotel_gallery_delete_path') }}" method="POST" class="text-center">
+                                                                @csrf
+                                                                <input type="hidden" name="imagen_id" value="{{ $imagen->id }}">
+                                                                <button type="submit" class="btn btn-xs btn-danger">Eliminar</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <a class="carousel-control-prev" href="#hotelGalleryCarousel" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#hotelGalleryCarousel" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    <form method="post" action="{{ route('admin_hotel_gallery_upload_path') }}" enctype="multipart/form-data" class="dropzone" id="dropzone_gallery">
+                        @csrf
+                        <input type="hidden" name="idhotel" value="{{ $hotels->id }}">
+                    </form>
+
                 </div>
             </div>
             <div class="col">
@@ -337,6 +382,20 @@
 
             });
         });
+
+        $("#dropzone_gallery").dropzone({
+            maxFilesize: 12,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
+            addRemoveLinks: true,
+            timeout: 50000,
+            success: function (file, response) {
+                console.log("Imagen subida:", response);
+            },
+            error: function (file, response) {
+                console.error("Error al subir imagen:", response);
+            }
+        });
+
 
 
         tinymce.init({

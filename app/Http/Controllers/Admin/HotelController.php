@@ -133,6 +133,41 @@ class HotelController extends Controller
         return redirect(route('admin_hotel_edit_path', $id))->with('status', 'Successfully updated package');
 
     }
+
+    public function uploadGallery(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|image',
+            'idhotel' => 'required|integer|exists:thotel,id'
+        ]);
+
+        $filename = $request->file('file')->getClientOriginalName();
+        $nameToStore = pathinfo($filename, PATHINFO_FILENAME).'_'.time().'.'.$request->file('file')->getClientOriginalExtension();
+
+        Storage::disk('s3')->put('hotel/'.$nameToStore, fopen($request->file('file'), 'r+'), 'public');
+        $url = Storage::disk('s3')->url('hotel/'.$nameToStore);
+
+        THotelImagen::create([
+            'idhotel' => $request->idhotel,
+            'imagen' => $url,
+        ]);
+
+        return response()->json(['success' => true, 'url' => $url]);
+    }
+
+//    public function deleteGalleryImage(Request $request)
+//    {
+//        $request->validate([
+//            'imagen_id' => 'required|exists:thotelimagen,id'
+//        ]);
+//
+//        $imagen = THotelImagen::find($request->imagen_id);
+//        $imagen->delete();
+//
+//        return back()->with('status', 'Imagen eliminada correctamente');
+//    }
+
+
     public function destroy($id)
     {
         $hotel=THotel::find($id);
@@ -184,6 +219,28 @@ class HotelController extends Controller
 
         return redirect(route('admin_hotel_edit_path', $id_hotel_file))->with('delete', 'Image successfully removed');
     }
+
+    public function deleteGalleryImage(Request $request)
+    {
+        $id_imagen = $request->get('imagen_id');
+
+        $imagen = THotelImagen::findOrFail($id_imagen);
+
+        // Extraer nombre del archivo desde la URL
+        $filenameParts = explode('hotel/', $imagen->imagen);
+        if (isset($filenameParts[1])) {
+            $filename = $filenameParts[1];
+
+            // Eliminar del disco S3
+            Storage::disk('s3')->delete('hotel/' . $filename);
+        }
+
+        // Eliminar el registro de la base de datos
+        $imagen->delete();
+
+        return back()->with('status', 'Imagen eliminada correctamente');
+    }
+
 
     public function image_delete_hotel(Request $request)
     {

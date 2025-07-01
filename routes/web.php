@@ -136,6 +136,12 @@ Route::post('admin/itinerary/image/image_store', [
     'uses' => 'Admin\ItineraryController@image_store',
     'as' => 'admin_itinerary_image_store_path',
 ]);
+
+Route::post('admin/itinerary/image/uploadGallery', [
+    'uses' => 'Admin\ItineraryController@uploadGallery',
+    'as' => 'admin_hotel_gallery_upload_path',
+]);
+
 Route::post('admin/itinerary/image/image_delete', [
     'uses' => 'Admin\ItineraryController@image_delete',
     'as' => 'admin_iitinerary_mage_delete_path',
@@ -143,6 +149,10 @@ Route::post('admin/itinerary/image/image_delete', [
 Route::post('admin/itinerary/image/image_delete_form', [
     'uses' => 'Admin\ItineraryController@image_delete_form',
     'as' => 'admin_iitinerary_image_delete_form_path',
+]);
+Route::post('admin/itinerary/image/deleteGalleryImage', [
+    'uses' => 'Admin\ItineraryController@deleteGalleryImage',
+    'as' => 'admin_hotel_gallery_delete_path',
 ]);
 Route::get('admin/itinerary/image/image_list', [
     'uses' => 'Admin\ItineraryController@image_list',
