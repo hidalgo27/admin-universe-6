@@ -93,6 +93,7 @@ class HotelController extends Controller
         return $name;
     }
 
+
     public function edit($id)
     {
         $hotel = THotel::where('id', $id)->get();
@@ -310,14 +311,45 @@ class HotelController extends Controller
     }
 
 
-    public function hotel_imagen_deleteFile(Request $request){
-        $id_blog_file = $request->get('id_blog_file');
-        error_log($id_blog_file);
-        $filename = explode('hotel/', $id_blog_file);
-        $filename = $filename[1];
-        Storage::disk('s3')->delete('hotel/'.$filename);
+
+    public function hotel_imagen_deleteFile(Request $request)
+    {
+        $id_file = $request->get('id_file'); // el src completo que llega del frontend
+
+        $filename = explode('hotels/', $id_file)[1];
+        Storage::disk('s3')->delete('hotels/' . $filename);
 
         return $filename;
     }
+
+    public function hotel_slider_form_delete(Request $request)
+    {
+        $id_imagen = $request->get('id_hotel_imagen');
+        $id_hotel = $request->get('id_hotel');
+
+        $imagen = THotelImagen::find($id_imagen);
+        $filename = explode('hotels/slider/', $imagen->nombre)[1];
+        Storage::disk('s3')->delete('hotels/slider/' . $filename);
+
+        THotelImagen::where('id', $id_imagen)->delete();
+
+        return redirect(route('admin_hotels_edit_path', $id_hotel))->with('delete', 'Image successfully removed');
+    }
+
+    public function deleteHotelGalleryImage(Request $request)
+    {
+        $imagen = THotelImagen::find($request->imagen_id);
+
+        if ($imagen) {
+            $filename = explode('hotels/slider/', $imagen->imagen);
+            $filename = $filename[1];
+            Storage::disk('s3')->delete('hotels/slider/' . $filename);
+
+            $imagen->delete();
+        }
+
+        return back()->with('delete', 'Imagen eliminada con éxito');
+    }
+
 }
 

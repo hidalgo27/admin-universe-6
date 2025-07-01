@@ -108,10 +108,17 @@
                             </div>
                         </div>
                     @endif
-                    <form method="post" action="{{ route('admin_hotel_gallery_upload_path') }}" enctype="multipart/form-data" class="dropzone" id="dropzone_gallery">
+{{--                    <form method="post" action="{{ route('admin_hotel_gallery_upload_path') }}" enctype="multipart/form-data" class="dropzone" id="dropzone_gallery">--}}
+{{--                        @csrf--}}
+{{--                        <input type="hidden" name="idhotel" value="{{ $hotels->id }}">--}}
+{{--                    </form>--}}
+
+                    <form method="post" action="{{route('admin_image_hotels_slider_store_path')}}" enctype="multipart/form-data"
+                          class="dropzone" id="dropzone_hotels">
+                        <input type="hidden" value="{{$hotel->id}}" name="id_hotels_file">
                         @csrf
-                        <input type="hidden" name="idhotel" value="{{ $hotels->id }}">
                     </form>
+
 
                 </div>
             </div>
@@ -288,6 +295,7 @@
                 // },
 
             });
+
             $("#dropzone2").dropzone({
 
                 maxFilesize: 12,
@@ -336,52 +344,38 @@
     </script>
     <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=4im5y0hsu2i10v7je2aecag5d41lh7hc0oh1mpj0lgv8pmgj "></script>
     <script>
-        Dropzone.autoDiscover = false;
-        jQuery(document).ready(function() {
-            $("#dropzone_hotel").dropzone({
-
-                maxFilesize: 12,
-                maxFiles: 1,
-                // renameFile: function(file) {
-                //     var dt = new Date();
-                //     var time = dt.getTime();
-                //     return time+file.name;
-                // },
-                acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
-                addRemoveLinks: true,
-                timeout: 50000,
-                removedfile: function(file){
-                    var name = file.name;
-                    alert(name);
-                    var dataString = $('#dropzone_hotel').serialize();
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                        },
-                        type: 'POST',
-                        url: "{{ route('admin_hotel_image_delete_path') }}",
-                        data: dataString,
-                        success: function (data) {
-                            console.log("File has been successfully removed!!");
-                        },
-                        error: function (e) {
-                            console.log(e);
-                        }
-                    });
-                    var fileRef;
-                    return (fileRef = file.previewElement) != null ?
-                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
-                },
-
-                // success: function (file, response) {
-                //     console.log(response);
-                // },
-                // error: function (file, response) {
-                //     return false;
-                // },
-
-            });
+        $("#dropzone_hotels").dropzone({
+            maxFilesize: 12,
+            renameFile: function(file) {
+                var dt = new Date();
+                var time = dt.getTime();
+                return time + file.name;
+            },
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
+            addRemoveLinks: true,
+            timeout: 50000,
+            removedfile: function(file){
+                var dataString = $('#dropzone_hotels').serialize() + '&' + $.param({ 'name_file': file.name });
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    type: 'POST',
+                    url: "{{ route('admin_hotels_imagen_deleteFile_path') }}",
+                    data: dataString,
+                    success: function (data) {
+                        console.log("File successfully removed.");
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+                var fileRef;
+                return (fileRef = file.previewElement) != null ?
+                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
+            }
         });
+
 
         $("#dropzone_gallery").dropzone({
             maxFilesize: 12,
