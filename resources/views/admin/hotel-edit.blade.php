@@ -113,9 +113,17 @@
 {{--                        <input type="hidden" name="idhotel" value="{{ $hotels->id }}">--}}
 {{--                    </form>--}}
 
-                    <form method="post" action="{{route('admin_image_hotels_slider_store_path')}}" enctype="multipart/form-data"
-                          class="dropzone" id="dropzone_hotels">
-                        <input type="hidden" value="{{$hotel->id}}" name="id_hotels_file">
+{{--                    <form method="post" action="{{route('admin_hotel_gallery_upload_path')}}" enctype="multipart/form-data"--}}
+{{--                          class="dropzone" id="dropzone_hotels">--}}
+{{--                        <input type="hidden" value="{{$hotel->id}}" name="id_hotels_file">--}}
+{{--                        @csrf--}}
+{{--                    </form>--}}
+
+                    <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Subir nuevas imágenes</p>
+                    <form method="post" action="{{ route('admin_hotel_gallery_store_path') }}"
+                          enctype="multipart/form-data"
+                          class="dropzone" id="dropzone_hotel_gallery">
+                        <input type="hidden" name="idhotel" value="{{ $hotels->id }}">
                         @csrf
                     </form>
 
@@ -338,6 +346,68 @@
                 //     return false;
                 // },
 
+            });
+        });
+
+        Dropzone.autoDiscover = false;
+
+        jQuery(document).ready(function () {
+            const images = [];
+            const images_aux = [];
+            let dataT = "";
+
+            $("#dropzone_hotel_gallery").dropzone({
+                maxFilesize: 12,
+                acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
+                addRemoveLinks: true,
+                timeout: 50000,
+
+                renameFile: function (file) {
+                    const dt = new Date();
+                    const time = dt.getTime();
+                    dataT = time;
+                    return time + file.name;
+                },
+
+                success: function (file, response) {
+                    // respuesta tipo: { success: 'https://s3...jpg' }
+                    images_aux.push(response.success + " " + dataT);
+                    const img = response.success.split(" ");
+                    images.push(img[0]);
+
+                    // Guardamos en input oculto por si lo necesitas en el store (opcional)
+                    $("#gallery_images").val(JSON.stringify(images));
+                },
+
+                removedfile: function (file) {
+                    const name = file.name;
+
+                    const dataString = $('#gallery_images').serialize() + '&' + $.param({ name_file: name });
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        type: 'POST',
+                        url: "{{ route('admin_hotel_gallery_delete_temp_path') }}", // si usas eliminación temporal
+                        data: dataString,
+                        success: function (data) {
+                            const index_name_aux = images_aux.indexOf(data);
+                            images_aux.splice(index_name_aux, 1);
+                            images.splice(index_name_aux, 1);
+                            $("#gallery_images").val(JSON.stringify(images));
+                            console.log("Imagen eliminada temporalmente");
+                        },
+                        error: function (e) {
+                            console.log("Error al eliminar:", e);
+                        }
+                    });
+
+                    const fileRef = file.previewElement;
+                    if (fileRef != null) {
+                        fileRef.parentNode.removeChild(fileRef);
+                    }
+                }
             });
         });
 

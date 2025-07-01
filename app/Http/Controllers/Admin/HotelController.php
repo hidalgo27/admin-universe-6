@@ -351,5 +351,25 @@ class HotelController extends Controller
         return back()->with('delete', 'Imagen eliminada con éxito');
     }
 
+    public function image_hotel_gallery_store(Request $request)
+    {
+        $idhotel = $request->get('idhotel');
+
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+
+        Storage::disk('s3')->put('hotels/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $imageUrl = Storage::disk('s3')->url('hotels/slider/'.$filenametostore);
+
+        $hotelImage = new \App\THotelImagen();
+        $hotelImage->imagen = $imageUrl;
+        $hotelImage->idhotel = $idhotel;
+        $hotelImage->save();
+
+        return response()->json(['success' => $imageUrl]);
+    }
+
 }
 
