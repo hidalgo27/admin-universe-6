@@ -229,22 +229,26 @@ class HotelController extends Controller
         return redirect(route('admin_hotel_edit_path', $id_hotel_file))->with('delete', 'Image successfully removed');
     }
 
+
+
     public function deleteGalleryImage(Request $request)
     {
         $id_imagen = $request->get('imagen_id');
+        if (!$id_imagen) {
+            return back()->with('error', 'ID de imagen no recibido.');
+        }
 
-        $imagen = THotelImagen::findOrFail($id_imagen);
+        $imagen = THotelImagen::find($id_imagen);
+        if (!$imagen) {
+            return back()->with('error', 'Imagen no encontrada.');
+        }
 
-        // Extraer nombre del archivo desde la URL
         $filenameParts = explode('hotel/', $imagen->imagen);
         if (isset($filenameParts[1])) {
             $filename = $filenameParts[1];
-
-            // Eliminar del disco S3
             Storage::disk('s3')->delete('hotel/' . $filename);
         }
 
-        // Eliminar el registro de la base de datos
         $imagen->delete();
 
         return back()->with('status', 'Imagen eliminada correctamente');
