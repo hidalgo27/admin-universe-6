@@ -563,6 +563,11 @@ Route::post('admin/hotels/image/gallery/store', [
 ]);
 
 
+Route::post('admin/hotel/image/delete', [
+    'uses' => 'Admin\HotelController@deleteGalleryImage',
+    'as' => 'admin_hotel_gallery_delete_path',
+]);
+
 //BLOG
 Route::get('admin/blog', [
     'uses' => 'Admin\BlogController@index',
