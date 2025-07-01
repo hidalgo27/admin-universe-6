@@ -530,6 +530,12 @@ Route::get('admin/hotel/image/image_list', [
     'uses' => 'Admin\HotelController@image_list',
     'as' => 'admin_hotel_list_path',
 ]);
+
+Route::post('admin/hotel/image/gallery/store', [
+    'uses' => 'Admin\HotelController@hotel_imagen_gallery_store',
+    'as' => 'admin_hotel_gallery_upload_path',
+]);
+
 //BLOG
 Route::get('admin/blog', [
     'uses' => 'Admin\BlogController@index',

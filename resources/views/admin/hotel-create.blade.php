@@ -33,12 +33,16 @@
             </div>
             <div class="col pt-4">
                 <p class="font-weight-bold text-secondary small pb-1 mb-2">Hotel Gallery Images</p>
-                <form method="post" action="{{ route('admin_hotel_imagen_getFile_path') }}" enctype="multipart/form-data"
-                      class="dropzone" id="dropzone_gallery">
+                <form method="post"
+                      action="{{ route('admin_hotel_gallery_upload_path') }}"
+                      enctype="multipart/form-data"
+                      class="dropzone"
+                      id="dropzone_gallery">
                     @csrf
+                    <input type="hidden" name="idhotel" value="{{ $hotels->id ?? '' }}"> {{-- si estás en edición --}}
                 </form>
-                <input type="hidden" name="gallery_images" id="gallery_images">
             </div>
+
 
         </div>
         <div class="col-9">
@@ -207,18 +211,13 @@
             addRemoveLinks: true,
             timeout: 50000,
             success: function (file, response) {
-                let input = document.getElementById("gallery_images");
-                let current = input.value ? JSON.parse(input.value) : [];
-                current.push(response);
-                input.value = JSON.stringify(current);
+                console.log("Imagen guardada en galería:", response.url);
             },
-            removedfile: function (file) {
-                var fileRef;
-                return (fileRef = file.previewElement) != null
-                    ? fileRef.parentNode.removeChild(file.previewElement)
-                    : void 0;
+            error: function (file, response) {
+                console.error("Error al subir imagen:", response);
             }
         });
+
 
     </script>
     <script type="text/javascript">

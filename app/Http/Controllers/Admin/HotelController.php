@@ -264,6 +264,30 @@ class HotelController extends Controller
         $imageName = Storage::disk('s3')->url('hotel/'.$filenametostore);
         return $imageName;
     }
+    public function hotel_imagen_gallery_store(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|image',
+            'idhotel' => 'required|integer|exists:thotel,id',
+        ]);
+
+        $filenamewithextension = $request->file('file')->getClientOriginalName();
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+
+        Storage::disk('s3')->put('hotel/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
+        $url = Storage::disk('s3')->url('hotel/'.$filenametostore);
+
+        THotelImagen::create([
+            'idhotel' => $request->idhotel,
+            'imagen' => $url,
+        ]);
+
+        return response()->json(['success' => true, 'url' => $url]);
+    }
+
+
     public function hotel_imagen_deleteFile(Request $request){
         $id_blog_file = $request->get('id_blog_file');
         error_log($id_blog_file);
