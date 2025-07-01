@@ -557,11 +557,6 @@ Route::post('admin/hotels/image/hotel_slider_form_delete', [
     'as' => 'admin_hotels_slider_form_delete_path',
 ]);
 
-Route::post('admin/hotels/image/delete', [
-    'uses' => 'Admin\HotelController@deleteHotelGalleryImage',
-    'as' => 'admin_hotel_gallery_delete_path',
-]);
-
 Route::post('admin/hotels/image/gallery/store', [
     'uses' => 'Admin\HotelController@image_hotel_gallery_store',
     'as' => 'admin_hotel_gallery_store_path',
