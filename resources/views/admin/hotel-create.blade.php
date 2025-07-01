@@ -31,6 +31,15 @@
                     @csrf
                 </form>
             </div>
+            <div class="col pt-4">
+                <p class="font-weight-bold text-secondary small pb-1 mb-2">Hotel Gallery Images</p>
+                <form method="post" action="{{ route('admin_hotel_imagen_getFile_path') }}" enctype="multipart/form-data"
+                      class="dropzone" id="dropzone_gallery">
+                    @csrf
+                </form>
+                <input type="hidden" name="gallery_images" id="gallery_images">
+            </div>
+
         </div>
         <div class="col-9">
             <form action="{{route('admin_hotel_store_path')}}" method="post">
@@ -191,6 +200,26 @@
 
             });
         });
+
+        $("#dropzone_gallery").dropzone({
+            maxFilesize: 12,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.webp,.avif",
+            addRemoveLinks: true,
+            timeout: 50000,
+            success: function (file, response) {
+                let input = document.getElementById("gallery_images");
+                let current = input.value ? JSON.parse(input.value) : [];
+                current.push(response);
+                input.value = JSON.stringify(current);
+            },
+            removedfile: function (file) {
+                var fileRef;
+                return (fileRef = file.previewElement) != null
+                    ? fileRef.parentNode.removeChild(file.previewElement)
+                    : void 0;
+            }
+        });
+
     </script>
     <script type="text/javascript">
         tinymce.init({

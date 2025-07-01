@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\TDestino;
 use App\THotel;
 use App\THotelDestino;
+use App\THotelImagen;
 use App\TPaquete;
 use App\TPaqueteDestino;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         $hotel = $request->input('txt_hotel');
+
 
         $hotel = new THotel();
         $hotel->nombre = $request->input('txt_hotel');
@@ -67,6 +69,18 @@ class HotelController extends Controller
                 THotelDestino::where('idhotel', $hotel->id)->delete();
             }
         }
+
+        $gallery = $request->input('gallery_images');
+        if ($gallery) {
+            $imagenes = json_decode($gallery, true);
+            foreach ($imagenes as $img) {
+                $imagen = new THotelImagen();
+                $imagen->idhotel = $hotel->id;
+                $imagen->imagen = $img;
+                $imagen->save();
+            }
+        }
+
 
         return redirect(route('admin_hotel_index_path'))->with('status', 'Hotel created successfully');
 
@@ -126,7 +140,7 @@ class HotelController extends Controller
         if($hotel_destino){
             return redirect(route('admin_hotel_index_path'))->with('status', 'It cannot be deleted');
         }else{
-            
+
             if ($hotel->imagen != NULL) {
                 $filename = explode('hotel/', $hotel->imagen);
                 $filename = $filename[1];
@@ -135,7 +149,7 @@ class HotelController extends Controller
             $hotel->delete();
             return redirect(route('admin_hotel_index_path'))->with('status', 'Hotel successfully removed');
         }
-        
+
     }
     public function image_store(Request $request)
     {
@@ -188,7 +202,7 @@ class HotelController extends Controller
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $filenametostore = $filename.'_'.time().'.'.$extension;
-        
+
         Storage::disk('s3')->put('hotel/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('hotel/'.$filenametostore);
         return $imageName;

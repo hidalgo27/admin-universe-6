@@ -12,4 +12,10 @@ class THotel extends Model
     {
         return $this->hasMany(THotelDestino::class, 'idhotel');
     }
+
+    public function imagenes()
+    {
+        return $this->hasMany(THotelImagen::class, 'idhotel');
+    }
+
 }
