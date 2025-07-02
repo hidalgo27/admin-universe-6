@@ -49,7 +49,7 @@
                         @if (empty($hotels->imagen))
                             <p class="font-weight-bold text-secondary small pb-1 mb-2">Package Thumbnail Image <span class="badge badge-warning">420x280 PX</span></p>
                             <form method="post" action="{{route('admin_hotel_image_store_path')}}" enctype="multipart/form-data"
-                                  class="dropzone" id="dropzone_hotel">
+                                  class="dropzone" id="dropzone_hotels">
                                 <input type="hidden" value="{{$hotels->id}}" name="id_hotel_file">
                                 @csrf
                             </form>
@@ -119,13 +119,15 @@
 {{--                        @csrf--}}
 {{--                    </form>--}}
 
-                    <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Subir nuevas imágenes</p>
-                    <form method="post" action="{{ route('admin_hotel_gallery_store_path') }}"
-                          enctype="multipart/form-data"
-                          class="dropzone" id="dropzone_hotel_gallery">
-                        <input type="hidden" name="idhotel" value="{{ $hotels->id }}">
-                        @csrf
-                    </form>
+                    <div class="col-12">
+                        <p class="font-weight-bold text-secondary small pb-1 mb-2 mt-4">Subir nuevas imágenes</p>
+                        <form method="post" action="{{ route('admin_hotel_gallery_store_path') }}"
+                              enctype="multipart/form-data"
+                              class="dropzone" id="dropzone_hotel_gallery">
+                            <input type="hidden" name="idhotel" value="{{ $hotels->id }}">
+                            @csrf
+                        </form>
+                    </div>
 
 
                 </div>
