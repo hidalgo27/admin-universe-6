@@ -205,9 +205,17 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col">
+                                    <h3 class="font-weight-bold text-secondary small">Short</h3>
+                                    <div class="form-group">
+                                        <textarea class="textarea-package" name="txta_short">{!! $hotels->short !!}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
                                     <h3 class="font-weight-bold text-secondary small">Description</h3>
                                     <div class="form-group">
-                                        <textarea class="textarea-package" name="txta_short">{!! $hotels->descripcion !!}</textarea>
+                                        <textarea class="textarea-package" name="txta_descripcion">{!! $hotels->descripcion !!}</textarea>
                                     </div>
                                 </div>
                             </div>

@@ -109,9 +109,18 @@
 
                         <div class="row">
                             <div class="col">
-                                <h3 class="font-weight-bold text-secondary small">Description</h3>
+                                <h3 class="font-weight-bold text-secondary small">Summary</h3>
                                 <div class="form-group">
                                     <textarea class="textarea-package" name="txta_short"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col">
+                                <h3 class="font-weight-bold text-secondary small">Description</h3>
+                                <div class="form-group">
+                                    <textarea class="textarea-package" name="txta_descripcion"></textarea>
                                 </div>
                             </div>
                         </div>

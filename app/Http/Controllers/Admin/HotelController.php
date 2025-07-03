@@ -33,7 +33,8 @@ class HotelController extends Controller
 
         $hotel = new THotel();
         $hotel->nombre = $request->input('txt_hotel');
-        $hotel->descripcion = $request->input('txta_short');
+        $hotel->short = $request->input('txta_short');
+        $hotel->descripcion = $request->input('txta_descripcion');
         $hotel->estrellas = $request->input('slc_category');
         $hotel->direccion = $request->input('txt_address');
         $hotel->url = $request->input('url');
@@ -107,7 +108,8 @@ class HotelController extends Controller
     {
         $hotel = THotel::FindOrFail($id);
         $hotel->nombre = $request->input('txt_hotel');
-        $hotel->descripcion = $request->input('txta_short');
+        $hotel->short = $request->input('txta_short');
+        $hotel->descripcion = $request->input('txta_descripcion');
         $hotel->estrellas = $request->input('slc_category');
         $hotel->direccion = $request->input('txt_address');
         $hotel->url = $request->input('url');
