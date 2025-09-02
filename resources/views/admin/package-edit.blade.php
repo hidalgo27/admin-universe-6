@@ -138,14 +138,14 @@
                 <div class="row">
 
                     <div class="col-12">
-                        @if ($imagen_slider < 3)
+{{--                        @if ($imagen_slider < 3)--}}
                             <p class="font-weight-bold text-secondary small pb-1 mb-2">Image Slider <span class="badge badge-warning">1900x1080 PX</span></p>
                             <form method="post" action="{{route('admin_image_slider_store_path')}}" enctype="multipart/form-data"
                                   class="dropzone" id="dropzone">
                                 <input type="hidden" value="{{$paquetes->id}}" name="id_package_file">
                                 @csrf
                             </form>
-                        @endif
+{{--                        @endif--}}
                     </div>
                     @if (empty($paquetes->mapa))
                     <div class="col-12">
