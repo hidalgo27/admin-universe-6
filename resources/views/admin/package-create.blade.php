@@ -1,3 +1,4 @@
+{{-- admin-universe-6/resources/views/admin/package-create.blade.php--}}
 @extends('layouts.admin.app')
 @section('sidebar')
     @parent
@@ -149,6 +150,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="row">
                         <div class="col">
@@ -503,6 +505,25 @@
                             </div>
                         </div>
                         <div class="swiper-scrollbar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="font-weight-bold text-secondary small" for="fixed_departures">
+                            Fixed Departures
+                        </label>
+                        <textarea
+                            name="fixed_departures"
+                            id="fixed_departures"
+                            class="form-control font-weight-bold"
+                            rows="15"
+                            placeholder="2025-05-10&#10;2025-06-14&#10;2025-07-12">{{ old('fixed_departures') }}</textarea>
+                        <small class="form-text text-muted">
+                            Registrar una fecha por línea. Formato recomendado: YYYY-MM-DD.
+                        </small>
                     </div>
                 </div>
             </div>

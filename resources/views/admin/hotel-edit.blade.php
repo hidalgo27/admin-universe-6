@@ -1,3 +1,4 @@
+{{-- admin-universe-6/resources/views/admin/hotel-edit.blade.php--}}
 @extends('layouts.admin.app')
 @section('sidebar')
     @parent

@@ -1,4 +1,5 @@
 <?php
+// admin-universe-6/app/TPaquete.php
 
 namespace App;
 
@@ -51,5 +52,18 @@ class TPaquete extends Model
     public function paquete_no_incluye()
     {
         return $this->hasMany(TPaqueteNoIncluye::class, 'idpaquetes');
+    }
+
+    public function salidas()
+    {
+        return $this->hasMany(TPaqueteSalida::class, 'idpaquetes')->orderBy('departure_date');
+    }
+
+    public function salidas_activas()
+    {
+        return $this->hasMany(TPaqueteSalida::class, 'idpaquetes')
+            ->where('status', 1)
+            ->whereDate('departure_date', '>=', date('Y-m-d'))
+            ->orderBy('departure_date');
     }
 }

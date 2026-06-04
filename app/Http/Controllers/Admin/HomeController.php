@@ -1,4 +1,5 @@
 <?php
+// admin-universe-6/app/Http/Controllers/Admin/HomeController.php
 
 namespace App\Http\Controllers\Admin;
 
@@ -20,6 +21,8 @@ use App\TPaqueteIncluye;
 use App\TpaqueteItinerario;
 use App\TPaqueteNoIncluye;
 use App\TPrecioPaquete;
+use App\TPaqueteSalida;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -30,6 +33,62 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
+    /**
+     * Sincroniza las fechas de salida fija del paquete.
+     *
+     * Recibe un textarea con una fecha por línea:
+     * 2025-05-10
+     * 2025-06-14
+     * 2025-07-12
+     *
+     * Por ahora se elimina todo y se vuelve a crear.
+     * Es la forma más simple para integrarlo al admin actual.
+     */
+    private function syncPackageDepartures($packageId, $rawDepartures)
+    {
+        TPaqueteSalida::where('idpaquetes', $packageId)->delete();
+
+        if (!$rawDepartures) {
+            return;
+        }
+
+        $lines = preg_split('/\r\n|\r|\n/', $rawDepartures);
+        $sortOrder = 1;
+        $registeredDates = [];
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+
+            if ($line === '') {
+                continue;
+            }
+
+            try {
+                $date = Carbon::parse($line)->format('Y-m-d');
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            /**
+             * Evita duplicados dentro del mismo textarea.
+             */
+            if (in_array($date, $registeredDates)) {
+                continue;
+            }
+
+            TPaqueteSalida::create([
+                'idpaquetes' => $packageId,
+                'departure_date' => $date,
+                'status' => 1,
+                'sort_order' => $sortOrder,
+            ]);
+
+            $registeredDates[] = $date;
+            $sortOrder++;
+        }
+    }
+
     public function index(Request $request)
     {
         $request->user()->authorizeRoles(['user', 'admin']);
@@ -38,6 +97,7 @@ class HomeController extends Controller
         $seo=TSeo::where('estado', 1)->get();
         return view('admin.home', compact('paquete','seo'));
     }
+
     /**
      * Show
      */
@@ -78,7 +138,6 @@ class HomeController extends Controller
         $itinerario = TItinerario::get()->take($duration);
         $itinerario_full = TItinerario::all();
 
-
         return view('layouts.admin.load', compact('paquete'), ['itinerario'=>$itinerario, 'itinerario_full' => $itinerario_full]);
     }
 
@@ -97,6 +156,7 @@ class HomeController extends Controller
         $noincluye = TNoIncluye::all();
         return view('admin.package-create', compact('host'),['itinerario'=>$itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
     }
+
     public function store(Request $request)
     {
 
@@ -131,7 +191,14 @@ class HomeController extends Controller
         $package->opcional = $request->input('txta_optional');
         $package->imagen=$request->input('id_blog_file');
         $package->mapa=$request->input('id_file_map');
+
         if ($package->save()){
+
+            /**
+             * Fixed departures / salidas fijas del paquete.
+             */
+            $this->syncPackageDepartures($package->id, $request->input('fixed_departures'));
+
             $seo_atributos=$request->input('seo_atributos');
             $imagen_seo=$request->input('imagen_seo2');
             if($seo_atributos!=null){
@@ -161,6 +228,7 @@ class HomeController extends Controller
                 $seo->id_t=$package->id;
                 $seo->save();
             }
+
             $imagenes=$request->input('id_blog_file2');
             if($imagenes!=null){
                 $porciones = explode(",", $imagenes);
@@ -192,7 +260,6 @@ class HomeController extends Controller
                     $itinerary->save();
                 }
             }
-
 
             $package_level = TPaqueteDificultad::where('idpaquetes', $package->id)->get();
             $var = [];
@@ -307,7 +374,6 @@ class HomeController extends Controller
         }
 //            return redirect('/home')->with('status', 'Package created successfully');
         return redirect(route('admin_package_edit_path', $package->id))->with('status', 'Package created successfully');
-
     }
 
     public function edit(Request $request, $id)
@@ -316,7 +382,7 @@ class HomeController extends Controller
 
         $request->user()->authorizeRoles(['user', 'admin']);
 
-        $paquete = TPaquete::with('imagen_paquetes')->where('id', $id)->get();
+        $paquete = TPaquete::with(['imagen_paquetes', 'salidas'])->where('id', $id)->get();
         $paquete_itinerario = TpaqueteItinerario::with('itinerarios')->where('idpaquetes', $id)->get();
 
         $itinerario_full = TItinerario::all();
@@ -345,6 +411,7 @@ class HomeController extends Controller
 
         return view('admin.package-edit', compact('id','seo','paquete','precio_paquetes_2', 'precio_paquetes_3','precio_paquetes_4','precio_paquetes_5','paquete_dificultad','paquete_category','paquete_destino','paquete_incluye','paquete_no_incluye','host'), ['paquete_itinerario'=>$paquete_itinerario, 'itinerario_full' => $itinerario_full, 'level'=>$level, 'category'=>$category, 'destinations'=>$destinations, 'incluye'=>$incluye, 'noincluye'=>$noincluye]);
     }
+
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -374,6 +441,12 @@ class HomeController extends Controller
         $package->opcional = $request->input('txta_optional');
 
         if ($package->save()){
+
+            /**
+             * Fixed departures / salidas fijas del paquete.
+             */
+            $this->syncPackageDepartures($id, $request->input('fixed_departures'));
+
             TPrecioPaquete::where('idpaquetes', $id)->delete();
             for($x=2; $x < 6; $x++){
                 $price = new TPrecioPaquete();
@@ -502,6 +575,8 @@ class HomeController extends Controller
             TPaqueteImagen::where('id', $tpaquete_imagen_1->id)->delete();
         }
 
+        TPaqueteSalida::where('idpaquetes', $id)->delete();
+
         $packages->delete();
         $postsEO=TSeo::where('estado',1)->where('id_t', $id)->first();
         if($postsEO!=null){
@@ -515,6 +590,7 @@ class HomeController extends Controller
         }
         return redirect('/home')->with('delete', 'Package successfully removed');
     }
+
     public function image_store(Request $request)
     {
         $id_package = $request->get('id_package_file');
@@ -547,13 +623,10 @@ class HomeController extends Controller
         return $filename;
     }
 
-
-
     public function image_delete_map_package_form(Request $request)
     {
 //        $filename = $request->get('filename');
 //        $id_package = $request->get('id_package');
-
 
         $id_package_file = $request->get('id_package');
         $paquete = TPaquete::find($id_package_file);
@@ -568,7 +641,6 @@ class HomeController extends Controller
         return redirect(route('admin_package_edit_path', $id_package_file))->with('delete', 'Image successfully removed');
     }
 
-
     public function image_store_slider(Request $request)
     {
         $id_package = $request->get('id_package_file');
@@ -580,7 +652,6 @@ class HomeController extends Controller
 
         Storage::disk('s3')->put('package/slider/'.$filenametostore, fopen($request->file('file'), 'r+'), 'public');
         $imageName = Storage::disk('s3')->url('package/slider/'.$filenametostore);
-
 
         $imageUpload = new TPaqueteImagen();
         $imageUpload->nombre = $imageName;
@@ -625,9 +696,10 @@ class HomeController extends Controller
 
         return redirect(route('admin_package_edit_path', $id_package))->with('delete', 'Image successfully removed');
     }
-     //PAQUETE
 
-     public function package_imagen_getFile(Request $request){
+    //PAQUETE
+
+    public function package_imagen_getFile(Request $request){
         $filenamewithextension = $request->file('file')->getClientOriginalName();
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
@@ -637,6 +709,7 @@ class HomeController extends Controller
         $imageName = Storage::disk('s3')->url('package/'.$filenametostore);
         return $imageName;
     }
+
     public function package_imagen_deleteFile(Request $request){
         $id_blog_file = $request->get('id_blog_file');
 
@@ -646,6 +719,7 @@ class HomeController extends Controller
 
         return $filename;
     }
+
     public function package_map_getFile(Request $request){
         $filenamewithextension = $request->file('file')->getClientOriginalName();
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
@@ -656,6 +730,7 @@ class HomeController extends Controller
         $imageName = Storage::disk('s3')->url('package/map/'.$filenametostore);
         return $imageName;
     }
+
     public function package_map_deleteFile(Request $request){
         $id_blog_file = $request->get('id_file_map');
 
@@ -665,6 +740,7 @@ class HomeController extends Controller
 
         return $filename;
     }
+
     public function package_slider_getFile(Request $request){
         $t=time();
         $filenamewithextension = $request->file('file')->getClientOriginalName();
@@ -676,6 +752,7 @@ class HomeController extends Controller
         $imageName = Storage::disk('s3')->url('package/slider/'.$filenametostore);
         return $imageName." ".$t;
     }
+
     public function package_slider_deleteFile(Request $request){
         $imagenes = $request->get('aux');
         $file_name = $request->get('name_file');
@@ -695,6 +772,7 @@ class HomeController extends Controller
         Storage::disk('s3')->delete('package/slider/'.$filename[0]);
         return $name;
     }
+
     public function map_store(Request $request)
     {
         $id_package = $request->get('id_package_file');
@@ -726,11 +804,11 @@ class HomeController extends Controller
         TPaquete::where('id', $id_package_file)->update(['mapa' => NULL]);
         return $filename;
     }
+
     public function delete_map_package_form(Request $request)
     {
 //        $filename = $request->get('filename');
 //        $id_package = $request->get('id_package');
-
 
         $id_package_file = $request->get('id_package');
         $paquete = TPaquete::find($id_package_file);
