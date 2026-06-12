@@ -30,6 +30,6 @@
         "bootstrap4c-dropzone": "^1.0.6",
         "dropzone": "^5.5.1",
         "feather-icons": "^4.24.1",
-        "swiper": "^5.2.0"
+        "swiper": "^6.5.1"
     }
 }
